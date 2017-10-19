@@ -16,6 +16,7 @@
         <spring.version>4.2.1.RELEASE</spring.version>
         <!-- AssertJ is not a part of Spring IO platform, so the version must be provided explicitly -->
         <assertj-core-version>3.1.0</assertj-core-version>
+        <mysql-connector.version>5.1.31</mysql-connector.version>
     </properties>
     <parent>
         <groupId>io.spring.platform</groupId>
@@ -56,6 +57,19 @@
         </dependency>
         <!-- Persistence -->
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+        </dependency>
+        <dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql-connector.version}</version>
+		</dependency>
+        <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
         </dependency>
@@ -74,6 +88,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- Generic DAO - Utility classes so that only one Hibernate DAO is needed. -->
+		<dependency>
+			<groupId>com.googlecode.genericdao</groupId>
+			<artifactId>dao-hibernate</artifactId>
+			<version>1.2.0</version> 
+		</dependency>
         <!-- Avoid: javax.validation.ValidationException: HV000183: Unable to load 'javax.el.ExpressionFactory' -->
         <dependency>
             <groupId>javax.el</groupId>
@@ -165,6 +185,12 @@
             <artifactId>spring-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.4.184</version>
+			<scope>test</scope>
+		</dependency>
     </dependencies>
     <build>
         <plugins>
