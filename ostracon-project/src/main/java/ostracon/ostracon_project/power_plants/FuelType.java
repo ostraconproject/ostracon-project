@@ -1,5 +1,10 @@
 package ostracon.ostracon_project.power_plants;
 
+/**
+ * Fuel types the user will be able to select from.
+ * 
+ * @author NMarlor
+ */
 public enum FuelType {
 	
 	COAL("Coal"),
