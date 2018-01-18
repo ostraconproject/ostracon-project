@@ -1,7 +1,7 @@
 package ostracon.ostracon_project.power_plants;
 
 /**
- * Services for interacting with the database, in relation
+ * CRUD services for interacting with the database, in relation
  * to a power plant.
  * 
  * @author NMarlor
