@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html class="no-js" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Ostracon</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+	<div th:replace="fragments/header">Header</div>
+		<div class="container">
+			<div class="jumbotron">
+				<h2 class="text-center" style="padding-top:40px;padding-bottom:30px;">Created Power Plant</h2>
+				<table class="table">
+					<thead>
+						<tr>
+							<th class="col-sm-1 text-center">Name</th>
+							<th class="col-sm-1 text-center">City</th>
+							<th class="col-sm-1 text-center">Coordinates</th>
+							<th class="col-sm-1 text-center">Fuel Type</th>
+							<th class="col-sm-1 text-center">Capacity</th>
+							<th class="col-sm-1 text-center">Capacity Factor</th>
+							<th class="col-sm-1 text-center">Electricity Generated Annually(MWh)</th>
+							<th class="col-sm-1 text-center">Direct Emissions Of CO2</th>
+							<th class="col-sm-1 text-center">Global Warming Potential</th>
+							<th class="col-sm-1 text-center">Total LCoE</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="powerPlant : ${powerPlants}">
+							<td class="col-sm-1 text-center" th:text="${powerPlant.name}"></td>
+							<td class="col-sm-1 text-center" th:text="${powerPlant.city}"></td>
+							<td class="col-sm-1 text-center" th:text="${powerPlant.coordinates}"></td>
+							<td class="col-sm-1 text-center" th:text="${powerPlant.fuelType}"></td>
+							<td class="col-sm-1 text-center" th:text="${powerPlant.capacity}"></td>
+							<td class="col-sm-1 text-center" th:text="${powerPlant.capacityFactor}"></td>
+							<td class="col-sm-1 text-center" th:text="${powerPlant.anualElectricityGenerated}"></td>
+							<td class="col-sm-1 text-center" th:text="${powerPlant.directEmissions}"></td>
+							<td class="col-sm-1 text-center" th:text="${powerPlant.globalWarmingPotential}"></td>
+							<td class="col-sm-1 text-center" th:text="${powerPlant.totalLcoe}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+</body>
+</html>

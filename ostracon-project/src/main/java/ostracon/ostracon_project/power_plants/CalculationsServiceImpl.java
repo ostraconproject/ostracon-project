@@ -19,10 +19,10 @@ public class CalculationsServiceImpl implements CalculationsService {
 		double annualElectricity = powerPlant.getAnualElectricityGenerated();
 		double directEmissions = 0;
 		
-		if (fuelType == "Coal") {
+		if (fuelType.equals("Coal")) {
 			directEmissions = annualElectricity * 1.047;
 		}
-		if (fuelType == "Natural Gas") {
+		if (fuelType.equals("Natural Gas")) {
 			directEmissions = annualElectricity * 0.9;
 		}
 		return directEmissions;
@@ -34,22 +34,22 @@ public class CalculationsServiceImpl implements CalculationsService {
 		double annualElectricity = powerPlant.getAnualElectricityGenerated();
 		double globalWarmingPotential = 0;
 		
-		if (fuelType == "Coal") {
+		if (fuelType.equals("Coal")) {
 			globalWarmingPotential = annualElectricity * 0.65;
 		}
-		if (fuelType == "Natural Gas") {
+		if (fuelType.equals("Natural Gas")) {
 			globalWarmingPotential = annualElectricity * 0.5;
 		}
-		if (fuelType == "Wind") {
+		if (fuelType.equals("Wind")) {
 			globalWarmingPotential = annualElectricity * 0.038;
 		}
-		if (fuelType == "Solar") {
+		if (fuelType.equals("Solar")) {
 			globalWarmingPotential = annualElectricity * 0.116;
 		}
-		if (fuelType == "Hydro") {
+		if (fuelType.equals("Hydro")) {
 			globalWarmingPotential = annualElectricity * 0.03;
 		}
-		if (fuelType == "Biomass") {
+		if (fuelType.equals("Biomass")) {
 			globalWarmingPotential = annualElectricity * 0.258;
 		}
 		
@@ -62,22 +62,22 @@ public class CalculationsServiceImpl implements CalculationsService {
 		double annualElectricity = powerPlant.getAnualElectricityGenerated();
 		double totalLcoe = 0;
 		
-		if (fuelType == "Coal") {
+		if (fuelType.equals("Coal")) {
 			totalLcoe = annualElectricity * 140;
 		}
-		if (fuelType == "Natural Gas") {
+		if (fuelType.equals("Natural Gas")) {
 			totalLcoe = annualElectricity * 140;
 		}
-		if (fuelType == "Wind") {
+		if (fuelType.equals("Wind")) {
 			totalLcoe = annualElectricity * 90;
 		}
-		if (fuelType == "Solar") {
+		if (fuelType.equals("Solar")) {
 			totalLcoe = annualElectricity * 170;
 		}
-		if (fuelType == "Hydro") {
+		if (fuelType.equals("Hydro")) {
 			totalLcoe = annualElectricity * 100;
 		}
-		if (fuelType == "Biomass") {
+		if (fuelType.equals("Biomass")) {
 			totalLcoe = annualElectricity * 80;
 		}
 		

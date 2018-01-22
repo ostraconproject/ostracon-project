@@ -1,5 +1,7 @@
 package ostracon.ostracon_project.power_plants;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,11 @@ public class PowerPlantServiceImpl implements PowerPlantService {
 	@Override
 	public void deletePowerPlant(PowerPlant powerPlant) {
 		powerPlantDAO.remove(powerPlant);
+	}
+
+	@Override
+	public List<PowerPlant> retrieveAllPowerPlants() {
+		return powerPlantDAO.findAll();
 	}
 	
 }

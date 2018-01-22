@@ -1,5 +1,7 @@
 package ostracon.ostracon_project.power_plants;
 
+import java.util.List;
+
 /**
  * CRUD services for interacting with the database, in relation
  * to a power plant.
@@ -20,6 +22,12 @@ public interface PowerPlantService
 	 * @return powerPlant
 	 */
 	public PowerPlant retrievePowerPlant(Long powerPlantId);
+	
+	/**
+	 * To retrieve all power plants in the system.
+	 * @return powerPlants
+	 */
+	public List<PowerPlant> retrieveAllPowerPlants();
 	
 	/**
 	 * To update a power plants values and save within the database.

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html class="no-js" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Ostracon</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+	<div th:replace="fragments/header">Header</div>
+		<div class="container">
+		<form method="post" th:action="@{/addPowerPlant}" th:object="${powerPlantForm}">
+		<div class="jumbotron" style="background-color:#FFFFFF">
+			<h2 class="text-center" style="padding-top:40px;padding-bottom:30px;">New Power Plant</h2>
+			<div class="col-sm-offset-1 col-sm-4 text-right">
+				<span>Name</span>
+			</div>
+			<div class="col-sm-3 text-center">
+		  		<input type="text" class="form-control" id="name-input" th:field="*{name}"/>
+				<br></br>
+			</div>
+			<div class="col-sm-offset-1 col-sm-4 text-right">
+				<span>City</span>
+			</div>
+			<div class="col-sm-3 text-center">
+		  		<input type="text" class="form-control" id="city-input" th:field="*{city}"/>
+				<br></br>
+			</div>
+			<div class="col-sm-offset-1 col-sm-4 text-right">
+				<span>Coordinates</span>
+			</div>
+			<div class="col-sm-3 text-center">
+		  		<input type="text" class="form-control" id="name-input" th:field="*{coordinates}"/>
+				<br></br>
+			</div>
+			<div class="col-sm-offset-1 col-sm-4 text-right">
+				<span>Fuel Type</span>
+			</div>
+			<div class="col-sm-3 text-center">
+			  	<select th:errorclass="input-form-error" class="form-control" id="fuel-input" th:field="*{fuelType}">
+					<option value="" ></option>
+					<option th:each="fuelType : ${fuelTypes}"
+				  	th:value="${fuelType}" th:text="${fuelType}"></option>
+				</select>
+				<br></br>
+			</div>
+			<div class="col-sm-offset-1 col-sm-4 text-right">
+				<span>Capacity</span>
+			</div>
+			<div class="col-sm-3 text-center">
+		  		<input type="text" class="form-control" id="name-input" th:field="*{capacity}"/>
+				<br></br>
+			</div>
+			<div class="col-sm-offset-1 col-sm-4 text-right">
+				<span>Capacity Factor</span>
+			</div>
+			<div class="col-sm-3 text-center">
+		  		<input type="text" class="form-control" id="name-input" th:field="*{capacityFactor}"/>
+				<br></br>
+			</div>
+			<div class="create-btn col-sm-offset-4 col-sm-2"></div>
+			<div class="col-sm-2">
+				<input type="submit" value="Save Power Plant" class="btn btn-block btn-success create-button"/>
+			</div>
+		</div>
+		</form>
+		</div>
+</body>
+</html>
