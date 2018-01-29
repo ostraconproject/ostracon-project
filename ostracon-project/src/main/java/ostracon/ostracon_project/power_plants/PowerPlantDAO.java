@@ -4,6 +4,12 @@ import java.util.List;
 
 import com.googlecode.genericdao.dao.jpa.GenericDAO;
 
+/**
+ * DAO functions to interact with power plants table
+ * within the database.
+ * 
+ * @author NMarlor
+ */
 public interface PowerPlantDAO extends GenericDAO<PowerPlant, Long> 
 {
 	/**
