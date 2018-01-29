@@ -22,6 +22,12 @@ public class PowerPlant {
 	private String city;
 	
 	@Column
+	private String country;
+	
+	@Column
+	private Integer year;
+	
+	@Column
 	private String coordinates;
 	
 	@Column(name = "fuel_type")
@@ -55,6 +61,14 @@ public class PowerPlant {
 
 	public String getCity() {
 		return city;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public Integer getYear() {
+		return year;
 	}
 
 	public String getCoordinates() {
@@ -95,6 +109,14 @@ public class PowerPlant {
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public void setYear(Integer year) {
+		this.year = year;
 	}
 
 	public void setCoordinates(String coordinates) {
