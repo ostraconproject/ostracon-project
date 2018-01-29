@@ -5,7 +5,7 @@ import java.util.List;
 import com.googlecode.genericdao.dao.jpa.GenericDAO;
 
 /**
- * DAO functions to interact with power plants table
+ * DAO functions to interact with the power plants table
  * within the database.
  * 
  * @author NMarlor
@@ -26,4 +26,11 @@ public interface PowerPlantDAO extends GenericDAO<PowerPlant, Long>
 	 * @return power plants
 	 */
 	List<PowerPlant> findPowerPlantsByCountryAndYear(String country, Integer year);
+	
+	/**
+	 * For finding all the power plants for a particular year.
+	 * @param year
+	 * @return power plants
+	 */
+	List<PowerPlant> findPowerPlantsByYear(Integer year);
 }
