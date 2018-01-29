@@ -39,4 +39,41 @@ public interface CalculationsService
 	 * @return total LCoE
 	 */
 	public double totalLcoe(PowerPlant powerPlant);
+	
+	/**
+	 * For returning the total sum of the electricity generated annually
+	 * of all power plants in a country for a particular year.
+	 * @param country
+	 * @param year
+	 * @return electricity generated annually
+	 */
+	public double totalElectricityGeneratedAnnuallyByCountryandYear(String country, Integer year);
+	
+	/**
+	 * For returning the total sum of direct emissions of CO2
+	 * for all power plants in a country for a particular year.
+	 * @param country
+	 * @param year
+	 * @return direct emissions of CO2
+	 */
+	public double totalDirectEmissionsOfCarbonDioxideByCountryAndYear(String country, Integer year);
+	
+	/**
+	 * For returning the total sum of global warming potential
+	 * for all power plants in a country for a particular year.
+	 * @param country
+	 * @param year
+	 * @return global warming potential
+	 */
+	public double totalGlobalWarmingPotentialByCountryAndYear(String country, Integer year);
+	
+	/**
+	 * For returning the total sum of all total LCoE's
+	 * for all power plants in a country for a particular year.
+	 * @param country
+	 * @param year
+	 * @return total LCoE
+	 */
+	public double totalOfAllLcoeByCountryAndYear(String country, Integer year);
+	
 }
