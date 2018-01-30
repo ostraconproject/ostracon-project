@@ -1,5 +1,6 @@
 package ostracon.ostracon_project.power_plants;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import ostracon.ostracon_project.account.Account;
+import ostracon.ostracon_project.account.AccountRepository;
+
 @Controller
 public class PowerPlantController {
 	
@@ -19,6 +23,9 @@ public class PowerPlantController {
 	
 	@Autowired
 	private CalculationsService calculationsService;
+	
+	@Autowired
+	private AccountRepository accountRepository;
 
 	@RequestMapping(value = "addPowerPlant", method = RequestMethod.GET)
 	public ModelAndView addPowerPlant(){
@@ -40,8 +47,12 @@ public class PowerPlantController {
 	}
 	
 	@RequestMapping(value = "addPowerPlant", method = RequestMethod.POST)
-	public ModelAndView submitPowerPlant(@ModelAttribute("powerPlantForm") NewPowerPlantForm powerPlantForm, BindingResult bindingResult){
+	public ModelAndView submitPowerPlant(@ModelAttribute("powerPlantForm") NewPowerPlantForm powerPlantForm, Principal principal, BindingResult bindingResult){
+		String accountName = principal.getName();
+		Account account = accountRepository.findByEmail(accountName);
+		
 		PowerPlant powerPlant = new PowerPlant();
+		powerPlant.setAccount(account);
 		powerPlant.setName(powerPlantForm.getName());
 		powerPlant.setCity(powerPlantForm.getCity());
 		powerPlant.setCoordinates(powerPlantForm.getCoordinates());
@@ -66,7 +77,7 @@ public class PowerPlantController {
 		powerPlantForm.setTotalLcoe(totalLcoe);
 		
 		powerPlantService.createPowerPlant(powerPlant);
-		List<PowerPlant> powerPlants = powerPlantService.retrieveAllPowerPlants();
+		List<PowerPlant> powerPlants = powerPlantService.retrieveAllPowerPlantsForAccount(account);
 		
 		ModelAndView successMv = new ModelAndView("power_plants/successfulPlantCreation");
 		successMv.addObject("powerPlant", powerPlant);

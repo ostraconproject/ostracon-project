@@ -2,6 +2,8 @@ package ostracon.ostracon_project.power_plants;
 
 import java.util.List;
 
+import ostracon.ostracon_project.account.Account;
+
 /**
  * CRUD services for interacting with the database, in relation
  * to a power plant.
@@ -28,6 +30,12 @@ public interface PowerPlantService
 	 * @return powerPlants
 	 */
 	public List<PowerPlant> retrieveAllPowerPlants();
+	
+	/**
+	 * To retrieve all power plants in the system for an account.
+	 * @return powerPlants
+	 */
+	public List<PowerPlant> retrieveAllPowerPlantsForAccount(Account account);
 	
 	/**
 	 * To update a power plants values and save within the database.

@@ -2,10 +2,15 @@ package ostracon.ostracon_project.power_plants;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import ostracon.ostracon_project.account.Account;
 
 @Entity
 @Table(name = "power_plants")
@@ -14,6 +19,10 @@ public class PowerPlant {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@ManyToOne
+	@JoinColumn(name="account_id", foreignKey=@ForeignKey(name="power_plant_account_id_fk"))
+	private Account account;
 	
 	@Column
 	private String name;
@@ -53,6 +62,10 @@ public class PowerPlant {
 
 	public Long getId() {
 		return id;
+	}
+
+	public Account getAccount() {
+		return account;
 	}
 
 	public String getName() {
@@ -101,6 +114,10 @@ public class PowerPlant {
 
 	public double getTotalLcoe() {
 		return totalLcoe;
+	}
+	
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 
 	public void setName(String name) {

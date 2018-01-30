@@ -7,6 +7,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ostracon.ostracon_project.account.Account;
+
 @Service
 @Transactional
 public class PowerPlantServiceImpl implements PowerPlantService {
@@ -37,6 +39,12 @@ public class PowerPlantServiceImpl implements PowerPlantService {
 	@Override
 	public List<PowerPlant> retrieveAllPowerPlants() {
 		return powerPlantDAO.findAll();
+	}
+
+	@Override
+	public List<PowerPlant> retrieveAllPowerPlantsForAccount(Account account) {
+		List<PowerPlant> powerPlantsForAccount = powerPlantDAO.findPowerPlantsByAccount(account);
+		return powerPlantsForAccount;
 	}
 	
 }
