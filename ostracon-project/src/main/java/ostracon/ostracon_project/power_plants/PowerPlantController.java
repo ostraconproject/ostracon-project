@@ -54,6 +54,8 @@ public class PowerPlantController {
 		PowerPlant powerPlant = new PowerPlant();
 		powerPlant.setAccount(account);
 		powerPlant.setName(powerPlantForm.getName());
+		powerPlant.setYear(powerPlantForm.getYear());
+		powerPlant.setCountry(powerPlantForm.getCountry());
 		powerPlant.setCity(powerPlantForm.getCity());
 		powerPlant.setCoordinates(powerPlantForm.getCoordinates());
 		powerPlant.setFuelType(powerPlantForm.getFuelType());
@@ -79,12 +81,43 @@ public class PowerPlantController {
 		powerPlantService.createPowerPlant(powerPlant);
 		List<PowerPlant> powerPlants = powerPlantService.retrieveAllPowerPlantsForAccount(account);
 		
-		ModelAndView successMv = new ModelAndView("power_plants/successfulPlantCreation");
+		ModelAndView successMv = new ModelAndView("power_plants/allPlants");
 		successMv.addObject("powerPlant", powerPlant);
 		successMv.addObject("powerPlantForm", powerPlantForm);
 		successMv.addObject("powerPlants", powerPlants);
 		
 		return successMv;
+	}
+	
+	@RequestMapping(value = "myPowerPlants", method = RequestMethod.GET)
+	public ModelAndView myPowerPlants(Principal principal){
+		ModelAndView mv = new ModelAndView("power_plants/allPlants");
+		
+		String accountName = principal.getName();
+		Account account = accountRepository.findByEmail(accountName);
+		List<PowerPlant> powerPlants = powerPlantService.retrieveAllPowerPlantsForAccount(account);
+		
+		mv.addObject("powerPlants", powerPlants);
+		return mv;
+	}
+
+	@RequestMapping(value = "viewPowerPlant", method = RequestMethod.GET)
+	public ModelAndView viewPowerPlantRequest(Long id){
+		ModelAndView mv = new ModelAndView("power_plants/viewPowerPlant");
+		
+		PowerPlant powerPlant = powerPlantService.retrievePowerPlant(id);
+		
+		NewPowerPlantForm powerPlantForm = new NewPowerPlantForm();
+		powerPlantForm.setPlantId(id);
+		powerPlantForm.setName(powerPlant.getName());
+		powerPlantForm.setAnualElectricityGenerated(powerPlant.getAnualElectricityGenerated());
+		powerPlantForm.setDirectEmissions(powerPlant.getDirectEmissions());
+		powerPlantForm.setGlobalWarmingPotential(powerPlant.getGlobalWarmingPotential());
+		powerPlantForm.setTotalLcoe(powerPlant.getTotalLcoe());
+		
+		mv.addObject("powerPlantForm", powerPlantForm);
+		mv.addObject("powerPlant", powerPlant);
+		return mv;
 	}
 
 }

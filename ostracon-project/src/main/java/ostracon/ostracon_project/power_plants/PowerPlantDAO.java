@@ -42,4 +42,12 @@ public interface PowerPlantDAO extends GenericDAO<PowerPlant, Long>
 	 * @return power plants
 	 */
 	public List<PowerPlant> findPowerPlantsByAccount(Account account);
+	
+	/**
+	 * For finding all power plants of an account and a particular year.
+	 * @param account
+	 * @param year
+	 * @return power plants
+	 */
+	public List<PowerPlant> findPowerPlantsByAccountAndYear(Account account, String year);
 }

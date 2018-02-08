@@ -38,6 +38,15 @@ public interface PowerPlantService
 	public List<PowerPlant> retrieveAllPowerPlantsForAccount(Account account);
 	
 	/**
+	 * To retrieve all power plants in the system for an account
+	 * and a given year.
+	 * @param account
+	 * @param year
+	 * @return powerPlants
+	 */
+	public List<PowerPlant> retrieveAllPowerPlantsForAccountAndYear(Account account, String year);
+	
+	/**
 	 * To update a power plants values and save within the database.
 	 * @param powerPlant
 	 * @return powerPlant

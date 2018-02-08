@@ -1,0 +1,51 @@
+<form th:action="@{/viewPowerPlant}" th:object="${powerPlantForm}" method="get">
+	
+	<input type="hidden" th:field="*{plantId}"/>
+		
+	<div class="modal-dialog modal-md">
+		<div class="modal-content">
+			<div class="modal-header">
+		    	<button type="button" class="close" data-dismiss="modal" aria-label="Close" disabled="disabled"><span data-dismiss="modal" aria-hidden="true">&times;</span></button>
+				<h4 class="inline-block modal-title" id="myModalLabel" th:text="|${powerPlant.name} results|"></h4>
+			</div>
+			<div class="modal-body" id="">
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<label>Annual Electricity Generation</label>
+						<input type="text" readonly="readonly" class="form-control" id="electricity-input" th:field="*{anualElectricityGenerated}"/>
+					</div>
+				</div>
+			</div>
+			<div class="modal-body" id="">
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<label>Direct Emissions Of Carbon Dioxide</label>
+						<input type="text" readonly="readonly" class="form-control" id="emissions-input" th:field="*{directEmissions}"/>
+					</div>
+				</div>
+			</div>
+			<div class="modal-body" id="">
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<label>Global Warming Potential</label>
+						<input type="text" readonly="readonly" class="form-control" id="global-input" th:field="*{globalWarmingPotential}"/>
+					</div>
+				</div>
+			</div>
+			<div class="modal-body" id="">
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<label>Total LCoE</label>
+						<input type="text" readonly="readonly" class="form-control" id="lcoe-input" th:field="*{totalLcoe}"/>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+		    	<h4 class="inline-block no-margin confirmationMessage"></h4>
+		    	<div class="pull-right">
+		    		<button type="button" class="btn btn-default " data-dismiss="modal">Close</button>
+		        </div>
+	        </div>
+		</div>
+	</div>
+</form>

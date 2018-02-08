@@ -41,4 +41,12 @@ public class PowerPlantDAOImpl extends HibernateJPABase<PowerPlant, Long> implem
 		return super.search(search);
 	}
 
+	@Override
+	public List<PowerPlant> findPowerPlantsByAccountAndYear(Account account, String year) {
+		Search search = new Search(PowerPlant.class);
+		search.addFilterEqual("account", account);
+		search.addFilterEqual("year", year);
+		return super.search(search);
+	}
+
 }

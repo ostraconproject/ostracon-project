@@ -16,9 +16,15 @@
         <!-- /* The message code is returned from the @Controller */ -->
         <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#authentication.name})})">&nbsp;</div>
     </th:block>
-    <p>
+    <h2>
         Welcome to the Ostracon application!
-    </p>
+    </h2>
+    <a href="/addPowerPlant" th:href="@{/addPowerPlant}">
+       	<h3>Click here to add a new power plant</h3>
+    </a>
+    <a href="/myPowerPlants" th:href="@{/myPowerPlants}">
+    	<h3>Click here to view all of your power plants</h3>
+    </a>
 </div>
 </body>
 </html>

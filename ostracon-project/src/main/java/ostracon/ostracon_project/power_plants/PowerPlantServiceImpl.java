@@ -46,5 +46,11 @@ public class PowerPlantServiceImpl implements PowerPlantService {
 		List<PowerPlant> powerPlantsForAccount = powerPlantDAO.findPowerPlantsByAccount(account);
 		return powerPlantsForAccount;
 	}
+
+	@Override
+	public List<PowerPlant> retrieveAllPowerPlantsForAccountAndYear(Account account, String year) {
+		List<PowerPlant> powerPlantsForAccountAndYear = powerPlantDAO.findPowerPlantsByAccountAndYear(account, year);
+		return powerPlantsForAccountAndYear;
+	}
 	
 }

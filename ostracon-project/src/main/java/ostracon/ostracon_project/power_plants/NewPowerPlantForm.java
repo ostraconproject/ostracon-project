@@ -4,8 +4,11 @@ import java.util.ArrayList;
 
 public class NewPowerPlantForm {
 
+	private Long plantId;
 	private String name;
+	private String country;
 	private String city;
+	private String year;
 	private String coordinates;
 	private String fuelType;
 	private double capacity;
@@ -16,8 +19,20 @@ public class NewPowerPlantForm {
 	private double totalLcoe;
 	private ArrayList<String> fuleTypes;
 	
+	public Long getPlantId() {
+		return plantId;
+	}
+	public void setPlantId(Long plantId) {
+		this.plantId = plantId;
+	}
 	public String getName() {
 		return name;
+	}
+	public String getYear() {
+		return year;
+	}
+	public String getCountry() {
+		return country;
 	}
 	public String getCity() {
 		return city;
@@ -48,6 +63,12 @@ public class NewPowerPlantForm {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public void setYear(String year) {
+		this.year = year;
+	}
+	public void setCountry(String country) {
+		this.country = country;
 	}
 	public void setCity(String city) {
 		this.city = city;

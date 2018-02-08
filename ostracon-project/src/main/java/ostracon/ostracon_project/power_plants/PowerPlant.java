@@ -34,7 +34,7 @@ public class PowerPlant {
 	private String country;
 	
 	@Column
-	private Integer year;
+	private String year;
 	
 	@Column
 	private String coordinates;
@@ -79,8 +79,8 @@ public class PowerPlant {
 	public String getCountry() {
 		return country;
 	}
-
-	public Integer getYear() {
+	
+	public String getYear() {
 		return year;
 	}
 
@@ -131,8 +131,8 @@ public class PowerPlant {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-
-	public void setYear(Integer year) {
+	
+	public void setYear(String year) {
 		this.year = year;
 	}
 
