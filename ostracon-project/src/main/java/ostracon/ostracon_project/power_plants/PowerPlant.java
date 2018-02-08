@@ -1,5 +1,7 @@
 package ostracon.ostracon_project.power_plants;
 
+import java.math.BigInteger;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -43,22 +45,22 @@ public class PowerPlant {
 	private String fuelType;
 	
 	@Column
-	private double capacity;
+	private int capacity;
 	
 	@Column(name = "capacity_factor")
-	private double capacityFactor;
+	private int capacityFactor;
 
 	@Column(name = "anual_electricity_generated")
-	private double anualElectricityGenerated;
+	private int anualElectricityGenerated;
 	
 	@Column(name = "direct_emissions")
-	private double directEmissions;
+	private int directEmissions;
 	
 	@Column(name = "global_warming_potential")
-	private double globalWarmingPotential;
+	private int globalWarmingPotential;
 	
 	@Column(name = "total_lcoe")
-	private double totalLcoe;
+	private BigInteger totalLcoe;
 
 	public Long getId() {
 		return id;
@@ -91,30 +93,6 @@ public class PowerPlant {
 	public String getFuelType() {
 		return fuelType;
 	}
-
-	public double getCapacity() {
-		return capacity;
-	}
-
-	public double getCapacityFactor() {
-		return capacityFactor;
-	}
-
-	public double getAnualElectricityGenerated() {
-		return anualElectricityGenerated;
-	}
-
-	public double getDirectEmissions() {
-		return directEmissions;
-	}
-
-	public double getGlobalWarmingPotential() {
-		return globalWarmingPotential;
-	}
-
-	public double getTotalLcoe() {
-		return totalLcoe;
-	}
 	
 	public void setAccount(Account account) {
 		this.account = account;
@@ -144,28 +122,52 @@ public class PowerPlant {
 		this.fuelType = fuelType;
 	}
 
-	public void setCapacity(double capacity) {
+	public int getCapacity() {
+		return capacity;
+	}
+
+	public int getCapacityFactor() {
+		return capacityFactor;
+	}
+
+	public int getAnualElectricityGenerated() {
+		return anualElectricityGenerated;
+	}
+
+	public int getDirectEmissions() {
+		return directEmissions;
+	}
+
+	public int getGlobalWarmingPotential() {
+		return globalWarmingPotential;
+	}
+
+	public BigInteger getTotalLcoe() {
+		return totalLcoe;
+	}
+
+	public void setCapacity(int capacity) {
 		this.capacity = capacity;
 	}
 
-	public void setCapacityFactor(double capacityFactor) {
+	public void setCapacityFactor(int capacityFactor) {
 		this.capacityFactor = capacityFactor;
 	}
 
-	public void setAnualElectricityGenerated(double anualElectricityGenerated) {
+	public void setAnualElectricityGenerated(int anualElectricityGenerated) {
 		this.anualElectricityGenerated = anualElectricityGenerated;
 	}
 
-	public void setDirectEmissions(double directEmissions) {
+	public void setDirectEmissions(int directEmissions) {
 		this.directEmissions = directEmissions;
 	}
 
-	public void setGlobalWarmingPotential(double globalWarmingPotential) {
+	public void setGlobalWarmingPotential(int globalWarmingPotential) {
 		this.globalWarmingPotential = globalWarmingPotential;
 	}
 
-	public void setTotalLcoe(double totalLcoe) {
+	public void setTotalLcoe(BigInteger totalLcoe) {
 		this.totalLcoe = totalLcoe;
-	}
+	}	
 	
 }

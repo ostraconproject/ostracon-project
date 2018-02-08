@@ -1,5 +1,6 @@
 package ostracon.ostracon_project.power_plants;
 
+import java.math.BigInteger;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,19 +63,19 @@ public class PowerPlantController {
 		powerPlant.setCapacity(powerPlantForm.getCapacity());
 		powerPlant.setCapacityFactor(powerPlantForm.getCapacityFactor());
 		
-		double electricityGenerated = calculationsService.electricityGeneratedAnnually(powerPlant);
+		int electricityGenerated = calculationsService.electricityGeneratedAnnually(powerPlant);
 		powerPlant.setAnualElectricityGenerated(electricityGenerated);
 		powerPlantForm.setAnualElectricityGenerated(electricityGenerated);
 		
-		double directEmissions = calculationsService.directEmissionsOfCarbonDioxide(powerPlant);
+		int directEmissions = calculationsService.directEmissionsOfCarbonDioxide(powerPlant);
 		powerPlant.setDirectEmissions(directEmissions);
 		powerPlantForm.setDirectEmissions(directEmissions);
 		
-		double globalWarming = calculationsService.globalWarmingPotential(powerPlant);
+		int globalWarming = calculationsService.globalWarmingPotential(powerPlant);
 		powerPlant.setGlobalWarmingPotential(globalWarming);
 		powerPlantForm.setGlobalWarmingPotential(globalWarming);
 		
-		double totalLcoe = calculationsService.totalLcoe(powerPlant);
+		BigInteger totalLcoe = calculationsService.totalLcoe(powerPlant);
 		powerPlant.setTotalLcoe(totalLcoe);
 		powerPlantForm.setTotalLcoe(totalLcoe);
 		

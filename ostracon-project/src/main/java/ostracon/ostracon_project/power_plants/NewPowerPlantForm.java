@@ -1,5 +1,6 @@
 package ostracon.ostracon_project.power_plants;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 
 public class NewPowerPlantForm {
@@ -11,12 +12,12 @@ public class NewPowerPlantForm {
 	private String year;
 	private String coordinates;
 	private String fuelType;
-	private double capacity;
-	private double capacityFactor;
-	private double anualElectricityGenerated;
-	private double directEmissions;
-	private double globalWarmingPotential;
-	private double totalLcoe;
+	private int capacity;
+	private int capacityFactor;
+	private int anualElectricityGenerated;
+	private int directEmissions;
+	private int globalWarmingPotential;
+	private BigInteger totalLcoe;
 	private ArrayList<String> fuleTypes;
 	
 	public Long getPlantId() {
@@ -43,24 +44,6 @@ public class NewPowerPlantForm {
 	public String getFuelType() {
 		return fuelType;
 	}
-	public double getCapacity() {
-		return capacity;
-	}
-	public double getCapacityFactor() {
-		return capacityFactor;
-	}
-	public double getAnualElectricityGenerated() {
-		return anualElectricityGenerated;
-	}
-	public double getDirectEmissions() {
-		return directEmissions;
-	}
-	public double getGlobalWarmingPotential() {
-		return globalWarmingPotential;
-	}
-	public double getTotalLcoe() {
-		return totalLcoe;
-	}
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -79,29 +62,49 @@ public class NewPowerPlantForm {
 	public void setFuelType(String fuelType) {
 		this.fuelType = fuelType;
 	}
-	public void setCapacity(double capacity) {
-		this.capacity = capacity;
-	}
-	public void setCapacityFactor(double capacityFactor) {
-		this.capacityFactor = capacityFactor;
-	}
-	public void setAnualElectricityGenerated(double anualElectricityGenerated) {
-		this.anualElectricityGenerated = anualElectricityGenerated;
-	}
-	public void setDirectEmissions(double directEmissions) {
-		this.directEmissions = directEmissions;
-	}
-	public void setGlobalWarmingPotential(double globalWarmingPotential) {
-		this.globalWarmingPotential = globalWarmingPotential;
-	}
-	public void setTotalLcoe(double totalLcoe) {
-		this.totalLcoe = totalLcoe;
-	}
 	public ArrayList<String> getFuleTypes() {
 		return fuleTypes;
 	}
 	public void setFuleTypes(ArrayList<String> fuleTypes) {
 		this.fuleTypes = fuleTypes;
 	}
+	public int getCapacity() {
+		return capacity;
+	}
+	public int getCapacityFactor() {
+		return capacityFactor;
+	}
+	public int getAnualElectricityGenerated() {
+		return anualElectricityGenerated;
+	}
+	public int getDirectEmissions() {
+		return directEmissions;
+	}
+	public int getGlobalWarmingPotential() {
+		return globalWarmingPotential;
+	}
+	public BigInteger getTotalLcoe() {
+		return totalLcoe;
+	}
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
+	}
+	public void setCapacityFactor(int capacityFactor) {
+		this.capacityFactor = capacityFactor;
+	}
+	public void setAnualElectricityGenerated(int anualElectricityGenerated) {
+		this.anualElectricityGenerated = anualElectricityGenerated;
+	}
+	public void setDirectEmissions(int directEmissions) {
+		this.directEmissions = directEmissions;
+	}
+	public void setGlobalWarmingPotential(int globalWarmingPotential) {
+		this.globalWarmingPotential = globalWarmingPotential;
+	}
+	public void setTotalLcoe(BigInteger totalLcoe) {
+		this.totalLcoe = totalLcoe;
+	}
+	
+	
 
 }

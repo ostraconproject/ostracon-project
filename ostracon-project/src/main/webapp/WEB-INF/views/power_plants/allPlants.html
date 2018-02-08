@@ -34,7 +34,7 @@
 							<td class="col-sm-1 text-center" th:text="${powerPlant.city}"></td>
 							<td class="col-sm-2 text-center" th:text="${powerPlant.coordinates}"></td>
 							<td class="col-sm-1 text-center" th:text="${powerPlant.capacity}"></td>
-							<td class="col-sm-1 text-center" th:text="${powerPlant.capacityFactor}"></td>
+							<td class="col-sm-2 text-center" th:text="|${powerPlant.capacityFactor}%|"></td>
 							<td class="col-sm-1">
 								<span class="btn-group">
 					  				<a class="btn btn-success plantInfoBtn" th:id="${powerPlant.id}" data-toggle="modal" data-target="#viewPowerPlantModal">View Results</a>

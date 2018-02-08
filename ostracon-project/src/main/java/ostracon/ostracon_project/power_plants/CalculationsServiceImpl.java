@@ -1,5 +1,6 @@
 package ostracon.ostracon_project.power_plants;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -15,125 +16,136 @@ public class CalculationsServiceImpl implements CalculationsService {
 	private PowerPlantDAO powerPlantDAO;
 
 	@Override
-	public double electricityGeneratedAnnually(PowerPlant powerPlant) {
-		return powerPlant.getCapacity() * powerPlant.getCapacityFactor() * 8760;
+	public int electricityGeneratedAnnually(PowerPlant powerPlant) {
+		double convertedCapacityFactor = powerPlant.getCapacityFactor();
+		convertedCapacityFactor = convertedCapacityFactor / 100;
+//		int convertedCapacityFactor = powerPlant.getCapacityFactor() / 100;
+		
+		return (int) (powerPlant.getCapacity() * convertedCapacityFactor * 8760);
 	}
 
 	@Override
-	public double directEmissionsOfCarbonDioxide(PowerPlant powerPlant) {
+	public int directEmissionsOfCarbonDioxide(PowerPlant powerPlant) {
 		String fuelType = powerPlant.getFuelType();
-		double annualElectricity = powerPlant.getAnualElectricityGenerated();
-		double directEmissions = 0;
+		int annualElectricity = powerPlant.getAnualElectricityGenerated();
+		int directEmissions = 0;
 		
 		if (fuelType.equals("Coal")) {
-			directEmissions = annualElectricity * 1.047;
+			directEmissions = (int) (annualElectricity * 1.047);
 		}
 		if (fuelType.equals("Natural Gas")) {
-			directEmissions = annualElectricity * 0.9;
+			directEmissions = (int) (annualElectricity * 0.9);
 		}
 		return directEmissions;
 	}
 
 	@Override
-	public double globalWarmingPotential(PowerPlant powerPlant) {
+	public int globalWarmingPotential(PowerPlant powerPlant) {
 		String fuelType = powerPlant.getFuelType();
-		double annualElectricity = powerPlant.getAnualElectricityGenerated();
-		double globalWarmingPotential = 0;
+		int annualElectricity = powerPlant.getAnualElectricityGenerated();
+		int globalWarmingPotential = 0;
 		
 		if (fuelType.equals("Coal")) {
-			globalWarmingPotential = annualElectricity * 0.65;
+			globalWarmingPotential = (int) (annualElectricity * 0.65);
 		}
 		if (fuelType.equals("Natural Gas")) {
-			globalWarmingPotential = annualElectricity * 0.5;
+			globalWarmingPotential = (int) (annualElectricity * 0.5);
 		}
 		if (fuelType.equals("Wind")) {
-			globalWarmingPotential = annualElectricity * 0.038;
+			globalWarmingPotential = (int) (annualElectricity * 0.038);
 		}
 		if (fuelType.equals("Solar")) {
-			globalWarmingPotential = annualElectricity * 0.116;
+			globalWarmingPotential = (int) (annualElectricity * 0.116);
 		}
 		if (fuelType.equals("Hydro")) {
-			globalWarmingPotential = annualElectricity * 0.03;
+			globalWarmingPotential = (int) (annualElectricity * 0.03);
 		}
 		if (fuelType.equals("Biomass")) {
-			globalWarmingPotential = annualElectricity * 0.258;
+			globalWarmingPotential = (int) (annualElectricity * 0.258);
 		}
 		
 		return globalWarmingPotential;
 	}
 
 	@Override
-	public double totalLcoe(PowerPlant powerPlant) {
+	public BigInteger totalLcoe(PowerPlant powerPlant) {
 		String fuelType = powerPlant.getFuelType();
-		double annualElectricity = powerPlant.getAnualElectricityGenerated();
-		double totalLcoe = 0;
+		int annualElectricity = powerPlant.getAnualElectricityGenerated();
+		int sum = 0;
+		BigInteger totalLcoe = BigInteger.valueOf(0);
 		
 		if (fuelType.equals("Coal")) {
-			totalLcoe = annualElectricity * 140;
+			sum = annualElectricity * 140;
+			totalLcoe = totalLcoe.add(BigInteger.valueOf(sum));
 		}
 		if (fuelType.equals("Natural Gas")) {
-			totalLcoe = annualElectricity * 140;
+			sum = annualElectricity * 140;
+			totalLcoe = totalLcoe.add(BigInteger.valueOf(sum));
 		}
 		if (fuelType.equals("Wind")) {
-			totalLcoe = annualElectricity * 90;
+			sum = annualElectricity * 90;
+			totalLcoe = totalLcoe.add(BigInteger.valueOf(sum));
 		}
 		if (fuelType.equals("Solar")) {
-			totalLcoe = annualElectricity * 170;
+			sum = annualElectricity * 170;
+			totalLcoe = totalLcoe.add(BigInteger.valueOf(sum));
 		}
 		if (fuelType.equals("Hydro")) {
-			totalLcoe = annualElectricity * 100;
+			sum = annualElectricity * 100;
+			totalLcoe = totalLcoe.add(BigInteger.valueOf(sum));
 		}
 		if (fuelType.equals("Biomass")) {
-			totalLcoe = annualElectricity * 80;
+			sum = annualElectricity * 80;
+			totalLcoe = totalLcoe.add(BigInteger.valueOf(sum));
 		}
 		
 		return totalLcoe;
 	}
 
 	@Override
-	public double totalElectricityGeneratedAnnuallyByCountryandYear(String country, Integer year) {
+	public int totalElectricityGeneratedAnnuallyByCountryandYear(String country, Integer year) {
 		List<PowerPlant> powerPlants = powerPlantDAO.findPowerPlantsByCountryAndYear(country, year);
-		double annualElectricityGenerated = 0;
+		int annualElectricityGenerated = 0;
 		
 		for (PowerPlant powerPlant : powerPlants) {
-			double aeg = powerPlant.getAnualElectricityGenerated();
+			int aeg = powerPlant.getAnualElectricityGenerated();
 			annualElectricityGenerated = annualElectricityGenerated + aeg;
 		}
 		return annualElectricityGenerated;
 	}
 
 	@Override
-	public double totalDirectEmissionsOfCarbonDioxideByCountryAndYear(String country, Integer year) {
+	public int totalDirectEmissionsOfCarbonDioxideByCountryAndYear(String country, Integer year) {
 		List<PowerPlant> powerPlants = powerPlantDAO.findPowerPlantsByCountryAndYear(country, year);
-		double directEmissionsOfCarbonDioxide = 0;
+		int directEmissionsOfCarbonDioxide = 0;
 		
 		for (PowerPlant powerPlant : powerPlants) {
-			double deocd = powerPlant.getDirectEmissions();
+			int deocd = powerPlant.getDirectEmissions();
 			directEmissionsOfCarbonDioxide = directEmissionsOfCarbonDioxide + deocd;
 		}
 		return directEmissionsOfCarbonDioxide;
 	}
 
 	@Override
-	public double totalGlobalWarmingPotentialByCountryAndYear(String country, Integer year) {
+	public int totalGlobalWarmingPotentialByCountryAndYear(String country, Integer year) {
 		List<PowerPlant> powerPlants = powerPlantDAO.findPowerPlantsByCountryAndYear(country, year);
-		double globalWarmingPotential = 0;
+		int globalWarmingPotential = 0;
 		
 		for (PowerPlant powerPlant : powerPlants) {
-			double gwp = powerPlant.getGlobalWarmingPotential();
+			int gwp = powerPlant.getGlobalWarmingPotential();
 			globalWarmingPotential = globalWarmingPotential + gwp;
 		}
 		return globalWarmingPotential;
 	}
 
 	@Override
-	public double totalOfAllLcoeByCountryAndYear(String country, Integer year) {
+	public BigInteger totalOfAllLcoeByCountryAndYear(String country, Integer year) {
 		List<PowerPlant> powerPlants = powerPlantDAO.findPowerPlantsByCountryAndYear(country, year);
-		double totalLcoe = 0;
+		BigInteger totalLcoe = BigInteger.valueOf(0);
 		
 		for (PowerPlant powerPlant : powerPlants) {
-			double tlcoe = powerPlant.getTotalLcoe();
-			totalLcoe = totalLcoe + tlcoe;
+			BigInteger tlcoe = powerPlant.getTotalLcoe();
+			totalLcoe = totalLcoe.add(BigInteger.valueOf(tlcoe.intValue()));
 		}
 		return totalLcoe;
 	}
