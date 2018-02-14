@@ -10,7 +10,22 @@
 	<div th:replace="fragments/header">Header</div>
 		<div class="container">
 			<div class="jumbotron" style="background-color:#FFFFFF">
-				<h2 class="text-center" style="padding-top:40px;padding-bottom:30px;">Power Plants</h2>
+				<h2 class="text-center" style="padding-top:40px;padding-bottom:30px;">Your Power Plants</h2>
+				<form method="post" th:action="@{/powerPlantsForYear}" th:object="${yearSearch}">
+				<h3>Select The Year To View Powerplants For</h3>
+				<div class="col-sm-3 text-center">
+			  	<select class="form-control" id="year-input" th:field="*{year}">
+					<option class="text-center" th:each="year : ${years}"
+					  			th:value="${year}" 
+					  			th:text="${year}">
+					 </option>
+				</select>
+				</div>
+				<div class="col-sm-2">
+					<input type="submit" value="Refresh" class="btn btn-block btn-info create-button"/>
+					<br></br>
+				</div>
+				</form>
 				<table class="table">
 					<thead>
 						<tr>

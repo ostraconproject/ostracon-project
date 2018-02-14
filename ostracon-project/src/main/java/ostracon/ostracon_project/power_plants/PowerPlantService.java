@@ -1,5 +1,6 @@
 package ostracon.ostracon_project.power_plants;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ostracon.ostracon_project.account.Account;
@@ -58,4 +59,18 @@ public interface PowerPlantService
 	 * @param powerPlant
 	 */
 	public void deletePowerPlant(PowerPlant powerPlant);
+	
+	/**
+	 * To get the current year, which will be useful for when 
+	 * entering the site and viewing powerPlants.
+	 * @return year
+	 */
+	public String getCurrentYear();
+
+	/**
+	 * To get all of the years from an accounts created powerPlants.
+	 * @param account
+	 * @return years
+	 */
+	public ArrayList<String> getYearsForPowerPlants(Account account);
 }

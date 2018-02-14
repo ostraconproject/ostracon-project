@@ -80,12 +80,22 @@ public class PowerPlantController {
 		powerPlantForm.setTotalLcoe(totalLcoe);
 		
 		powerPlantService.createPowerPlant(powerPlant);
-		List<PowerPlant> powerPlants = powerPlantService.retrieveAllPowerPlantsForAccount(account);
+		
+		String year = powerPlantForm.getYear();
+		List<PowerPlant> powerPlants = powerPlantService.retrieveAllPowerPlantsForAccountAndYear(account, year);
+		ArrayList<String> years = powerPlantService.getYearsForPowerPlants(account);
+		
+		YearSearchForm yearSearch = new YearSearchForm();
+		yearSearch.setYears(years);
+		yearSearch.setYear(year);
 		
 		ModelAndView successMv = new ModelAndView("power_plants/allPlants");
 		successMv.addObject("powerPlant", powerPlant);
 		successMv.addObject("powerPlantForm", powerPlantForm);
 		successMv.addObject("powerPlants", powerPlants);
+		successMv.addObject("yearSearch", yearSearch);
+		successMv.addObject("years", years);
+		successMv.addObject("year", year);
 		
 		return successMv;
 	}
@@ -94,11 +104,41 @@ public class PowerPlantController {
 	public ModelAndView myPowerPlants(Principal principal){
 		ModelAndView mv = new ModelAndView("power_plants/allPlants");
 		
+		YearSearchForm yearSearch = new YearSearchForm();
+		
 		String accountName = principal.getName();
 		Account account = accountRepository.findByEmail(accountName);
-		List<PowerPlant> powerPlants = powerPlantService.retrieveAllPowerPlantsForAccount(account);
+		String year = powerPlantService.getCurrentYear();
+		List<PowerPlant> powerPlants = powerPlantService.retrieveAllPowerPlantsForAccountAndYear(account, year);
+		ArrayList<String> years = powerPlantService.getYearsForPowerPlants(account);
+		
+		yearSearch.setYear(year);
+		yearSearch.setYears(years);
 		
 		mv.addObject("powerPlants", powerPlants);
+		mv.addObject("year", year);
+		mv.addObject("years", years);
+		mv.addObject("yearSearch", yearSearch);
+		return mv;
+	}
+	
+	@RequestMapping(value = "powerPlantsForYear", method = RequestMethod.POST)
+	public ModelAndView powerPlantsForYear(@ModelAttribute("yearSearch") YearSearchForm yearSearch, Principal principal, BindingResult bindingResult){
+		ModelAndView mv = new ModelAndView("power_plants/allPlants");
+		
+		String accountName = principal.getName();
+		Account account = accountRepository.findByEmail(accountName);
+		String year = yearSearch.getYear();
+		ArrayList<String> years = powerPlantService.getYearsForPowerPlants(account);
+		List<PowerPlant> powerPlants = powerPlantService.retrieveAllPowerPlantsForAccountAndYear(account, year);
+		
+		yearSearch.setYear(year);
+		yearSearch.setYears(years);
+		
+		mv.addObject("powerPlants", powerPlants);
+		mv.addObject("yearSearch", yearSearch);
+		mv.addObject("year", year);
+		mv.addObject("years", years);
 		return mv;
 	}
 
