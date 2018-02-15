@@ -38,6 +38,7 @@
 							<th class="col-sm-1 text-center">Capacity</th>
 							<th class="col-sm-2 text-center">Capacity Factor</th>
 							<th class="col-sm-1 text-center"></th>
+							<th class="col-sm-1 text-center"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -47,12 +48,17 @@
 							<td class="col-sm-2 text-center" th:text="${powerPlant.fuelType}"></td>
 							<td class="col-sm-1 text-center" th:text="${powerPlant.country}"></td>
 							<td class="col-sm-1 text-center" th:text="${powerPlant.city}"></td>
-							<td class="col-sm-2 text-center" th:text="${powerPlant.coordinates}"></td>
+ 							<td class="col-sm-2 text-center" th:text="${powerPlant.coordinates}"></td>
 							<td class="col-sm-1 text-center" th:text="${powerPlant.capacity}"></td>
 							<td class="col-sm-2 text-center" th:text="|${powerPlant.capacityFactor}%|"></td>
 							<td class="col-sm-1">
 								<span class="btn-group">
 					  				<a class="btn btn-success plantInfoBtn" th:id="${powerPlant.id}" data-toggle="modal" data-target="#viewPowerPlantModal">View Results</a>
+					  			</span>
+					  		</td>
+					  		<td class="col-sm-1">
+								<span class="btn-group">
+					  				<a class="btn btn-danger deletePlantBtn" th:id="${powerPlant.id}" data-toggle="modal" data-target="#deletePowerPlantModal"><i class="fa fa-trash-o danger"></i></a>
 					  			</span>
 					  		</td>
 						</tr>
@@ -66,11 +72,29 @@
 		</div>
 	</div>
 	
+	<div id="deletePowerPlantModal" class="deletePowerPlantModal modal fade" tabindex="-1" role="dialog" aria-labelledby="deletePowerPlantModal">
+		<div class="replaceable">
+		</div>
+	</div>
+	
 	<script>
 		$(".plantInfoBtn").click(function(){
 			var plantId = $(this).attr("id");
 			$.ajax({
 			 	url: base_url + "viewPowerPlant",
+			 	data: {id : plantId},
+			 	success: function(result){
+			 		$(".replaceable").html(result);
+			 	}
+			});
+		});
+	</script>
+	
+	<script>
+		$(".deletePlantBtn").click(function(){
+			var plantId = $(this).attr("id");
+			$.ajax({
+			 	url: base_url + "deletePowerPlant",
 			 	data: {id : plantId},
 			 	success: function(result){
 			 		$(".replaceable").html(result);

@@ -5,6 +5,8 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import ostracon.ostracon_project.account.Account;
 import ostracon.ostracon_project.account.AccountRepository;
@@ -159,6 +162,31 @@ public class PowerPlantController {
 		mv.addObject("powerPlantForm", powerPlantForm);
 		mv.addObject("powerPlant", powerPlant);
 		return mv;
+	}
+	
+	@RequestMapping(value = "deletePowerPlant", method = RequestMethod.GET)
+	public ModelAndView deletePowerPlantRequest(Long id){
+		ModelAndView mv = new ModelAndView("power_plants/deletePowerPlant");
+		
+		PowerPlant powerPlant = powerPlantService.retrievePowerPlant(id);
+		
+		NewPowerPlantForm powerPlantForm = new NewPowerPlantForm();
+		powerPlantForm.setPlantId(id);
+		powerPlantForm.setName(powerPlant.getName());
+		
+		mv.addObject("powerPlantForm", powerPlantForm);
+		mv.addObject("powerPlant", powerPlant);
+		return mv;
+	}
+	
+	@RequestMapping(value = "deletePowerPlant", method = RequestMethod.POST)
+	public ModelAndView deletePowerPlant(@ModelAttribute("powerPlantForm") NewPowerPlantForm powerPlantForm, BindingResult result, HttpServletRequest request){
+		PowerPlant powerPlant = powerPlantService.retrievePowerPlant(powerPlantForm.getPlantId());
+		
+		powerPlantService.deletePowerPlant(powerPlant);
+		MappingJackson2JsonView jsonView = new MappingJackson2JsonView();
+		jsonView.setModelKey("redirect");
+		return new ModelAndView (jsonView, "redirect", request.getContextPath() + "power_plants/allPlants");
 	}
 
 }
