@@ -144,6 +144,67 @@ public class PowerPlantController {
 		mv.addObject("years", years);
 		return mv;
 	}
+	
+	@RequestMapping(value = "editPowerPlant", method = RequestMethod.GET)
+	public ModelAndView editPowerPlantRequest(Long id){
+		ModelAndView mv = new ModelAndView("power_plants/editPowerPlant");
+		
+		PowerPlant powerPlant = powerPlantService.retrievePowerPlant(id);
+		
+		FuelType[] fuelTypeValues = FuelType.values();
+		ArrayList<String> fuelTypes = new ArrayList<>();
+		for (FuelType fuelType : fuelTypeValues) {
+			fuelTypes.add(fuelType.getPrettyName());
+		}
+		
+		NewPowerPlantForm powerPlantForm = new NewPowerPlantForm();
+		powerPlantForm.setPlantId(id);
+		powerPlantForm.setName(powerPlant.getName());
+		powerPlantForm.setFuelType(powerPlant.getFuelType());
+		powerPlantForm.setYear(powerPlant.getYear());
+		powerPlantForm.setCountry(powerPlant.getCountry());
+		powerPlantForm.setCity(powerPlant.getCity());
+		powerPlantForm.setCoordinates(powerPlant.getCoordinates());
+		powerPlantForm.setCapacity(powerPlant.getCapacity());
+		powerPlantForm.setCapacityFactor(powerPlant.getCapacityFactor());
+		powerPlantForm.setFuleTypes(fuelTypes);
+		
+		mv.addObject("powerPlantForm", powerPlantForm);
+		mv.addObject("powerPlant", powerPlant);
+		mv.addObject("fuelTypes", fuelTypes);
+		return mv;
+	}
+	
+	@RequestMapping(value = "editPowerPlant", method = RequestMethod.POST)
+	public ModelAndView editPowerPlant(@ModelAttribute("powerPlantForm") NewPowerPlantForm powerPlantForm, BindingResult result, HttpServletRequest request){
+		
+		PowerPlant powerPlant = powerPlantService.retrievePowerPlant(powerPlantForm.getPlantId());
+		powerPlant.setName(powerPlantForm.getName());
+		powerPlant.setFuelType(powerPlantForm.getFuelType());
+		powerPlant.setYear(powerPlantForm.getYear());
+		powerPlant.setCountry(powerPlantForm.getCountry());
+		powerPlant.setCity(powerPlantForm.getCity());
+		powerPlant.setCoordinates(powerPlantForm.getCoordinates());
+		powerPlant.setCapacity(powerPlantForm.getCapacity());
+		powerPlant.setCapacityFactor(powerPlantForm.getCapacityFactor());
+		
+		int electricityGenerated = calculationsService.electricityGeneratedAnnually(powerPlant);
+		powerPlant.setAnualElectricityGenerated(electricityGenerated);
+		
+		int directEmissions = calculationsService.directEmissionsOfCarbonDioxide(powerPlant);
+		powerPlant.setDirectEmissions(directEmissions);
+		
+		int globalWarming = calculationsService.globalWarmingPotential(powerPlant);
+		powerPlant.setGlobalWarmingPotential(globalWarming);
+		
+		BigInteger totalLcoe = calculationsService.totalLcoe(powerPlant);
+		powerPlant.setTotalLcoe(totalLcoe);
+		
+		powerPlantService.updatePowerPlant(powerPlant);
+		MappingJackson2JsonView jsonView = new MappingJackson2JsonView();
+		jsonView.setModelKey("redirect");
+		return new ModelAndView (jsonView, "redirect", request.getContextPath() + "power_plants/allPlants");
+	}
 
 	@RequestMapping(value = "viewPowerPlant", method = RequestMethod.GET)
 	public ModelAndView viewPowerPlantRequest(Long id){

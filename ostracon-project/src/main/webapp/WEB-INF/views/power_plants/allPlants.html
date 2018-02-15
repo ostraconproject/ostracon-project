@@ -30,13 +30,12 @@
 					<thead>
 						<tr>
 							<th class="col-sm-2 text-center">Name</th>
-							<th class="col-sm-1 text-center">Year</th>
+							<th class="col-sm-2 text-center">Year</th>
 							<th class="col-sm-2 text-center">Fuel Type</th>
-							<th class="col-sm-1 text-center">Country</th>
-							<th class="col-sm-1 text-center">City</th>
+							<th class="col-sm-2 text-center">Country</th>
+							<th class="col-sm-2 text-center">City</th>
 							<th class="col-sm-2 text-center">Coordinates</th>
-							<th class="col-sm-1 text-center">Capacity</th>
-							<th class="col-sm-2 text-center">Capacity Factor</th>
+							<th class="col-sm-1 text-center"></th>
 							<th class="col-sm-1 text-center"></th>
 							<th class="col-sm-1 text-center"></th>
 						</tr>
@@ -44,13 +43,16 @@
 					<tbody>
 						<tr th:each="powerPlant : ${powerPlants}">
 							<td class="col-sm-2 text-center" th:text="${powerPlant.name}"></td>
-							<td class="col-sm-1 text-center" th:text="${powerPlant.year}"></td>
+							<td class="col-sm-2 text-center" th:text="${powerPlant.year}"></td>
 							<td class="col-sm-2 text-center" th:text="${powerPlant.fuelType}"></td>
-							<td class="col-sm-1 text-center" th:text="${powerPlant.country}"></td>
-							<td class="col-sm-1 text-center" th:text="${powerPlant.city}"></td>
+							<td class="col-sm-2 text-center" th:text="${powerPlant.country}"></td>
+							<td class="col-sm-2 text-center" th:text="${powerPlant.city}"></td>
  							<td class="col-sm-2 text-center" th:text="${powerPlant.coordinates}"></td>
-							<td class="col-sm-1 text-center" th:text="${powerPlant.capacity}"></td>
-							<td class="col-sm-2 text-center" th:text="|${powerPlant.capacityFactor}%|"></td>
+							<td class="col-sm-1">
+								<span class="btn-group">
+					  				<a class="btn btn-info editPlantBtn" th:id="${powerPlant.id}" data-toggle="modal" data-target="#editPowerPlantModal"><i class="fa fa-pencil"></i></a>
+					  			</span>
+					  		</td>
 							<td class="col-sm-1">
 								<span class="btn-group">
 					  				<a class="btn btn-success plantInfoBtn" th:id="${powerPlant.id}" data-toggle="modal" data-target="#viewPowerPlantModal">View Results</a>
@@ -66,7 +68,11 @@
 				</table>
 			</div>
 		</div>
-		
+	
+	<div id="editPowerPlantModal" class="editPowerPlantModal modal fade" tabindex="-1" role="dialog" aria-labelledby="editPowerPlantModal">
+		<div class="replaceable">
+		</div>
+	</div>	
 	<div id="viewPowerPlantModal" class="viewPowerPlantModal modal fade" tabindex="-1" role="dialog" aria-labelledby="viewPowerPlantModal">
 		<div class="replaceable">
 		</div>
@@ -78,6 +84,19 @@
 	</div>
 	
 	<script>
+		$(".editPlantBtn").click(function(){
+			var plantId = $(this).attr("id");
+			$.ajax({
+			 	url: base_url + "editPowerPlant",
+			 	data: {id : plantId},
+			 	success: function(result){
+			 		$(".replaceable").html(result);
+			 	}
+			});
+		});
+	</script>
+	
+	<script>	
 		$(".plantInfoBtn").click(function(){
 			var plantId = $(this).attr("id");
 			$.ajax({

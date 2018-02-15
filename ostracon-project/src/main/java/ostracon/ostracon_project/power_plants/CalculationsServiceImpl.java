@@ -19,7 +19,6 @@ public class CalculationsServiceImpl implements CalculationsService {
 	public int electricityGeneratedAnnually(PowerPlant powerPlant) {
 		double convertedCapacityFactor = powerPlant.getCapacityFactor();
 		convertedCapacityFactor = convertedCapacityFactor / 100;
-//		int convertedCapacityFactor = powerPlant.getCapacityFactor() / 100;
 		
 		return (int) (powerPlant.getCapacity() * convertedCapacityFactor * 8760);
 	}
