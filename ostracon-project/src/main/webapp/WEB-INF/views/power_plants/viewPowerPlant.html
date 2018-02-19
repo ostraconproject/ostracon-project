@@ -12,7 +12,7 @@
 				<div class="form-group row">
 					<div class="col-sm-12">
 						<label>Annual Electricity Generation</label>
-						<input type="text" readonly="readonly" class="form-control" id="electricity-input" th:field="*{anualElectricityGenerated}"/>
+						<input type="text" style="background-color: white;" readonly="readonly" class="form-control" id="electricity-input" th:field="*{anualElectricityGenerated}"/>
 					</div>
 				</div>
 			</div>
@@ -20,7 +20,7 @@
 				<div class="form-group row">
 					<div class="col-sm-12">
 						<label>Direct Emissions Of Carbon Dioxide</label>
-						<input type="text" readonly="readonly" class="form-control" id="emissions-input" th:field="*{directEmissions}"/>
+						<input type="text" style="background-color: white;" readonly="readonly" class="form-control" id="emissions-input" th:field="*{directEmissions}"/>
 					</div>
 				</div>
 			</div>
@@ -28,15 +28,15 @@
 				<div class="form-group row">
 					<div class="col-sm-12">
 						<label>Global Warming Potential</label>
-						<input type="text" readonly="readonly" class="form-control" id="global-input" th:field="*{globalWarmingPotential}"/>
+						<input type="text" style="background-color: white;" readonly="readonly" class="form-control" id="global-input" th:field="*{globalWarmingPotential}"/>
 					</div>
 				</div>
 			</div>
 			<div class="modal-body" id="">
 				<div class="form-group row">
 					<div class="col-sm-12">
-						<label>Total LCoE</label>
-						<input type="text" readonly="readonly" class="form-control" id="lcoe-input" th:field="*{totalLcoe}"/>
+						<label>Total LCoE ($)</label>
+						<input type="text" style="background-color: white;" readonly="readonly" class="form-control" id="lcoe-input" th:field="*{totalLcoe}"/>
 					</div>
 				</div>
 				<span style="color:red">The values are indicative; for a more accurate calculation additional research is required.</span>
@@ -44,7 +44,7 @@
 			<div class="modal-footer">
 		    	<h4 class="inline-block no-margin confirmationMessage"></h4>
 		    	<div class="pull-right">
-		    		<button type="button" class="btn btn-default " data-dismiss="modal">Close</button>
+		    		<button type="button" class="btn btn-danger " data-dismiss="modal">Close</button>
 		        </div>
 	        </div>
 		</div>

@@ -12,7 +12,7 @@
 			<div class="jumbotron" style="background-color:#FFFFFF">
 				<h2 class="text-center" style="padding-top:40px;padding-bottom:30px;">Your Power Plants</h2>
 				<form method="post" th:action="@{/powerPlantsForYear}" th:object="${yearSearch}">
-				<h3>Select The Year To View Powerplants For</h3>
+				<h3>Select The Year To View Power plants For</h3>
 				<div class="col-sm-3 text-center">
 			  	<select class="form-control" id="year-input" th:field="*{year}">
 					<option class="text-center" th:each="year : ${years}"
