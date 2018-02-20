@@ -16,12 +16,9 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Ostracon Project</a>
+            <a class="navbar-brand" href="#" th:href="@{/}">Ostracon - Energy Impact Data Projection</a>
         </div>
         <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#" th:href="@{/}">Home</a></li>
-            </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li th:if="${#authorization.expression('!isAuthenticated()')}">
                     <a href="/signin" th:href="@{/signin}">
@@ -34,6 +31,15 @@
                     </a>
                     <form style="visibility: hidden" id="form" method="post" action="#" th:action="@{/logout}"></form>
                 </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" th:href="@{/}">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" th:href="@{/}">My Account</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" th:href="@{/}">Home</a></li>
             </ul>
         </div>
         <!--/.nav-collapse -->

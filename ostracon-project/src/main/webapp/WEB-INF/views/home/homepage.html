@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{view.index.title}">Welcome!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
+    <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}" />
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div th:replace="fragments/header :: header">&nbsp;</div>
+<div class="container">
+    <!-- /* Handle the flash message */-->
+    <th:block th:if="${message != null}">
+        <!-- /* The message code is returned from the @Controller */ -->
+        <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#authentication.name})})">&nbsp;</div>
+    </th:block>
+    <span class="btn-group">
+		<a class="btn btn-success home-buttons" href="/addPowerPlant" th:href="@{/addPowerPlant}">Add New Power Plant</a>
+	</span>
+	<span class="btn-group">
+		<a class="btn btn-warning home-buttons"  href="/myPowerPlants" th:href="@{/myPowerPlants}">View All Power Plants</a>
+	</span>
+</div>
+<div class="col-sm-1">
+</div>
+<div class="col-sm-10 text-center">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d22557101.70567107!2d-5.347384994369466!3d46.35842612709138!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x25a3b1142c791a9%3A0xc4f8a0433288257a!2sUnited+Kingdom!5e0!3m2!1sen!2suk!4v1518684218644" width="1250" height="625" frameborder="0" style="border:0"></iframe>
+</div>
+<div class="col-sm-1">
+</div>
+</body>
+</html>

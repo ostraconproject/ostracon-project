@@ -36,7 +36,7 @@ public class SignupController {
 		}
 		Account account = accountRepository.save(signupForm.createAccount());
 		userService.signin(account);
-        // see /WEB-INF/i18n/messages.properties and /WEB-INF/views/homeSignedIn.html
+        // see /WEB-INF/i18n/messages.properties and /WEB-INF/views/homepage.html
         MessageHelper.addSuccessAttribute(ra, "signup.success");
 		return "redirect:/";
 	}
