@@ -7,9 +7,21 @@
     <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}" />
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
+
+	<style type="text/css">
+	div#map_container{
+		margin-top:15px;
+		width:83%;
+		height:620px;
+	}
+	</style>
 </head>
-<body>
-<div th:replace="fragments/header :: header">&nbsp;</div>
+<body onload="loadMap()">
+<div th:replace="fragments/header">Header</div>
+<form method="post" th:action="@{/}" th:object="${arrayForm}">
+
+<input type="hidden" id="jsonStringArray" name="jsonStringArray" th:value="jsonStringArray" th:field="*{jsonStringArray}"/>
+
 <div class="container">
     <!-- /* Handle the flash message */-->
     <th:block th:if="${message != null}">
@@ -23,12 +35,101 @@
 		<a class="btn btn-warning home-buttons"  href="/myPowerPlants" th:href="@{/myPowerPlants}">View All Power Plants</a>
 	</span>
 </div>
-<div class="col-sm-1">
-</div>
-<div class="col-sm-10 text-center">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d22557101.70567107!2d-5.347384994369466!3d46.35842612709138!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x25a3b1142c791a9%3A0xc4f8a0433288257a!2sUnited+Kingdom!5e0!3m2!1sen!2suk!4v1518684218644" width="1250" height="625" frameborder="0" style="border:0"></iframe>
-</div>
-<div class="col-sm-1">
-</div>
+
+	<div class="col-sm-offset-1 col-sm-10" align="center" id="map_container"></div>
+	
+	<div id="viewPowerPlantModal" class="viewPowerPlantModal modal fade" tabindex="-1" role="dialog" aria-labelledby="viewPowerPlantModal">
+		<div class="replaceable">
+		</div>
+	</div>
+	
+	<script>	
+		$(".plantInfoBtn").click(function(){
+			var plantId = $(this).attr("id");
+			$.ajax({
+			 	url: base_url + "viewPowerPlant",
+			 	data: {id : plantId},
+			 	success: function(result){
+			 		$(".replaceable").html(result);
+			 	}
+			});
+		});
+	</script>
+	
+<script type="text/javascript" th:inline="javascript">
+/*<![CDATA[*/
+  function loadMap() {
+    var latlng = new google.maps.LatLng(44.3795, 20.2639);
+    var myOptions = {
+      zoom: 4,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById("map_container"),myOptions);
+
+    var contentString = '<div id="content">'+
+    '<div id="siteNotice">'+
+    '</div>'+
+    '<h3 id="firstHeading" class="firstHeading">Lazarevac Power Plant</h3>'+
+    '<div id="bodyContent">'+
+    '<p>This is an example for Lazarevac</p>' +
+    '<span class="btn-group">' +
+	'<a class="btn btn-info marker-buttons" href="/myPowerPlants" th:href="@{/myPowerPlants}"><i class="fa fa-pencil"></i></a>'+
+	'</span>'+
+	'<span class="btn-group">' +
+	'<a class="btn btn-success marker-buttons" href="/myPowerPlants" th:href="@{/myPowerPlants}">View Results</a>'+
+	'</span>'+
+	'<span class="btn-group">' +
+	'<a class="btn btn-danger marker-buttons" href="/myPowerPlants" th:href="@{/myPowerPlants}"><i class="fa fa-trash-o danger"></i></a>'+
+	'</span>'+
+    '</div>'+
+    '</div>';
+    
+    var infowindow = new google.maps.InfoWindow({
+        content: contentString
+      });
+    
+    var image = {
+    	    url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+    	    /* url: 'https://drive.google.com/open?id=1Ndx3WN3nlKpCjiBvYb5i9N8b9QbZfKEB&amp;export=png', */
+    	    /*url: 'https://drive.google.com/file/d/1Ndx3WN3nlKpCjiBvYb5i9N8b9QbZfKEB/view?usp=sharing&amp;export=png',*/
+    	 	
+    	    // This marker is 20 pixels wide by 32 pixels high.
+    	    size: new google.maps.Size(20, 32),
+     	    // The origin for this image is (0, 0).
+    	    origin: new google.maps.Point(0, 0),
+    	    // The anchor for this image is the base of the image at (0, 32).
+    	    anchor: new google.maps.Point(0, 32)
+   	};
+    
+/*      var marker = new google.maps.Marker({
+      position: latlng,
+      map: map,
+      icon: image,
+      title:"Click to see more"
+    });
+     marker.addListener('click', function() {
+	        infowindow.open(map, marker);
+	      }); */
+		
+		var jsonString = /*[[${jsonStringArray}]]*/ "{\"a\":\"... ";
+		var json = JSON.parse(jsonString);
+		
+    	for (var i = 0, length = json.length; i < length; i++) {
+    		  var data = json[i],
+    		    latLng = new google.maps.LatLng(data.lat, data.lng);
+
+    		  // Creating a marker and putting it on the map
+    		  var marker = new google.maps.Marker({
+    		    position: latLng,
+    		    map: map,
+    		    title:"Click to see more"
+    		  });
+    		}
+  }
+/*]]>*/
+</script>
+<script async="async" defer="defer" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWSnUTD5EMTBsFolIr5CH2fv596dPlB74&amp;callback=loadMap"></script>
+</form>
 </body>
 </html>

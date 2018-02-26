@@ -39,7 +39,10 @@ public class PowerPlant {
 	private String year;
 	
 	@Column
-	private String coordinates;
+	private float latitude;
+	
+	@Column
+	private float longitude;
 	
 	@Column(name = "fuel_type")
 	private String fuelType;
@@ -85,10 +88,6 @@ public class PowerPlant {
 	public String getYear() {
 		return year;
 	}
-
-	public String getCoordinates() {
-		return coordinates;
-	}
 	
 	public String getFuelType() {
 		return fuelType;
@@ -112,10 +111,6 @@ public class PowerPlant {
 	
 	public void setYear(String year) {
 		this.year = year;
-	}
-
-	public void setCoordinates(String coordinates) {
-		this.coordinates = coordinates;
 	}
 
 	public void setFuelType(String fuelType) {
@@ -168,6 +163,22 @@ public class PowerPlant {
 
 	public void setTotalLcoe(BigInteger totalLcoe) {
 		this.totalLcoe = totalLcoe;
-	}	
+	}
+
+	public float getLatitude() {
+		return latitude;
+	}
+
+	public float getLongitude() {
+		return longitude;
+	}
+
+	public void setLatitude(float latitude) {
+		this.latitude = latitude;
+	}
+
+	public void setLongitude(float longitude) {
+		this.longitude = longitude;
+	}
 	
 }

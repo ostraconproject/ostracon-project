@@ -10,7 +10,6 @@ public class NewPowerPlantForm {
 	private String country;
 	private String city;
 	private String year;
-	private String coordinates;
 	private String fuelType;
 	private int capacity;
 	private int capacityFactor;
@@ -19,6 +18,8 @@ public class NewPowerPlantForm {
 	private int globalWarmingPotential;
 	private BigInteger totalLcoe;
 	private ArrayList<String> fuleTypes;
+	private float latitude;
+	private float longitude;
 	
 	public Long getPlantId() {
 		return plantId;
@@ -38,9 +39,6 @@ public class NewPowerPlantForm {
 	public String getCity() {
 		return city;
 	}
-	public String getCoordinates() {
-		return coordinates;
-	}
 	public String getFuelType() {
 		return fuelType;
 	}
@@ -55,9 +53,6 @@ public class NewPowerPlantForm {
 	}
 	public void setCity(String city) {
 		this.city = city;
-	}
-	public void setCoordinates(String coordinates) {
-		this.coordinates = coordinates;
 	}
 	public void setFuelType(String fuelType) {
 		this.fuelType = fuelType;
@@ -104,7 +99,17 @@ public class NewPowerPlantForm {
 	public void setTotalLcoe(BigInteger totalLcoe) {
 		this.totalLcoe = totalLcoe;
 	}
-	
-	
+	public float getLatitude() {
+		return latitude;
+	}
+	public float getLongitude() {
+		return longitude;
+	}
+	public void setLatitude(float latitude) {
+		this.latitude = latitude;
+	}
+	public void setLongitude(float longitude) {
+		this.longitude = longitude;
+	}
 
 }

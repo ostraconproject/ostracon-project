@@ -61,7 +61,8 @@ public class PowerPlantController {
 		powerPlant.setYear(powerPlantForm.getYear());
 		powerPlant.setCountry(powerPlantForm.getCountry());
 		powerPlant.setCity(powerPlantForm.getCity());
-		powerPlant.setCoordinates(powerPlantForm.getCoordinates());
+		powerPlant.setLatitude(powerPlantForm.getLatitude());
+		powerPlant.setLongitude(powerPlantForm.getLongitude());
 		powerPlant.setFuelType(powerPlantForm.getFuelType());
 		powerPlant.setCapacity(powerPlantForm.getCapacity());
 		powerPlant.setCapacityFactor(powerPlantForm.getCapacityFactor());
@@ -164,7 +165,8 @@ public class PowerPlantController {
 		powerPlantForm.setYear(powerPlant.getYear());
 		powerPlantForm.setCountry(powerPlant.getCountry());
 		powerPlantForm.setCity(powerPlant.getCity());
-		powerPlantForm.setCoordinates(powerPlant.getCoordinates());
+		powerPlantForm.setLatitude(powerPlant.getLatitude());
+		powerPlantForm.setLongitude(powerPlant.getLongitude());
 		powerPlantForm.setCapacity(powerPlant.getCapacity());
 		powerPlantForm.setCapacityFactor(powerPlant.getCapacityFactor());
 		powerPlantForm.setFuleTypes(fuelTypes);
@@ -184,7 +186,8 @@ public class PowerPlantController {
 		powerPlant.setYear(powerPlantForm.getYear());
 		powerPlant.setCountry(powerPlantForm.getCountry());
 		powerPlant.setCity(powerPlantForm.getCity());
-		powerPlant.setCoordinates(powerPlantForm.getCoordinates());
+		powerPlant.setLatitude(powerPlantForm.getLatitude());
+		powerPlant.setLongitude(powerPlantForm.getLongitude());
 		powerPlant.setCapacity(powerPlantForm.getCapacity());
 		powerPlant.setCapacityFactor(powerPlantForm.getCapacityFactor());
 		

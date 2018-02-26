@@ -41,10 +41,17 @@
 				<br></br>
 			</div>
 			<div class="col-sm-offset-1 col-sm-4 text-right">
-				<span>Coordinates</span>
+				<span>Latitude</span>
 			</div>
 			<div class="col-sm-3 text-center">
-		  		<input type="text" class="form-control" id="name-input" th:field="*{coordinates}"/>
+		  		<input type="text" class="form-control" id="latitude-input" th:field="*{latitude}"/>
+				<br></br>
+			</div>
+			<div class="col-sm-offset-1 col-sm-4 text-right">
+				<span>Longitude</span>
+			</div>
+			<div class="col-sm-3 text-center">
+		  		<input type="text" class="form-control" id="longitude-input" th:field="*{longitude}"/>
 				<br></br>
 			</div>
 			<div class="col-sm-offset-1 col-sm-4 text-right">
@@ -62,14 +69,14 @@
 				<span>Capacity (MW)</span>
 			</div>
 			<div class="col-sm-3 text-center">
-		  		<input type="text" class="form-control" id="name-input" th:field="*{capacity}"/>
+		  		<input type="text" class="form-control" id="capacity-input" th:field="*{capacity}"/>
 				<br></br>
 			</div>
 			<div class="col-sm-offset-1 col-sm-4 text-right">
 				<span>Capacity Factor (%)</span>
 			</div>
 			<div class="col-sm-3 text-center">
-		  		<input type="text" class="form-control" id="name-input" th:field="*{capacityFactor}"/>
+		  		<input type="text" class="form-control" id="factor-input" th:field="*{capacityFactor}"/>
 				<br></br>
 			</div>
 			<div class="create-btn col-sm-offset-4 col-sm-2"></div>
