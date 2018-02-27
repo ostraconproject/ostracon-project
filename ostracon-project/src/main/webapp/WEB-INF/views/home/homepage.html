@@ -133,10 +133,13 @@
 		var jsonString = /*[[${jsonStringArray}]]*/ "{\"a\":\"... ";
 		var json = JSON.parse(jsonString);
 		var image = coal;
+		var title = "";
 		
     	for (var i = 0, length = json.length; i < length; i++) {
     		  var data = json[i],
     		    latLng = new google.maps.LatLng(data.lat, data.lng);
+    		  
+    		  var title = data.name;
 			
     		  if(data.type == "Coal"){
     			  image = coal;
@@ -162,8 +165,12 @@
     		    position: latLng,
     		    map: map,
     		    icon: image,
-    		    title:"Click to see more"
+    		    title: title
     		  });
+    		  google.maps.event.addListener(marker, 'click', function () {
+    	            infowindow.setContent('<h4>' + this.title + '</h4>');
+    	            infowindow.open(map, this);
+    	        });
     		}
   }
 /*]]>*/
