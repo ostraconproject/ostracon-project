@@ -1,6 +1,7 @@
 package ostracon.ostracon_project.home;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -54,6 +55,7 @@ public class HomeController {
 				jsonObject.addProperty("name", powerPlant.getName());
 				jsonObject.addProperty("lat", powerPlant.getLatitude());
 				jsonObject.addProperty("lng", powerPlant.getLongitude());
+				jsonObject.addProperty("type", powerPlant.getFuelType());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -64,15 +66,51 @@ public class HomeController {
 		String jsonStringArray = gson.toJson(jsonArray);
 		arrayForm.setJsonStringArray(jsonStringArray);
 		
+		ArrayList<String> years = powerPlantService.getYearsForPowerPlants(account);
+		arrayForm.setYear(year);
+		arrayForm.setYears(years);
+		
 		mv.addObject("arrayForm", arrayForm);
 		mv.addObject("jsonStringArray", jsonStringArray);
+		mv.addObject("year", year);
+		mv.addObject("years", years);
 		return mv;
 	}
 	
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public ModelAndView index(@Valid @ModelAttribute("arrayForm") PowerPlantsArrayForm arrayForm, BindingResult bindingResult){
+	public ModelAndView index(@Valid @ModelAttribute("arrayForm") PowerPlantsArrayForm arrayForm, Principal principal, BindingResult bindingResult){
 		ModelAndView mv = new ModelAndView("home/homepage");
+		
+		String accountName = principal.getName();
+		Account account = accountRepository.findByEmail(accountName);
+		String year = arrayForm.getYear();
+		ArrayList<String> years = powerPlantService.getYearsForPowerPlants(account);
+		
+		JsonArray jsonArray = new JsonArray();
+		List<PowerPlant> powerPlants = powerPlantService.retrieveAllPowerPlantsForAccountAndYear(account, year);
+		for (PowerPlant powerPlant : powerPlants) {
+			JsonObject jsonObject = new JsonObject();
+			try {
+				jsonObject.addProperty("name", powerPlant.getName());
+				jsonObject.addProperty("lat", powerPlant.getLatitude());
+				jsonObject.addProperty("lng", powerPlant.getLongitude());
+				jsonObject.addProperty("type", powerPlant.getFuelType());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			jsonArray.add(jsonObject);
+		}
+		
+		Gson gson = new Gson();
+		String jsonStringArray = gson.toJson(jsonArray);
+		arrayForm.setJsonStringArray(jsonStringArray);
+		arrayForm.setYear(year);
+		arrayForm.setYears(years);
+		
 		mv.addObject("arrayForm", arrayForm);
+		mv.addObject("jsonStringArray", jsonStringArray);
+		mv.addObject("year", year);
+		mv.addObject("years", years);
 		return mv;
 	}
 }

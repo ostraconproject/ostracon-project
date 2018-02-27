@@ -15,25 +15,37 @@
 		height:620px;
 	}
 	</style>
+	
 </head>
 <body onload="loadMap()">
 <div th:replace="fragments/header">Header</div>
 <form method="post" th:action="@{/}" th:object="${arrayForm}">
-
-<input type="hidden" id="jsonStringArray" name="jsonStringArray" th:value="jsonStringArray" th:field="*{jsonStringArray}"/>
-
+<input type="hidden" id="jsonStringArray" name="jsonStringArray" th:value="jsonStringArray" th:field="*{jsonStringArray}"/>	
 <div class="container">
     <!-- /* Handle the flash message */-->
     <th:block th:if="${message != null}">
         <!-- /* The message code is returned from the @Controller */ -->
         <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#authentication.name})})">&nbsp;</div>
     </th:block>
-    <span class="btn-group">
-		<a class="btn btn-success home-buttons" href="/addPowerPlant" th:href="@{/addPowerPlant}">Add New Power Plant</a>
-	</span>
-	<span class="btn-group">
-		<a class="btn btn-warning home-buttons"  href="/myPowerPlants" th:href="@{/myPowerPlants}">View All Power Plants</a>
-	</span>
+    <br></br>
+	<div class="col-sm-2">
+		<select class="form-control" id="year-input" th:field="*{year}">
+			<option class="text-center" th:each="year : ${years}"
+					  					th:value="${year}" 
+					  					th:text="${year}">
+			</option>
+		</select>
+	</div>
+	<div class="col-sm-2">
+		<input type="submit" value="Refresh Map" class="btn btn-block btn-info create-button"/>
+	</div>
+    
+    <div class="col-sm-2">
+		<a class="btn btn-success" href="/addPowerPlant" th:href="@{/addPowerPlant}">Add New Power Plant</a>
+	</div>
+	<div class="col-sm-2">
+		<a class="btn btn-warning"  href="/myPowerPlants" th:href="@{/myPowerPlants}">View All Power Plants</a>
+	</div>
 </div>
 
 	<div class="col-sm-offset-1 col-sm-10" align="center" id="map_container"></div>
@@ -89,17 +101,23 @@
         content: contentString
       });
     
-    var image = {
-    	    url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-    	    /* url: 'https://drive.google.com/open?id=1Ndx3WN3nlKpCjiBvYb5i9N8b9QbZfKEB&amp;export=png', */
-    	    /*url: 'https://drive.google.com/file/d/1Ndx3WN3nlKpCjiBvYb5i9N8b9QbZfKEB/view?usp=sharing&amp;export=png',*/
-    	 	
-    	    // This marker is 20 pixels wide by 32 pixels high.
-    	    size: new google.maps.Size(20, 32),
-     	    // The origin for this image is (0, 0).
-    	    origin: new google.maps.Point(0, 0),
-    	    // The anchor for this image is the base of the image at (0, 32).
-    	    anchor: new google.maps.Point(0, 32)
+    var wind = {
+    	    url: "resources/images/wind.png",
+   	};
+    var coal = {
+    	    url: "resources/images/coal.png",
+   	};
+    var biomass = {
+    	    url: "resources/images/biomass.png",
+   	};
+    var gas = {
+    	    url: "resources/images/gas.png",
+   	};
+    var hydro = {
+    	    url: "resources/images/hydro.png",
+   	};
+    var solar = {
+    	    url: "resources/images/solar.png",
    	};
     
 /*      var marker = new google.maps.Marker({
@@ -114,15 +132,36 @@
 		
 		var jsonString = /*[[${jsonStringArray}]]*/ "{\"a\":\"... ";
 		var json = JSON.parse(jsonString);
+		var image = coal;
 		
     	for (var i = 0, length = json.length; i < length; i++) {
     		  var data = json[i],
     		    latLng = new google.maps.LatLng(data.lat, data.lng);
-
+			
+    		  if(data.type == "Coal"){
+    			  image = coal;
+    		  }
+    		  if(data.type == "Natural Gas"){
+    			  image = gas;
+    		  }
+    		  if(data.type == "Wind"){
+    			  image = wind;
+    		  }
+    		  if(data.type == "Solar"){
+    			  image = solar;
+    		  }
+    		  if(data.type == "Hydro"){
+    			  image = hydro;
+    		  }
+    		  if(data.type == "Biomass"){
+    			  image = biomass;
+    		  }
+    		  
     		  // Creating a marker and putting it on the map
     		  var marker = new google.maps.Marker({
     		    position: latLng,
     		    map: map,
+    		    icon: image,
     		    title:"Click to see more"
     		  });
     		}

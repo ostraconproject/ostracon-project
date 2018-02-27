@@ -16,6 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import ostracon.ostracon_project.account.Account;
 import ostracon.ostracon_project.account.AccountRepository;
 
@@ -89,17 +93,33 @@ public class PowerPlantController {
 		List<PowerPlant> powerPlants = powerPlantService.retrieveAllPowerPlantsForAccountAndYear(account, year);
 		ArrayList<String> years = powerPlantService.getYearsForPowerPlants(account);
 		
-		YearSearchForm yearSearch = new YearSearchForm();
-		yearSearch.setYears(years);
-		yearSearch.setYear(year);
+		PowerPlantsArrayForm arrayForm = new PowerPlantsArrayForm();
 		
-		ModelAndView successMv = new ModelAndView("power_plants/allPlants");
-		successMv.addObject("powerPlant", powerPlant);
-		successMv.addObject("powerPlantForm", powerPlantForm);
-		successMv.addObject("powerPlants", powerPlants);
-		successMv.addObject("yearSearch", yearSearch);
-		successMv.addObject("years", years);
+		JsonArray jsonArray = new JsonArray();
+		for (PowerPlant retrievedPowerPlant : powerPlants) {
+			JsonObject jsonObject = new JsonObject();
+			try {
+				jsonObject.addProperty("name", retrievedPowerPlant.getName());
+				jsonObject.addProperty("lat", retrievedPowerPlant.getLatitude());
+				jsonObject.addProperty("lng", retrievedPowerPlant.getLongitude());
+				jsonObject.addProperty("type", retrievedPowerPlant.getFuelType());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			jsonArray.add(jsonObject);
+		}
+		
+		Gson gson = new Gson();
+		String jsonStringArray = gson.toJson(jsonArray);
+		arrayForm.setJsonStringArray(jsonStringArray);
+		arrayForm.setYear(year);
+		arrayForm.setYears(years);
+		
+		ModelAndView successMv = new ModelAndView("home/homepage");
+		successMv.addObject("arrayForm", arrayForm);
+		successMv.addObject("jsonStringArray", jsonStringArray);
 		successMv.addObject("year", year);
+		successMv.addObject("years", years);
 		
 		return successMv;
 	}
