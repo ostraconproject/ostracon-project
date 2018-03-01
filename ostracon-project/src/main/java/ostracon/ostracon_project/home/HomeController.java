@@ -56,6 +56,10 @@ public class HomeController {
 				jsonObject.addProperty("lat", powerPlant.getLatitude());
 				jsonObject.addProperty("lng", powerPlant.getLongitude());
 				jsonObject.addProperty("type", powerPlant.getFuelType());
+				jsonObject.addProperty("annual", powerPlant.getAnualElectricityGenerated());
+				jsonObject.addProperty("emissions", powerPlant.getDirectEmissions());
+				jsonObject.addProperty("warming", powerPlant.getGlobalWarmingPotential());
+				jsonObject.addProperty("lcoe", powerPlant.getTotalLcoe());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -95,6 +99,10 @@ public class HomeController {
 				jsonObject.addProperty("lat", powerPlant.getLatitude());
 				jsonObject.addProperty("lng", powerPlant.getLongitude());
 				jsonObject.addProperty("type", powerPlant.getFuelType());
+				jsonObject.addProperty("annual", powerPlant.getAnualElectricityGenerated());
+				jsonObject.addProperty("emissions", powerPlant.getDirectEmissions());
+				jsonObject.addProperty("warming", powerPlant.getGlobalWarmingPotential());
+				jsonObject.addProperty("lcoe", powerPlant.getTotalLcoe());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

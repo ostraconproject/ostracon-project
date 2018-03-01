@@ -34,6 +34,9 @@ public class PowerPlantController {
 	
 	@Autowired
 	private AccountRepository accountRepository;
+	
+	@Autowired
+	private PowerPlantValidator powerPlantValidator;
 
 	@RequestMapping(value = "addPowerPlant", method = RequestMethod.GET)
 	public ModelAndView addPowerPlant(){
@@ -58,6 +61,15 @@ public class PowerPlantController {
 	public ModelAndView submitPowerPlant(@ModelAttribute("powerPlantForm") NewPowerPlantForm powerPlantForm, Principal principal, BindingResult bindingResult){
 		String accountName = principal.getName();
 		Account account = accountRepository.findByEmail(accountName);
+		
+		ModelAndView thisMv = new ModelAndView("power_plants/newPowerPlant");
+		thisMv.addObject("powerPlantForm", powerPlantForm);
+		
+		powerPlantValidator.validate(powerPlantForm, bindingResult);
+		if (bindingResult.hasErrors()) {
+			thisMv.addObject("errors", bindingResult);
+			return thisMv;
+		}
 		
 		PowerPlant powerPlant = new PowerPlant();
 		powerPlant.setAccount(account);
@@ -103,6 +115,10 @@ public class PowerPlantController {
 				jsonObject.addProperty("lat", retrievedPowerPlant.getLatitude());
 				jsonObject.addProperty("lng", retrievedPowerPlant.getLongitude());
 				jsonObject.addProperty("type", retrievedPowerPlant.getFuelType());
+				jsonObject.addProperty("annual", retrievedPowerPlant.getAnualElectricityGenerated());
+				jsonObject.addProperty("emissions", retrievedPowerPlant.getDirectEmissions());
+				jsonObject.addProperty("warming", retrievedPowerPlant.getGlobalWarmingPotential());
+				jsonObject.addProperty("lcoe", retrievedPowerPlant.getTotalLcoe());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

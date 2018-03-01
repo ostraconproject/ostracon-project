@@ -44,7 +44,7 @@
 		<a class="btn btn-success" href="/addPowerPlant" th:href="@{/addPowerPlant}">Add New Power Plant</a>
 	</div>
 	<div class="col-sm-2">
-		<a class="btn btn-warning"  href="/myPowerPlants" th:href="@{/myPowerPlants}">View All Power Plants</a>
+		<a class="btn btn-warning"  href="/myPowerPlants" th:href="@{/myPowerPlants}">Edit Power Plants</a>
 	</div>
 </div>
 
@@ -79,23 +79,7 @@
     };
     var map = new google.maps.Map(document.getElementById("map_container"),myOptions);
 
-    var contentString = '<div id="content">'+
-    '<div id="siteNotice">'+
-    '</div>'+
-    '<h3 id="firstHeading" class="firstHeading">Lazarevac Power Plant</h3>'+
-    '<div id="bodyContent">'+
-    '<p>This is an example for Lazarevac</p>' +
-    '<span class="btn-group">' +
-	'<a class="btn btn-info marker-buttons" href="/myPowerPlants" th:href="@{/myPowerPlants}"><i class="fa fa-pencil"></i></a>'+
-	'</span>'+
-	'<span class="btn-group">' +
-	'<a class="btn btn-success marker-buttons" href="/myPowerPlants" th:href="@{/myPowerPlants}">View Results</a>'+
-	'</span>'+
-	'<span class="btn-group">' +
-	'<a class="btn btn-danger marker-buttons" href="/myPowerPlants" th:href="@{/myPowerPlants}"><i class="fa fa-trash-o danger"></i></a>'+
-	'</span>'+
-    '</div>'+
-    '</div>';
+    var contentString = '';
     
     var infowindow = new google.maps.InfoWindow({
         content: contentString
@@ -119,27 +103,27 @@
     var solar = {
     	    url: "resources/images/solar.png",
    	};
-    
-/*      var marker = new google.maps.Marker({
-      position: latlng,
-      map: map,
-      icon: image,
-      title:"Click to see more"
-    });
-     marker.addListener('click', function() {
-	        infowindow.open(map, marker);
-	      }); */
 		
 		var jsonString = /*[[${jsonStringArray}]]*/ "{\"a\":\"... ";
 		var json = JSON.parse(jsonString);
 		var image = coal;
 		var title = "";
+		var type = "";
+		var annual = "";
+		var emissions = "";
+		var warming = "";
+		var lcoe = "";
 		
     	for (var i = 0, length = json.length; i < length; i++) {
     		  var data = json[i],
     		    latLng = new google.maps.LatLng(data.lat, data.lng);
     		  
     		  var title = data.name;
+    		  var type = data.type;
+    		  var annual = data.annual;
+    		  var emissions = data.emissions;
+    		  var warming = data.warming;
+    		  var lcoe = data.lcoe;
 			
     		  if(data.type == "Coal"){
     			  image = coal;
@@ -165,10 +149,20 @@
     		    position: latLng,
     		    map: map,
     		    icon: image,
+    		    type: type,
+    		    annual: annual,
+    		    emissions: emissions,
+    		    warming: warming,
+    		    lcoe: lcoe,
     		    title: title
     		  });
     		  google.maps.event.addListener(marker, 'click', function () {
-    	            infowindow.setContent('<h4>' + this.title + '</h4>');
+    	            infowindow.setContent('<h4>' + this.title + '</h4>' +
+    	            					  '<p>' + 'Energy Type = ' + this.type + '</p>' +
+    	            					  '<p>' + 'Annual Electricity Generated = ' + this.annual + ' MWh' + '</p>' +
+    	            					  '<p>' + 'Direct Emissions Of CO2 = ' + this.emissions + '</p>' +
+    	            					  '<p>' + 'Global Warming Potential = ' + this.warming + '</p>' +
+    	            					  '<p>' + 'Total LCoE = ' + '$' + this.lcoe + '</p>');
     	            infowindow.open(map, this);
     	        });
     		}
