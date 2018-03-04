@@ -102,6 +102,10 @@
     color: #fff;
 }
 
+.contact-form {
+	margin-bottom: -80px;
+}
+
 button.btn {
 	height: 50px;
     margin: 0;
