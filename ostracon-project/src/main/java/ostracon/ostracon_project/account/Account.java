@@ -23,15 +23,23 @@ public class Account implements java.io.Serializable {
 	private String password;
 
 	private String role = "ROLE_USER";
+	
+	@Column
+	private String firstName;
+	
+	@Column
+	private String lastName;
 
     protected Account() {
 
 	}
 	
-	public Account(String email, String password, String role) {
+	public Account(String email, String password, String role, String firstName, String lastName) {
 		this.email = email;
 		this.password = password;
 		this.role = role;
+		this.firstName = firstName;
+		this.lastName = lastName;
 	}
 
 	public Long getId() {
@@ -60,5 +68,21 @@ public class Account implements java.io.Serializable {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 }

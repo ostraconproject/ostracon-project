@@ -41,3 +41,10 @@ body {
   	background-attachment: fixed;
  	background-size: cover;
 }
+
+
+#map_container{
+	margin-top:15px;
+	width:83%;
+	height:620px;
+}

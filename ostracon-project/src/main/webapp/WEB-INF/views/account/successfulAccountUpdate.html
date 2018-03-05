@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Account</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
+    <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}" />
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
+	<link rel="icon" href="resources/images/logo.png"/>
+</head>
+<body>
+<div th:replace="fragments/header">Header</div>
+<form method="post" th:action="@{/myAccount}" th:object="${accountForm}">
+<input type="hidden" th:value="accountId" th:field="*{accountId}"/>
+
+	<div class="container">
+		<div class="jumbotron" style="background-color:#FFFFFF">
+			<h2 class="text-center" style="padding-top:40px;padding-bottom:30px;">My Account</h2>
+			<div class="col-sm-offset-1 col-sm-4 text-right">
+				<span>Email</span>
+			</div>
+			<div class="col-sm-3 text-center">
+		  		<input type="text" class="form-control" id="email-input" th:field="*{email}"/>
+				<br></br>
+			</div>
+			<div class="col-sm-offset-1 col-sm-4 text-right">
+				<span>First Name</span>
+			</div>
+			<div class="col-sm-3 text-center">
+		  		<input type="text" class="form-control" id="fname-input" th:field="*{firstName}"/>
+				<br></br>
+			</div>
+			<div class="col-sm-offset-1 col-sm-4 text-right">
+				<span>Last Name</span>
+			</div>
+			<div class="col-sm-3 text-center">
+		  		<input type="text" class="form-control" id="lname-input" th:field="*{lastName}"/>
+				<br></br>
+			</div>
+			<div class="create-btn col-sm-offset-4 col-sm-2"></div>
+			<div class="col-sm-2">
+				<input type="submit" value="Update" class="btn btn-block btn-success create-button"/>
+			</div>
+			<!-- <div class="col-sm-offset-2 col-sm-2"></div> -->
+			<div class="col-sm-offset-4 col-sm-4 text-center" style="margin-top: 15px;">
+		  		<span style="color:red">Account info successfully updated, please logout for changes to take effect!</span>
+		  	</div>
+		</div>
+	</div>
+</form>
+</body>
+</html>
