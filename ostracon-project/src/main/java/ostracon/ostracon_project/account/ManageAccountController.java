@@ -2,7 +2,11 @@ package ostracon.ostracon_project.account;
 
 import java.security.Principal;
 
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,6 +22,9 @@ public class ManageAccountController {
 	
 	@Autowired
 	private AccountService accountService;
+	
+	@Inject
+	private PasswordEncoder passwordEncoder;
 	
 	@RequestMapping(value = "/myAccount", method = RequestMethod.GET)
 	public ModelAndView manageAccount(Principal principal)
@@ -60,5 +67,35 @@ public class ManageAccountController {
 		successMv.addObject("account", account);
 		
 		return successMv;
+	}
+	
+	@RequestMapping(value = "changePassword", method = RequestMethod.GET)
+	public ModelAndView changePasswordRequest(Long id){
+		ModelAndView mv = new ModelAndView("account/changePassword");
+		
+		Account account = accountService.retrieveAccount(id);
+		ChangePasswordForm passwordForm = new ChangePasswordForm();
+		passwordForm.setAccountId(account.getId());
+		
+		mv.addObject("passwordForm", passwordForm);
+		mv.addObject("account", account);
+		return mv;
+	}
+	
+	@RequestMapping(value = "changePassword", method = RequestMethod.POST)
+	public ModelAndView changePassword(@ModelAttribute("passwordForm") ChangePasswordForm passwordForm, BindingResult result, HttpServletRequest request){
+		ModelAndView mv = new ModelAndView("account/changePassword");
+		Long accountId = passwordForm.getAccountId();
+		Account account = accountService.retrieveAccount(accountId);
+		String oldPassword = passwordForm.getOldPassword();
+		String newPassword = passwordForm.getNewPassword();
+		String actualPassword = account.getPassword();
+		String newEncryptedPassword = passwordEncoder.encode(newPassword);
+		
+		if (passwordEncoder.matches(oldPassword, actualPassword) && !passwordEncoder.matches(newPassword, actualPassword)) {
+			account.setPassword(newEncryptedPassword);
+			accountService.updateAccount(account);
+		}
+		return mv;
 	}
 }
