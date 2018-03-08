@@ -38,7 +38,12 @@
 		  		<input type="text" class="form-control" id="lname-input" th:field="*{lastName}"/>
 				<br></br>
 			</div>
-			<div class="create-btn col-sm-offset-4 col-sm-2"></div>
+			<div class="col-sm-offset-3 col-sm-2">
+				<a class="btn btn-block btn-danger deleteAccountBtn" th:id="${account.id}" data-toggle="modal" data-target="#deleteAccountModal">Delete Account</a>
+			</div>
+			<div class="col-sm-2">
+				<a class="btn btn-block btn-info changePasswordBtn" th:id="${account.id}" data-toggle="modal" data-target="#changePasswordModal">Change Password</a>
+			</div>
 			<div class="col-sm-2">
 				<input type="submit" value="Update" class="btn btn-block btn-success create-button"/>
 			</div>
@@ -49,5 +54,42 @@
 		</div>
 	</div>
 </form>
+
+	<div id="deleteAccountModal" class="deleteAccountModal modal fade" tabindex="-1" role="dialog" aria-labelledby="deleteAccountModal">
+		<div class="replaceable">
+		</div>
+	</div>
+
+	<div id="changePasswordModal" class="changePasswordModal modal fade" tabindex="-1" role="dialog" aria-labelledby="changePasswordModal">
+		<div class="replaceable">
+		</div>
+	</div>
+
+	<script>
+		$(".changePasswordBtn").click(function(){
+			var accountId = $(this).attr("id");
+			$.ajax({
+			 	url: base_url + "changePassword",
+			 	data: {id : accountId},
+			 	success: function(result){
+			 		$(".replaceable").html(result);
+			 	}
+			});
+		});
+	</script>
+	
+	<script>
+		$(".deleteAccountBtn").click(function(){
+			var accountId = $(this).attr("id");
+			$.ajax({
+			 	url: base_url + "deleteAccount",
+			 	data: {id : accountId},
+			 	success: function(result){
+			 		$(".replaceable").html(result);
+			 	}
+			});
+		});
+	</script>
+	
 </body>
 </html>

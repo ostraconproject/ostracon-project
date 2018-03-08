@@ -1,6 +1,7 @@
 package ostracon.ostracon_project.account;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -13,12 +14,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
+
+import ostracon.ostracon_project.power_plants.PowerPlant;
+import ostracon.ostracon_project.power_plants.PowerPlantService;
 
 @Controller
 public class ManageAccountController {
 
 	@Autowired
 	private AccountRepository accountRepository;
+	
+	@Autowired
+	private PowerPlantService powerPlantService;
 	
 	@Autowired
 	private AccountService accountService;
@@ -97,5 +105,40 @@ public class ManageAccountController {
 			accountService.updateAccount(account);
 		}
 		return mv;
+	}
+	
+	@RequestMapping(value = "deleteAccount", method = RequestMethod.GET)
+	public ModelAndView deleteAccountRequest(Long id){
+		ModelAndView mv = new ModelAndView("account/deleteAccount");
+		
+		Account account = accountService.retrieveAccount(id);
+		
+		UpdateAccountInfoForm accountForm = new UpdateAccountInfoForm();
+		accountForm.setAccountId(account.getId());
+		
+		mv.addObject("accountForm", accountForm);
+		mv.addObject("account", account);
+		
+		return mv;
+	}
+	
+	@RequestMapping(value = "deleteAccount", method = RequestMethod.POST)
+	public ModelAndView deleteAccount(@ModelAttribute("accountForm") UpdateAccountInfoForm accountForm, BindingResult result, HttpServletRequest request){
+		Account account = accountService.retrieveAccount(accountForm.getAccountId());
+	
+		List<PowerPlant> powerPlants = powerPlantService.retrieveAllPowerPlantsForAccount(account);
+		
+		if (!powerPlants.isEmpty()) {
+			for (PowerPlant powerPlant : powerPlants) {
+				powerPlantService.deletePowerPlant(powerPlant);
+			}
+		}
+		
+		accountService.deleteAccount(account);
+		
+		//TODO redirect needs to be fixed, throws null pointer!
+		MappingJackson2JsonView jsonView = new MappingJackson2JsonView();
+		jsonView.setModelKey("redirect");
+		return new ModelAndView (jsonView, "redirect", request.getContextPath()+ "/");
 	}
 }

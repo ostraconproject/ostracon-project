@@ -1,0 +1,60 @@
+<form th:action="@{/deleteAccount}" th:object="${accountForm}" method="post">
+
+	<input type="hidden" th:field="*{accountId}"/>
+	
+	<div class="modal-dialog modal-md">
+		<div class="modal-content">
+			<div class="modal-header">
+		    	<button type="button" class="close" data-dismiss="modal" aria-label="Close" disabled="disabled"><span data-dismiss="modal" aria-hidden="true">&times;</span></button>
+		        <h4 class="inline-block modal-title" id="myModalLabel">Deleting account</h4>
+			</div>
+			<div class="modal-body" id="">
+				<div class="form-group row">
+					<div class="col-sm-12">
+						- By deleting your account, you will also be deleting any power plants you have previously entered into the system.
+					</div>
+					<br></br>
+					<br></br>
+					<br></br>
+					<div class="col-sm-12">
+						- Please note that once your account has been deleted, these changed can't be undone!
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+		    	<h4 class="inline-block no-margin confirmationMessage"></h4>
+		    	<div class="pull-right">
+		    		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		            <button type="button" class="deleteAccountConfirm btn btn-danger">Delete account</button>
+		        </div>
+	        </div>
+		</div>
+	</div>
+	
+</form>
+
+<script>
+	$(".deleteAccountConfirm").click(function(){
+		var url = $(this).parents("form").attr("action");
+		var data = $(this).parents("form");
+		
+		$(this).html("Confirm").removeClass("btn-danger ").addClass("btn-danger deleteAccountChanges");
+		$(".confirmationMessage").html("Are you sure you wish to delete your account?");
+		
+		$(".deleteAccountChanges").click(function(){
+			$.ajax({
+				url: url,
+				type: "post",
+				data: data.serialize(),
+				success : function(response){
+					if (response.redirect) {
+			    		window.location.reload();
+			    	}else{		
+			    		$(".replaceable").html(response);
+			    	}
+			    },error: function(){
+			    }
+			});
+		});
+	});
+</script>
