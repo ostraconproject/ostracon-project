@@ -1,6 +1,7 @@
 package ostracon.ostracon_project.account;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -34,31 +35,64 @@ public class ManageAccountController {
 	@Inject
 	private PasswordEncoder passwordEncoder;
 	
-	@RequestMapping(value = "/myAccount", method = RequestMethod.GET)
+	@RequestMapping(value = "/manageAccount", method = RequestMethod.GET)
 	public ModelAndView manageAccount(Principal principal)
 	{	
-		ModelAndView mv = new ModelAndView("account/myAccount");
-
 		String name = principal.getName();
 		Account account = accountRepository.findByEmail(name);
+		String role = account.getRole();
 		Long accountId = account.getId();
 		String firstName = account.getFirstName();
 		String lastName = account.getLastName();
 		String email = account.getEmail();
 		
-		UpdateAccountInfoForm accountForm = new UpdateAccountInfoForm();
-		accountForm.setAccountId(accountId);
-		accountForm.setFirstName(firstName);
-		accountForm.setLastName(lastName);
-		accountForm.setEmail(email);
-		
-		mv.addObject("account", account);
-		mv.addObject("accountId", accountId);
-		mv.addObject("accountForm", accountForm);
-		return mv;
+		if (role.equals("ROLE_USER")) {
+			ModelAndView mv = new ModelAndView("account/myAccount");
+			
+			UpdateAccountInfoForm accountForm = new UpdateAccountInfoForm();
+			accountForm.setAccountId(accountId);
+			accountForm.setFirstName(firstName);
+			accountForm.setLastName(lastName);
+			accountForm.setEmail(email);
+			
+			mv.addObject("account", account);
+			mv.addObject("accountId", accountId);
+			mv.addObject("accountForm", accountForm);
+			return mv;
+		}
+		if (role.equals("ROLE_ADMIN")) {
+			ModelAndView mv = new ModelAndView("account/adminAccount");
+			
+			UpdateAccountInfoForm accountForm = new UpdateAccountInfoForm();
+			accountForm.setAccountId(accountId);
+			accountForm.setFirstName(firstName);
+			accountForm.setLastName(lastName);
+			accountForm.setEmail(email);
+			
+			mv.addObject("account", account);
+			mv.addObject("accountId", accountId);
+			mv.addObject("accountForm", accountForm);
+			return mv;
+		}
+		if (role.equals("ROLE_SUPER_ADMIN")) {
+			ModelAndView mv = new ModelAndView("account/superAdminAccount");
+			
+			UpdateAccountInfoForm accountForm = new UpdateAccountInfoForm();
+			accountForm.setAccountId(accountId);
+			accountForm.setFirstName(firstName);
+			accountForm.setLastName(lastName);
+			accountForm.setEmail(email);
+			
+			mv.addObject("account", account);
+			mv.addObject("accountId", accountId);
+			mv.addObject("accountForm", accountForm);
+			return mv;
+		}
+
+		return new ModelAndView("home/homepage");
 	}
 	
-	@RequestMapping(value = "/myAccount", method = RequestMethod.POST)
+	@RequestMapping(value = "/manageAccount", method = RequestMethod.POST)
 	public ModelAndView updateClientAccount(@ModelAttribute("accountForm") UpdateAccountInfoForm accountForm, BindingResult bindingResult)
 	{
 		Long accountId = accountForm.getAccountId();
@@ -140,5 +174,101 @@ public class ManageAccountController {
 		MappingJackson2JsonView jsonView = new MappingJackson2JsonView();
 		jsonView.setModelKey("redirect");
 		return new ModelAndView (jsonView, "redirect", request.getContextPath()+ "/");
+	}
+	
+	@RequestMapping(value = "addNewAccount", method = RequestMethod.GET)
+	public ModelAndView addNewAccount(){
+		ModelAndView mv = new ModelAndView("account/addNewAccount");
+		
+		AdminAccountForm accountForm = new AdminAccountForm();
+		
+		mv.addObject("accountForm", accountForm);
+		return mv;
+	}
+	
+	@RequestMapping(value = "addNewAccount", method = RequestMethod.POST)
+	public ModelAndView submitNewAccount(@ModelAttribute("accountForm") AdminAccountForm accountForm, Principal principal, BindingResult bindingResult)
+	{	
+		ModelAndView mv = new ModelAndView("account/addNewAccount");
+		
+		String email = accountForm.getEmail();
+		String firstName = accountForm.getFirstName();
+		String LastName = accountForm.getLastName();
+		String password = accountForm.getPassword();
+		String role = accountForm.getRole();
+		
+		accountRepository.save(new Account(email, password, role, firstName, LastName));
+		
+		return mv;
+	}
+	
+	@RequestMapping(value = "manageAccounts", method = RequestMethod.GET)
+	public ModelAndView manageAccounts(Principal principal){
+		
+		String name = principal.getName();
+		Account account = accountRepository.findByEmail(name);
+		String role = account.getRole();
+		
+		if (role.equals("ROLE_SUPER_ADMIN") || role.equals("ROLE_ADMIN")) {
+			ModelAndView mv = new ModelAndView("account/manageAccounts");
+			
+			List <Account> accounts = new ArrayList<Account>();
+			List<Account> retrievedAccounts = accountService.findAllAccounts();
+			for (Account retrievedAccount : retrievedAccounts) {
+				if (retrievedAccount.getRole().equals("ROLE_USER") || retrievedAccount.getRole().equals("ROLE_ADMIN")) {
+					accounts.add(retrievedAccount);
+				}
+			}
+			ManageAccountForm accountForm = new ManageAccountForm();
+			accountForm.setAccounts(accounts);
+			
+			mv.addObject("accountForm", accountForm);
+			mv.addObject("accounts", accounts);
+			return mv;
+		}
+		
+		ModelAndView mv = new ModelAndView("/");
+		return mv;
+	}
+	
+	@RequestMapping(value = "editAccount", method = RequestMethod.GET)
+	public ModelAndView editAccountRequest(Long id){
+		ModelAndView mv = new ModelAndView("account/editAccount");
+		
+		Account account = accountService.retrieveAccount(id);
+		
+		UpdateAccountInfoForm accountForm = new UpdateAccountInfoForm();
+		accountForm.setAccountId(account.getId());
+		accountForm.setEmail(account.getEmail());
+		accountForm.setFirstName(account.getFirstName());
+		accountForm.setLastName(account.getLastName());
+		accountForm.setRole(account.getRole());
+		
+		mv.addObject("accountForm", accountForm);
+		mv.addObject("account", account);
+		
+		return mv;
+	}
+	
+	@RequestMapping(value = "editAccount", method = RequestMethod.POST)
+	public ModelAndView editAccount(@ModelAttribute("accountForm") UpdateAccountInfoForm accountForm, BindingResult result, HttpServletRequest request){
+		Long accountId = accountForm.getAccountId();
+		Account account = accountService.retrieveAccount(accountId);
+		
+		String email = accountForm.getEmail();
+		String firstName = accountForm.getFirstName();
+		String lastName = accountForm.getLastName();
+		String role = accountForm.getRole();
+		
+		account.setEmail(email);
+		account.setFirstName(firstName);
+		account.setLastName(lastName);
+		account.setRole(role);
+		
+		accountService.updateAccount(account);
+		
+		MappingJackson2JsonView jsonView = new MappingJackson2JsonView();
+		jsonView.setModelKey("redirect");
+		return new ModelAndView (jsonView, "redirect", request.getContextPath() + "account/manageAccounts");
 	}
 }

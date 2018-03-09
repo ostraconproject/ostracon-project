@@ -102,7 +102,7 @@ public class CalculationsServiceImpl implements CalculationsService {
 	}
 
 	@Override
-	public int totalElectricityGeneratedAnnuallyByCountryandYear(String country, Integer year) {
+	public int totalElectricityGeneratedAnnuallyByCountryandYear(String country, String year) {
 		List<PowerPlant> powerPlants = powerPlantDAO.findPowerPlantsByCountryAndYear(country, year);
 		int annualElectricityGenerated = 0;
 		
@@ -114,7 +114,7 @@ public class CalculationsServiceImpl implements CalculationsService {
 	}
 
 	@Override
-	public int totalDirectEmissionsOfCarbonDioxideByCountryAndYear(String country, Integer year) {
+	public int totalDirectEmissionsOfCarbonDioxideByCountryAndYear(String country, String year) {
 		List<PowerPlant> powerPlants = powerPlantDAO.findPowerPlantsByCountryAndYear(country, year);
 		int directEmissionsOfCarbonDioxide = 0;
 		
@@ -126,7 +126,7 @@ public class CalculationsServiceImpl implements CalculationsService {
 	}
 
 	@Override
-	public int totalGlobalWarmingPotentialByCountryAndYear(String country, Integer year) {
+	public int totalGlobalWarmingPotentialByCountryAndYear(String country, String year) {
 		List<PowerPlant> powerPlants = powerPlantDAO.findPowerPlantsByCountryAndYear(country, year);
 		int globalWarmingPotential = 0;
 		
@@ -138,7 +138,7 @@ public class CalculationsServiceImpl implements CalculationsService {
 	}
 
 	@Override
-	public BigInteger totalOfAllLcoeByCountryAndYear(String country, Integer year) {
+	public BigInteger totalOfAllLcoeByCountryAndYear(String country, String year) {
 		List<PowerPlant> powerPlants = powerPlantDAO.findPowerPlantsByCountryAndYear(country, year);
 		BigInteger totalLcoe = BigInteger.valueOf(0);
 		

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Manage Accounts</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
+    <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}" />
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
+	<link rel="icon" href="resources/images/logo.png"/>
+</head>
+<body>
+	<div th:replace="fragments/header">Header</div>
+		<div class="container">
+			<div class="jumbotron" style="background-color:#FFFFFF">
+				<h2 class="text-center" style="padding-top:20px;padding-bottom:20px;">Accounts</h2>
+				<table class="table">
+					<thead>
+						<tr>
+							<th class="col-sm-2 text-center">Email</th>
+							<th class="col-sm-2 text-center">First Name</th>
+							<th class="col-sm-2 text-center">Last Name</th>
+							<th class="col-sm-2 text-center">Role</th>
+							<th class="col-sm-1 text-center"></th>
+							<th class="col-sm-1 text-center"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="account : ${accounts}">
+							<td class="col-sm-2 text-center" th:text="${account.email}"></td>
+							<td class="col-sm-2 text-center" th:text="${account.firstName}"></td>
+							<td class="col-sm-2 text-center" th:text="${account.lastName}"></td>
+							<td class="col-sm-2 text-center" th:text="${account.role}"></td>
+							<td class="col-sm-1">
+								<span class="btn-group">
+					  				<a class="btn btn-info editAccountBtn" th:id="${account.id}" data-toggle="modal" data-target="#editAccountModal"><i class="fa fa-pencil"></i></a>
+					  			</span>
+					  		</td>
+					  		<td class="col-sm-1">
+								<span class="btn-group">
+					  				<a class="btn btn-danger deleteAccountBtn" th:id="${account.id}" data-toggle="modal" data-target="#deleteAccountModal"><i class="fa fa-trash-o danger"></i></a>
+					  			</span>
+					  		</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+		<div id="deleteAccountModal" class="deleteAccountModal modal fade" tabindex="-1" role="dialog" aria-labelledby="deleteAccountModal">
+		<div class="replaceable">
+		</div>
+		</div>
+		
+		<div id="editAccountModal" class="editAccountModal modal fade" tabindex="-1" role="dialog" aria-labelledby="editAccountModal">
+		<div class="replaceable">
+		</div>
+		</div>
+		
+		<script>
+		$(".deleteAccountBtn").click(function(){
+			var accountId = $(this).attr("id");
+			$.ajax({
+			 	url: base_url + "deleteAccount",
+			 	data: {id : accountId},
+			 	success: function(result){
+			 		$(".replaceable").html(result);
+			 	}
+			});
+		});
+		</script>
+		
+		<script>
+		$(".editAccountBtn").click(function(){
+			var accountId = $(this).attr("id");
+			$.ajax({
+			 	url: base_url + "editAccount",
+			 	data: {id : accountId},
+			 	success: function(result){
+			 		$(".replaceable").html(result);
+			 	}
+			});
+		});
+		</script>
+	
+</body>
+</html>

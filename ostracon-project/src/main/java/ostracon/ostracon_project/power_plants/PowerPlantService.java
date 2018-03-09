@@ -73,4 +73,6 @@ public interface PowerPlantService
 	 * @return years
 	 */
 	public ArrayList<String> getYearsForPowerPlants(Account account);
+	
+	public ArrayList<String> getCountriesForYear(Account account, String year);
 }

@@ -49,7 +49,7 @@ public interface CalculationsService
 	 * @param year
 	 * @return electricity generated annually
 	 */
-	public int totalElectricityGeneratedAnnuallyByCountryandYear(String country, Integer year);
+	public int totalElectricityGeneratedAnnuallyByCountryandYear(String country, String year);
 	
 	/**
 	 * For returning the total sum of direct emissions of CO2
@@ -58,7 +58,7 @@ public interface CalculationsService
 	 * @param year
 	 * @return direct emissions of CO2
 	 */
-	public int totalDirectEmissionsOfCarbonDioxideByCountryAndYear(String country, Integer year);
+	public int totalDirectEmissionsOfCarbonDioxideByCountryAndYear(String country, String year);
 	
 	/**
 	 * For returning the total sum of global warming potential
@@ -67,7 +67,7 @@ public interface CalculationsService
 	 * @param year
 	 * @return global warming potential
 	 */
-	public int totalGlobalWarmingPotentialByCountryAndYear(String country, Integer year);
+	public int totalGlobalWarmingPotentialByCountryAndYear(String country, String year);
 	
 	/**
 	 * For returning the total sum of all total LCoE's
@@ -76,6 +76,6 @@ public interface CalculationsService
 	 * @param year
 	 * @return total LCoE
 	 */
-	public BigInteger totalOfAllLcoeByCountryAndYear(String country, Integer year);
+	public BigInteger totalOfAllLcoeByCountryAndYear(String country, String year);
 	
 }

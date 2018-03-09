@@ -81,5 +81,22 @@ public class PowerPlantServiceImpl implements PowerPlantService {
 		
 		return years;
 	}
+
+	@Override
+	public ArrayList<String> getCountriesForYear(Account account, String year) {
+		List<PowerPlant> powerPlants = powerPlantDAO.findPowerPlantsByAccountAndYear(account, year);
+		ArrayList<String> countries = new ArrayList<>();
+		for (PowerPlant powerPlant : powerPlants) {
+			countries.add(powerPlant.getCountry());
+		}
+		
+		//Add to HashSet and then back to ArrayList to delete duplicate years
+		Set<String> hs = new HashSet<>();
+		hs.addAll(countries);
+		countries.clear();
+		countries.addAll(hs);
+				
+		return countries;
+	}
 	
 }

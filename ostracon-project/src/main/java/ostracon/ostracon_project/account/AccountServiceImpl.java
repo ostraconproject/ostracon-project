@@ -1,5 +1,7 @@
 package ostracon.ostracon_project.account;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,11 @@ public class AccountServiceImpl implements AccountService{
 	@Override
 	public void deleteAccount(Account account) {
 		accountDAO.remove(account);
+	}
+
+	@Override
+	public List<Account> findAllAccounts() {
+		return accountDAO.findAll();
 	}
 
 }

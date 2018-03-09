@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>My Account</title>
+    <title>Admin Account</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
     <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}" />
@@ -16,7 +16,13 @@
 
 	<div class="container">
 		<div class="jumbotron" style="background-color:#FFFFFF">
-			<h2 class="text-center" style="padding-top:40px;padding-bottom:30px;">My Account</h2>
+			<h2 class="text-center" style="padding-top:20px;">Admin Account</h2>
+			<div class="text-center" style="padding-bottom:10px;">
+	  			<a href="/addNewAccount" th:href="@{/addNewAccount}">Add a new account</a>
+	  		</div>
+	  		<div class="text-center" style="padding-bottom:20px;">
+	  			<a href="/manageAccounts" th:href="@{/manageAccounts}">Manage accounts</a>
+	  		</div>
 			<div class="col-sm-offset-1 col-sm-4 text-right">
 				<span>Email</span>
 			</div>

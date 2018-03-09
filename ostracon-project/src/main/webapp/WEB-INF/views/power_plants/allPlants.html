@@ -13,7 +13,7 @@
 			<div class="jumbotron" style="background-color:#FFFFFF">
 				<h2 class="text-center" style="padding-top:40px;padding-bottom:30px;">Your Power Plants</h2>
 				<form method="post" th:action="@{/powerPlantsForYear}" th:object="${yearSearch}">
-				<h3>Select The Year To View Power plants For</h3>
+				<h4 style="margin-bottom:15px;">Select the year to view power plants for &amp; country to view results:</h4>
 				<div class="col-sm-3 text-center">
 			  	<select class="form-control" id="year-input" th:field="*{year}">
 					<option class="text-center" th:each="year : ${years}"
@@ -23,9 +23,20 @@
 				</select>
 				</div>
 				<div class="col-sm-2">
-					<input type="submit" value="Refresh" class="btn btn-block btn-info create-button"/>
-					<br></br>
+					<input type="submit" value="Refresh" class="btn btn-block btn-info create-button "/>
 				</div>
+				<div class="col-sm-3 text-center">
+			  	<select class="form-control" id="country-input" th:field="*{country}">
+					<option class="text-center" th:each="country : ${countries}"
+					  			th:value="${country}" 
+					  			th:text="${country}">
+					 </option>
+				</select>
+				</div>
+				<div class="col-sm-2">
+					<input type="button" value="View" class="btn btn-block btn-success create-button"/>
+				</div>
+				<br></br><br></br><br></br>
 				</form>
 				<table class="table">
 					<thead>

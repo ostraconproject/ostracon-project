@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Account</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
+    <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}" />
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
+	<link rel="icon" href="resources/images/logo.png"/>
+</head>
+<body>
+<div th:replace="fragments/header">Header</div>
+<form method="post" th:action="@{/addNewAccount}" th:object="${accountForm}">
+	<div class="container">
+		<div class="jumbotron" style="background-color:#FFFFFF">
+			<h2 class="text-center" style="padding-top:20px;padding-bottom:10px;">New Account</h2>
+			<div class="col-sm-offset-1 col-sm-4 text-right">
+				<span>Email</span>
+			</div>
+			<div class="col-sm-3 text-center">
+		  		<input type="text" class="form-control" id="email-input" th:field="*{email}"/>
+				<br></br>
+			</div>
+			<div class="col-sm-offset-1 col-sm-4 text-right">
+				<span>First Name</span>
+			</div>
+			<div class="col-sm-3 text-center">
+		  		<input type="text" class="form-control" id="fname-input" th:field="*{firstName}"/>
+				<br></br>
+			</div>
+			<div class="col-sm-offset-1 col-sm-4 text-right">
+				<span>Last Name</span>
+			</div>
+			<div class="col-sm-3 text-center">
+		  		<input type="text" class="form-control" id="lname-input" th:field="*{lastName}"/>
+				<br></br>
+			</div>
+			<div class="col-sm-offset-1 col-sm-4 text-right">
+				<span>User type:</span>
+			</div>
+			<div class="col-sm-3 text-center">
+		  		<select class="form-control select-center" id="user-type-input" th:field="*{role}">
+					<option value="" >Select role</option>
+					<option value="ROLE_ADMIN">Admin</option>
+					<option value="ROLE_USER">User</option>
+				</select>
+				<br></br>
+			</div>
+			<div class="col-sm-offset-1 col-sm-4 text-right">
+				<span>Password</span>
+			</div>
+			<div class="col-sm-3 text-center">
+		  		<input type="password" class="form-control" id="password-input" th:field="*{password}"/>
+				<br></br>
+			</div>
+			<div class="col-sm-offset-6 col-sm-2">
+				<input type="submit" value="Add Account" class="btn btn-block btn-success create-button"/>
+			</div>
+		</div>
+	</div>
+</form>	
+</body>
+</html>

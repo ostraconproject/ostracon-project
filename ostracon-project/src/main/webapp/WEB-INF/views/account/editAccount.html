@@ -1,0 +1,82 @@
+<form th:action="@{/editAccount}" th:object="${accountForm}" method="post">
+
+	<input type="hidden" th:field="*{accountId}"/>
+	
+	<div class="modal-dialog modal-md">
+		<div class="modal-content">
+			<div class="modal-header">
+		    	<button type="button" class="close" data-dismiss="modal" aria-label="Close" disabled="disabled"><span data-dismiss="modal" aria-hidden="true">&times;</span></button>
+		        <h4 class="inline-block modal-title" id="myModalLabel">Editing account</h4>
+			</div>
+			<div class="modal-body" id="">
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<label>Email</label>
+						<input type="text" class="form-control" id="email-input" th:field="*{email}"/>
+					</div>
+				</div>
+			</div>
+			<div class="modal-body" id="">
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<label>First Name</label>
+						<input type="text" class="form-control" id="fName-input" th:field="*{firstName}"/>
+					</div>
+				</div>
+			</div>
+			<div class="modal-body" id="">
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<label>Last Name</label>
+						<input type="text" class="form-control" id="lName-input" th:field="*{lastName}"/>
+					</div>
+				</div>
+			</div>
+			<div class="modal-body" id="">
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<label>Role</label>
+					  	<select class="form-control" id="role-input" th:field="*{role}">
+							<option value="ROLE_ADMIN">Admin</option>
+							<option value="ROLE_USER">User</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+		    	<h4 class="inline-block no-margin confirmationMessage"></h4>
+		    	<div class="pull-right">
+		    		<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+		            <button type="button" class="saveAccountConfirm btn btn-success">Save changes</button>
+		        </div>
+	        </div>
+		</div>
+	</div>
+	
+</form>
+
+<script>
+	$(".saveAccountConfirm").click(function(){
+		var url = $(this).parents("form").attr("action");
+		var data = $(this).parents("form");
+		
+		$(this).html("Confirm").removeClass("btn-success ").addClass("btn-success saveAccountChanges");
+		$(".confirmationMessage").html("Are you sure you wish to change this accounts information?");
+		
+		$(".saveAccountChanges").click(function(){
+			$.ajax({
+				url: url,
+				type: "post",
+				data: data.serialize(),
+				success : function(response){
+					if (response.redirect) {
+			    		window.location.reload();
+			    	}else{		
+			    		$(".replaceable").html(response);
+			    	}
+			    },error: function(){
+			    }
+			});
+		});
+	});
+</script>
