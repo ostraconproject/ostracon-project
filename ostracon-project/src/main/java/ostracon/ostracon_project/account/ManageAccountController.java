@@ -271,4 +271,39 @@ public class ManageAccountController {
 		jsonView.setModelKey("redirect");
 		return new ModelAndView (jsonView, "redirect", request.getContextPath() + "account/manageAccounts");
 	}
+	
+	@RequestMapping(value = "changeAccountsPassword", method = RequestMethod.GET)
+	public ModelAndView changeAccountsPasswordRequest(Long id){
+		ModelAndView mv = new ModelAndView("account/changeAccountsPassword");
+		
+		Account account = accountService.retrieveAccount(id);
+		
+		UpdateAccountInfoForm accountForm = new UpdateAccountInfoForm();
+		accountForm.setAccountId(account.getId());
+		accountForm.setEmail(account.getEmail());
+		accountForm.setFirstName(account.getFirstName());
+		accountForm.setLastName(account.getLastName());
+		accountForm.setRole(account.getRole());
+		
+		mv.addObject("accountForm", accountForm);
+		mv.addObject("account", account);
+		
+		return mv;
+	}
+	
+	@RequestMapping(value = "changeAccountsPassword", method = RequestMethod.POST)
+	public ModelAndView changeAccountsPassword(@ModelAttribute("accountForm") UpdateAccountInfoForm accountForm, BindingResult result, HttpServletRequest request){
+		Long accountId = accountForm.getAccountId();
+		Account account = accountService.retrieveAccount(accountId);
+		
+		String password = accountForm.getPassword();
+		String newEncryptedPassword = passwordEncoder.encode(password);
+		
+		account.setPassword(newEncryptedPassword);
+		accountService.updateAccount(account);
+		
+		MappingJackson2JsonView jsonView = new MappingJackson2JsonView();
+		jsonView.setModelKey("redirect");
+		return new ModelAndView (jsonView, "redirect", request.getContextPath() + "account/manageAccounts");
+	}
 }

@@ -7,6 +7,7 @@ public class UpdateAccountInfoForm {
 	private String lastName;
 	private String email;
 	private String role;
+	private String password;
 	
 	public Long getAccountId() {
 		return accountId;
@@ -37,6 +38,12 @@ public class UpdateAccountInfoForm {
 	}
 	public void setRole(String role) {
 		this.role = role;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 }

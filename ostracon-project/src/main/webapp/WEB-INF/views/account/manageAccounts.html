@@ -22,6 +22,7 @@
 							<th class="col-sm-2 text-center">Last Name</th>
 							<th class="col-sm-2 text-center">Role</th>
 							<th class="col-sm-1 text-center"></th>
+							<th class="col-sm-2 text-center"></th>
 							<th class="col-sm-1 text-center"></th>
 						</tr>
 					</thead>
@@ -34,6 +35,11 @@
 							<td class="col-sm-1">
 								<span class="btn-group">
 					  				<a class="btn btn-info editAccountBtn" th:id="${account.id}" data-toggle="modal" data-target="#editAccountModal"><i class="fa fa-pencil"></i></a>
+					  			</span>
+					  		</td>
+					  		<td class="col-sm-2">
+								<span class="btn-group">
+					  				<a class="btn btn-warning changePasswordBtn" th:id="${account.id}" data-toggle="modal" data-target="#changePasswordModal">Change Password</a>
 					  			</span>
 					  		</td>
 					  		<td class="col-sm-1">
@@ -52,6 +58,11 @@
 		</div>
 		</div>
 		
+		<div id="changePasswordModal" class="changePasswordModal modal fade" tabindex="-1" role="dialog" aria-labelledby="changePasswordModal">
+		<div class="replaceable">
+		</div>
+		</div>
+		
 		<div id="editAccountModal" class="editAccountModal modal fade" tabindex="-1" role="dialog" aria-labelledby="editAccountModal">
 		<div class="replaceable">
 		</div>
@@ -62,6 +73,19 @@
 			var accountId = $(this).attr("id");
 			$.ajax({
 			 	url: base_url + "deleteAccount",
+			 	data: {id : accountId},
+			 	success: function(result){
+			 		$(".replaceable").html(result);
+			 	}
+			});
+		});
+		</script>
+		
+		<script>
+		$(".changePasswordBtn").click(function(){
+			var accountId = $(this).attr("id");
+			$.ajax({
+			 	url: base_url + "changeAccountsPassword",
 			 	data: {id : accountId},
 			 	success: function(result){
 			 		$(".replaceable").html(result);
