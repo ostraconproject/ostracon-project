@@ -7,12 +7,12 @@ package ostracon.ostracon_project.power_plants;
  */
 public enum FuelType {
 	
+	BIOMASS("Biomass"),
 	COAL("Coal"),
-	NATURAL_GAS("Natural Gas"),
-	WIND("Wind"),
-	SOLAR("Solar"),
 	HYDRO("Hydro"),
-	BIOMASS("Biomass");
+	NATURAL_GAS("Natural Gas"),
+	SOLAR("Solar"),
+	WIND("Wind");
 	
 	private String prettyName;
 	
