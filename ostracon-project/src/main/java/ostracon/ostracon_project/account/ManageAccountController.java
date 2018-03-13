@@ -2,6 +2,7 @@ package ostracon.ostracon_project.account;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -220,6 +221,7 @@ public class ManageAccountController {
 				}
 			}
 			ManageAccountForm accountForm = new ManageAccountForm();
+			Collections.sort(accounts, new SortByEmail());
 			accountForm.setAccounts(accounts);
 			
 			mv.addObject("accountForm", accountForm);
