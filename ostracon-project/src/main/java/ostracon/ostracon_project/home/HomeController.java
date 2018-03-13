@@ -2,6 +2,7 @@ package ostracon.ostracon_project.home;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -71,6 +72,8 @@ public class HomeController {
 		arrayForm.setJsonStringArray(jsonStringArray);
 		
 		ArrayList<String> years = powerPlantService.getYearsForPowerPlants(account);
+		Collections.sort(years);
+		
 		arrayForm.setYear(year);
 		arrayForm.setYears(years);
 		
@@ -89,6 +92,7 @@ public class HomeController {
 		Account account = accountRepository.findByEmail(accountName);
 		String year = arrayForm.getYear();
 		ArrayList<String> years = powerPlantService.getYearsForPowerPlants(account);
+		Collections.sort(years);
 		
 		JsonArray jsonArray = new JsonArray();
 		List<PowerPlant> powerPlants = powerPlantService.retrieveAllPowerPlantsForAccountAndYear(account, year);

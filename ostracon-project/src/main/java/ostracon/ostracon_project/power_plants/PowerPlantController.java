@@ -3,6 +3,7 @@ package ostracon.ostracon_project.power_plants;
 import java.math.BigInteger;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -152,10 +153,15 @@ public class PowerPlantController {
 		String accountName = principal.getName();
 		Account account = accountRepository.findByEmail(accountName);
 		String year = powerPlantService.getCurrentYear();
+		
 		List<PowerPlant> powerPlants = powerPlantService.retrieveAllPowerPlantsForAccountAndYear(account, year);
+		Collections.sort(powerPlants, new SortByCountryAndName());
+		
 		ArrayList<String> years = powerPlantService.getYearsForPowerPlants(account);
+		Collections.sort(years);
 		
 		ArrayList<String> countries = powerPlantService.getCountriesForYear(account, year);
+		Collections.sort(countries);
 		
 		yearSearch.setYear(year);
 		yearSearch.setYears(years);
@@ -176,9 +182,15 @@ public class PowerPlantController {
 		String accountName = principal.getName();
 		Account account = accountRepository.findByEmail(accountName);
 		String year = yearSearch.getYear();
+		
 		ArrayList<String> years = powerPlantService.getYearsForPowerPlants(account);
+		Collections.sort(years);
+		
 		List<PowerPlant> powerPlants = powerPlantService.retrieveAllPowerPlantsForAccountAndYear(account, year);
+		Collections.sort(powerPlants, new SortByCountryAndName());
+		
 		ArrayList<String> countries = powerPlantService.getCountriesForYear(account, year);
+		Collections.sort(countries);
 		
 		yearSearch.setYear(year);
 		yearSearch.setYears(years);
@@ -200,8 +212,12 @@ public class PowerPlantController {
 		Account account = accountRepository.findByEmail(accountName);
 		String year = yearSearch.getYear();
 		String country = yearSearch.getCountry();
+		
 		ArrayList<String> countries = powerPlantService.getCountriesForYear(account, year);
+		Collections.sort(countries);
+		
 		ArrayList<PowerPlant> powerPlants = (ArrayList<PowerPlant>) powerPlantDAO.findPowerPlantsByCountryAndYear(country, year, account);
+		Collections.sort(powerPlants, new SortByPlantName());
 		
 		int electricityGenerated = calculationsService.totalElectricityGeneratedAnnuallyByCountryandYear(country, year, account);
 		int carbonDioxide = calculationsService.totalDirectEmissionsOfCarbonDioxideByCountryAndYear(country, year, account);
