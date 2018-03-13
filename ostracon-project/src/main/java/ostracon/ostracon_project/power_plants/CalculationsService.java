@@ -2,6 +2,8 @@ package ostracon.ostracon_project.power_plants;
 
 import java.math.BigInteger;
 
+import ostracon.ostracon_project.account.Account;
+
 /**
  * Services for calculating a power plants electricity generated annually,
  * direct emissions of carbon dioxide, global warming potential and total LCoE.
@@ -47,35 +49,39 @@ public interface CalculationsService
 	 * of all power plants in a country for a particular year.
 	 * @param country
 	 * @param year
+	 * @param account
 	 * @return electricity generated annually
 	 */
-	public int totalElectricityGeneratedAnnuallyByCountryandYear(String country, String year);
+	public int totalElectricityGeneratedAnnuallyByCountryandYear(String country, String year, Account account);
 	
 	/**
 	 * For returning the total sum of direct emissions of CO2
 	 * for all power plants in a country for a particular year.
 	 * @param country
 	 * @param year
+	 * @param account
 	 * @return direct emissions of CO2
 	 */
-	public int totalDirectEmissionsOfCarbonDioxideByCountryAndYear(String country, String year);
+	public int totalDirectEmissionsOfCarbonDioxideByCountryAndYear(String country, String year, Account account);
 	
 	/**
 	 * For returning the total sum of global warming potential
 	 * for all power plants in a country for a particular year.
 	 * @param country
 	 * @param year
+	 * @param account
 	 * @return global warming potential
 	 */
-	public int totalGlobalWarmingPotentialByCountryAndYear(String country, String year);
+	public int totalGlobalWarmingPotentialByCountryAndYear(String country, String year, Account account);
 	
 	/**
 	 * For returning the total sum of all total LCoE's
 	 * for all power plants in a country for a particular year.
 	 * @param country
 	 * @param year
+	 * @param account
 	 * @return total LCoE
 	 */
-	public BigInteger totalOfAllLcoeByCountryAndYear(String country, String year);
+	public BigInteger totalOfAllLcoeByCountryAndYear(String country, String year, Account account);
 	
 }

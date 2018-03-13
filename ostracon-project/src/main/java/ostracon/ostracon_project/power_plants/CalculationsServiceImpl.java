@@ -8,6 +8,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ostracon.ostracon_project.account.Account;
+
 @Service
 @Transactional
 public class CalculationsServiceImpl implements CalculationsService {
@@ -102,8 +104,8 @@ public class CalculationsServiceImpl implements CalculationsService {
 	}
 
 	@Override
-	public int totalElectricityGeneratedAnnuallyByCountryandYear(String country, String year) {
-		List<PowerPlant> powerPlants = powerPlantDAO.findPowerPlantsByCountryAndYear(country, year);
+	public int totalElectricityGeneratedAnnuallyByCountryandYear(String country, String year, Account account) {
+		List<PowerPlant> powerPlants = powerPlantDAO.findPowerPlantsByCountryAndYear(country, year, account);
 		int annualElectricityGenerated = 0;
 		
 		for (PowerPlant powerPlant : powerPlants) {
@@ -114,8 +116,8 @@ public class CalculationsServiceImpl implements CalculationsService {
 	}
 
 	@Override
-	public int totalDirectEmissionsOfCarbonDioxideByCountryAndYear(String country, String year) {
-		List<PowerPlant> powerPlants = powerPlantDAO.findPowerPlantsByCountryAndYear(country, year);
+	public int totalDirectEmissionsOfCarbonDioxideByCountryAndYear(String country, String year, Account account) {
+		List<PowerPlant> powerPlants = powerPlantDAO.findPowerPlantsByCountryAndYear(country, year, account);
 		int directEmissionsOfCarbonDioxide = 0;
 		
 		for (PowerPlant powerPlant : powerPlants) {
@@ -126,8 +128,8 @@ public class CalculationsServiceImpl implements CalculationsService {
 	}
 
 	@Override
-	public int totalGlobalWarmingPotentialByCountryAndYear(String country, String year) {
-		List<PowerPlant> powerPlants = powerPlantDAO.findPowerPlantsByCountryAndYear(country, year);
+	public int totalGlobalWarmingPotentialByCountryAndYear(String country, String year, Account account) {
+		List<PowerPlant> powerPlants = powerPlantDAO.findPowerPlantsByCountryAndYear(country, year, account);
 		int globalWarmingPotential = 0;
 		
 		for (PowerPlant powerPlant : powerPlants) {
@@ -138,8 +140,8 @@ public class CalculationsServiceImpl implements CalculationsService {
 	}
 
 	@Override
-	public BigInteger totalOfAllLcoeByCountryAndYear(String country, String year) {
-		List<PowerPlant> powerPlants = powerPlantDAO.findPowerPlantsByCountryAndYear(country, year);
+	public BigInteger totalOfAllLcoeByCountryAndYear(String country, String year, Account account) {
+		List<PowerPlant> powerPlants = powerPlantDAO.findPowerPlantsByCountryAndYear(country, year, account);
 		BigInteger totalLcoe = BigInteger.valueOf(0);
 		
 		for (PowerPlant powerPlant : powerPlants) {

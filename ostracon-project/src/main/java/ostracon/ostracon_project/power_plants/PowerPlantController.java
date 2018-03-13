@@ -30,6 +30,9 @@ public class PowerPlantController {
 	private PowerPlantService powerPlantService;
 	
 	@Autowired
+	private PowerPlantDAO powerPlantDAO;
+	
+	@Autowired
 	private CalculationsService calculationsService;
 	
 	@Autowired
@@ -173,29 +176,50 @@ public class PowerPlantController {
 		String accountName = principal.getName();
 		Account account = accountRepository.findByEmail(accountName);
 		String year = yearSearch.getYear();
-		String country = yearSearch.getCountry();
 		ArrayList<String> years = powerPlantService.getYearsForPowerPlants(account);
 		List<PowerPlant> powerPlants = powerPlantService.retrieveAllPowerPlantsForAccountAndYear(account, year);
 		ArrayList<String> countries = powerPlantService.getCountriesForYear(account, year);
 		
-		int electricityGenerated = calculationsService.totalElectricityGeneratedAnnuallyByCountryandYear(country, year);
-		int carbonDioxide = calculationsService.totalDirectEmissionsOfCarbonDioxideByCountryAndYear(country, year);
-		int globalWarming = calculationsService.totalGlobalWarmingPotentialByCountryAndYear(country, year);
-		BigInteger totalLcoe = calculationsService.totalOfAllLcoeByCountryAndYear(country, year);
-		
 		yearSearch.setYear(year);
 		yearSearch.setYears(years);
-		yearSearch.setElectricityGenerated(electricityGenerated);
-		yearSearch.setCarbonDioxide(carbonDioxide);
-		yearSearch.setGlobalWarming(globalWarming);
-		yearSearch.setTotalLcoe(totalLcoe);
-		yearSearch.setCountry(country);
 		yearSearch.setCountries(countries);
 		
 		mv.addObject("powerPlants", powerPlants);
 		mv.addObject("yearSearch", yearSearch);
 		mv.addObject("year", year);
 		mv.addObject("years", years);
+		mv.addObject("countries", countries);
+		return mv;
+	}
+	
+	@RequestMapping(value = "resultsForCountryAndYear", method = RequestMethod.POST)
+	public ModelAndView resultsForCountryAndYear(@ModelAttribute("yearSearch") YearSearchForm yearSearch, Principal principal, BindingResult bindingResult){
+		ModelAndView mv = new ModelAndView("power_plants/resultsForCountryAndYear");
+		
+		String accountName = principal.getName();
+		Account account = accountRepository.findByEmail(accountName);
+		String year = yearSearch.getYear();
+		String country = yearSearch.getCountry();
+		ArrayList<String> countries = powerPlantService.getCountriesForYear(account, year);
+		ArrayList<PowerPlant> powerPlants = (ArrayList<PowerPlant>) powerPlantDAO.findPowerPlantsByCountryAndYear(country, year, account);
+		
+		int electricityGenerated = calculationsService.totalElectricityGeneratedAnnuallyByCountryandYear(country, year, account);
+		int carbonDioxide = calculationsService.totalDirectEmissionsOfCarbonDioxideByCountryAndYear(country, year, account);
+		int globalWarming = calculationsService.totalGlobalWarmingPotentialByCountryAndYear(country, year, account);
+		BigInteger totalLcoe = calculationsService.totalOfAllLcoeByCountryAndYear(country, year, account);
+		
+		yearSearch.setYear(year);
+		yearSearch.setElectricityGenerated(electricityGenerated);
+		yearSearch.setCarbonDioxide(carbonDioxide);
+		yearSearch.setGlobalWarming(globalWarming);
+		yearSearch.setTotalLcoe(totalLcoe);
+		yearSearch.setCountry(country);
+		yearSearch.setCountries(countries);
+		yearSearch.setPowerPlants(powerPlants);
+		
+		mv.addObject("powerPlants", powerPlants);
+		mv.addObject("yearSearch", yearSearch);
+		mv.addObject("year", year);
 		mv.addObject("country", country);
 		mv.addObject("countries", countries);
 		return mv;
@@ -306,21 +330,6 @@ public class PowerPlantController {
 		MappingJackson2JsonView jsonView = new MappingJackson2JsonView();
 		jsonView.setModelKey("redirect");
 		return new ModelAndView (jsonView, "redirect", request.getContextPath() + "power_plants/allPlants");
-	}
-	
-	@RequestMapping(value = "viewResults", method = RequestMethod.GET)
-	public ModelAndView viewResults(YearSearchForm yearSearch){
-		ModelAndView mv = new ModelAndView("power_plants/viewResults");
-		
-		String country = yearSearch.getCountry();
-		String year = yearSearch.getYear();
-		int co2 = yearSearch.getCarbonDioxide();
-		int electricity = yearSearch.getElectricityGenerated();
-		int globalWarming = yearSearch.getGlobalWarming();
-		BigInteger totalLcoe = yearSearch.getTotalLcoe();
-		
-		mv.addObject("yearSearch", yearSearch);
-		return mv;
 	}
 
 }

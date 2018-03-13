@@ -2,50 +2,47 @@
 <html class="no-js" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>My Power Plants</title>
+<title>Results For Country And Year</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <link rel="icon" href="resources/images/logo.png"/>
 </head>
 <body>
 	<div th:replace="fragments/header">Header</div>
+	<form method="post" th:action="@{/resultsForCountryAndYear}" th:object="${yearSearch}">
+		<input type="hidden" th:value="country" th:field="*{country}"/>
+		<input type="hidden" th:value="year" th:field="*{year}"/>
 		<div class="container">
 			<div class="jumbotron" style="background-color:#FFFFFF">
-				<h2 class="text-center" style="padding-top:40px;padding-bottom:30px;">Your Power Plants</h2>
-				<form method="post" th:action="@{/powerPlantsForYear}" th:object="${yearSearch}">
-				<h4 style="margin-bottom:15px;">Select the year to view power plants for &amp; country to view results:</h4>
+				<h2 class="text-center" style="padding-top:40px;padding-bottom:30px;" th:text="|Results For ${country} In ${year}|"></h2>
+				<div class="col-sm-offset-2 col-sm-4 text-right">
+					<span>Annual Electricity Generated</span>
+				</div>
 				<div class="col-sm-2 text-center">
-			  	<select class="form-control" id="year-input" th:field="*{year}">
-					<option class="text-center" th:each="year : ${years}"
-					  			th:value="${year}" 
-					  			th:text="${year}">
-					 </option>
-				</select>
+			  		<input type="text" style="background-color: white;" readonly="readonly" class="form-control" id="email-input" th:field="*{electricityGenerated}"/>
+					<br></br>
 				</div>
-				<div class="col-sm-2">
-					<input type="submit" value="Refresh" class="btn btn-block btn-info create-button "/>
+				<div class="col-sm-offset-2 col-sm-4 text-right">
+					<span>Direct Emissions Of Carbon Dioxide</span>
 				</div>
-				</form>
-				<form method="post" th:action="@{/resultsForCountryAndYear}" th:object="${yearSearch}">
-			  	<select  class="form-control hidden" id="year-input" th:field="*{year}">
-					<option class="text-center" th:each="year : ${years}"
-					  			th:value="${year}" 
-					  			th:text="${year}">
-					 </option>
-				</select>
-				<div class="col-sm-3 text-center">
-			  	<select class="form-control" id="country-input" th:field="*{country}">
-					<option class="text-center" th:each="country : ${countries}"
-					  			th:value="${country}" 
-					  			th:text="${country}">
-					 </option>
-				</select>
+				<div class="col-sm-2 text-center">
+			  		<input type="text" style="background-color: white;" readonly="readonly" class="form-control" id="email-input" th:field="*{carbonDioxide}"/>
+					<br></br>
 				</div>
-				<div class="col-sm-2">
-					<input type="submit" value="View" class="btn btn-block btn-success create-button"/>
+				<div class="col-sm-offset-2 col-sm-4 text-right">
+					<span>Global Warming Potential</span>
 				</div>
-				</form>
-				<br></br><br></br><br></br>
+				<div class="col-sm-2 text-center">
+			  		<input type="text" style="background-color: white;" readonly="readonly" class="form-control" id="email-input" th:field="*{globalWarming}"/>
+					<br></br>
+				</div>
+				<div class="col-sm-offset-2 col-sm-4 text-right">
+					<span>Total LCoE ($)</span>
+				</div>
+				<div class="col-sm-2 text-center">
+			  		<input type="text" style="background-color: white;" readonly="readonly" class="form-control" id="email-input" th:field="|*{totalLcoe}"/>
+					<br></br><br></br>
+				</div>
 				<table class="table">
 					<thead>
 						<tr>
@@ -90,6 +87,7 @@
 				</table>
 			</div>
 		</div>
+	</form>
 	
 	<div id="editPowerPlantModal" class="editPowerPlantModal modal fade" tabindex="-1" role="dialog" aria-labelledby="editPowerPlantModal">
 		<div class="replaceable">
@@ -143,6 +141,5 @@
 			});
 		});
 	</script>
-
 </body>
 </html>

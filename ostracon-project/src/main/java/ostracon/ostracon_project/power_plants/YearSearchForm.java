@@ -13,6 +13,7 @@ public class YearSearchForm {
 	private int carbonDioxide;
 	private int globalWarming;
 	private BigInteger totalLcoe;
+	private ArrayList<PowerPlant> powerPlants;
 	
 	public ArrayList<String> getYears() {
 		return years;
@@ -61,6 +62,12 @@ public class YearSearchForm {
 	}
 	public void setTotalLcoe(BigInteger totalLcoe) {
 		this.totalLcoe = totalLcoe;
+	}
+	public ArrayList<PowerPlant> getPowerPlants() {
+		return powerPlants;
+	}
+	public void setPowerPlants(ArrayList<PowerPlant> powerPlants) {
+		this.powerPlants = powerPlants;
 	}
 	
 }

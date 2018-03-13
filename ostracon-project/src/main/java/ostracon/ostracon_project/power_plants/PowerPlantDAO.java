@@ -25,9 +25,10 @@ public interface PowerPlantDAO extends GenericDAO<PowerPlant, Long>
 	 * For finding all the power plants within a country for a particular year.
 	 * @param country
 	 * @param year
+	 * @param account
 	 * @return power plants
 	 */
-	public List<PowerPlant> findPowerPlantsByCountryAndYear(String country, String year);
+	public List<PowerPlant> findPowerPlantsByCountryAndYear(String country, String year, Account account);
 	
 	/**
 	 * For finding all the power plants for a particular year.
