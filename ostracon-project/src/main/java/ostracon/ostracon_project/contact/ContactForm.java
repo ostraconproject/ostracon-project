@@ -1,10 +1,24 @@
 package ostracon.ostracon_project.contact;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class ContactForm 
 {
+	private static final String NAME_EMPTY_MESSAGE = "{emptyName.message}";
+	private static final String EMAIL_EMPTY_MESSAGE = "{emptyEmail.message}";
+	private static final String SUBJECT_EMPTY_MESSAGE = "{emptySubject.message}";
+	private static final String MESSAGE_EMPTY_MESSAGE = "{emptyMessage.message}";
+	
+	@NotBlank(message = ContactForm.NAME_EMPTY_MESSAGE)
 	private String name;
+	
+	@NotBlank(message = ContactForm.EMAIL_EMPTY_MESSAGE)
 	private String email;
+	
+	@NotBlank(message = ContactForm.SUBJECT_EMPTY_MESSAGE)
 	private String subject;
+	
+	@NotBlank(message = ContactForm.MESSAGE_EMPTY_MESSAGE)
 	private String message;
 	
 	public String getName() {

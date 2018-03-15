@@ -6,6 +6,7 @@
     <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
     <link href="../../../resources/css/contact.css" rel="stylesheet" media="screen" th:href="@{/resources/css/contact.css}"/>
 	<link rel="icon" href="resources/images/logo.png"/>
+	<link href="../../../resources/css/errors.css" rel="stylesheet" media="screen" th:href="@{/resources/css/errors.css}" />
 </head>
 <body>
 <div th:replace="fragments/header">Header</div>
@@ -28,22 +29,26 @@
                             </div>
                             <div class="form-bottom contact-form">
                             <div class="form-group">
-                              <label class="sr-only" for="contact-name">Name</label>
-                              <input type="text" name="name" placeholder="Name..." class="contact-name form-control" id="contact-name" th:field="*{name}"/>
+                              	<label class="sr-only" for="contact-name" th:classappend="${#fields.hasErrors('name')}? 'has-error'">Name</label>
+                              	<input type="text" name="name" placeholder="Name..." th:errorclass="input-form-error" class="contact-name form-control" id="contact-name" th:field="*{name}"/>
+                           		<span class="help-block" style="color:red;" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Empty name</span>
                             </div>
-                            		<div class="form-group">
-			                    		<label class="sr-only" for="contact-email">Email</label>
-			                        	<input type="text" name="email" placeholder="Email..." class="contact-email form-control" id="contact-email" th:field="*{email}"/>
-			                        </div>
-			                        <div class="form-group">
-			                        	<label class="sr-only" for="contact-subject">Subject</label>
-			                        	<input type="text" name="subject" placeholder="Subject..." class="contact-subject form-control" id="contact-subject" th:field="*{subject}"/>
-			                        </div>
-			                        <div class="form-group">
-			                        	<label class="sr-only" for="contact-message">Message</label>
-			                        	<textarea name="message" placeholder="Message..." class="contact-message form-control" id="contact-message" th:field="*{message}"></textarea>
-			                        </div>
-			                        <button type="submit" class="btn">Send message</button>
+                            <div class="form-group">
+			                    <label class="sr-only" for="contact-email" th:classappend="${#fields.hasErrors('email')}? 'has-error'">Email</label>
+			                    <input type="text" name="email" placeholder="Email..." th:errorclass="input-form-error" class="contact-email form-control" id="contact-email" th:field="*{email}"/>
+			                	<span class="help-block" style="color:red;" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Empty email</span>
+			                </div>
+			                <div class="form-group">
+			                    <label class="sr-only" for="contact-subject" th:classappend="${#fields.hasErrors('subject')}? 'has-error'">Subject</label>
+			                    <input type="text" name="subject" placeholder="Subject..." th:errorclass="input-form-error" class="contact-subject form-control" id="contact-subject" th:field="*{subject}"/>
+			                	<span class="help-block" style="color:red;" th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}">Empty subject</span>
+			                </div>
+			                <div class="form-group">
+			                    <label class="sr-only" for="contact-message" th:classappend="${#fields.hasErrors('message')}? 'has-error'">Message</label>
+			                    <textarea name="message" placeholder="Message..." th:errorclass="input-form-error" class="contact-message form-control" id="contact-message" th:field="*{message}"></textarea>
+			               		<span class="help-block" style="color:red;" th:if="${#fields.hasErrors('message')}" th:errors="*{message}">Empty message</span>
+			                </div>
+			                	<button type="submit" class="btn">Send message</button>
 		                    </div>
                         </div>
                     </div>
