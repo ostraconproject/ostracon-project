@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{view.index.title}">Welcome!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
+    <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}" />
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
+	<link rel="icon" href="resources/images/logo.png"/>
+</head>
+<body onload="loadMap()">
+<div th:replace="fragments/header">Header</div>
+<form method="post" th:action="@{/}" th:object="${arrayForm}">
+<input type="hidden" id="jsonStringArray" name="jsonStringArray" th:value="jsonStringArray" th:field="*{jsonStringArray}"/>	
+<div class="container">
+    <!-- /* Handle the flash message */-->
+    <th:block th:if="${message != null}">
+        <!-- /* The message code is returned from the @Controller */ -->
+        <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#authentication.name})})">&nbsp;</div>
+    </th:block>
+    <br></br>
+    <div class="col-sm-2">
+		<a class="btn btn-success" href="/addPowerPlant" th:href="@{/addPowerPlant}">Add New Power Plant</a>
+	</div>
+</div>
+
+	<div class="col-sm-offset-1 col-sm-10" align="center" id="map_container"></div>
+	
+	<div id="viewPowerPlantModal" class="viewPowerPlantModal modal fade" tabindex="-1" role="dialog" aria-labelledby="viewPowerPlantModal">
+		<div class="replaceable">
+		</div>
+	</div>
+	
+	<script>	
+		$(".plantInfoBtn").click(function(){
+			var plantId = $(this).attr("id");
+			$.ajax({
+			 	url: base_url + "viewPowerPlant",
+			 	data: {id : plantId},
+			 	success: function(result){
+			 		$(".replaceable").html(result);
+			 	}
+			});
+		});
+	</script>
+	
+<script type="text/javascript" th:inline="javascript">
+/*<![CDATA[*/
+  function loadMap() {
+    var latlng = new google.maps.LatLng(50.0647, 19.9450);
+    var myOptions = {
+      zoom: 4,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById("map_container"),myOptions);
+
+    var contentString = '';
+    
+    var infowindow = new google.maps.InfoWindow({
+        content: contentString
+      });
+    
+    var wind = {
+    	    url: "resources/images/wind.png",
+   	};
+    var coal = {
+    	    url: "resources/images/coal.png",
+   	};
+    var biomass = {
+    	    url: "resources/images/biomass.png",
+   	};
+    var gas = {
+    	    url: "resources/images/gas.png",
+   	};
+    var hydro = {
+    	    url: "resources/images/hydro.png",
+   	};
+    var solar = {
+    	    url: "resources/images/solar.png",
+   	};
+		
+		var jsonString = /*[[${jsonStringArray}]]*/ "{\"a\":\"... ";
+		var json = JSON.parse(jsonString);
+		var image = coal;
+		var title = "";
+		var capacity = "";
+		var capacityFactor = "";
+		var type = "";
+		var annual = "";
+		var emissions = "";
+		var warming = "";
+		var lcoe = "";
+		
+    	for (var i = 0, length = json.length; i < length; i++) {
+    		  var data = json[i],
+    		    latLng = new google.maps.LatLng(data.lat, data.lng);
+    		  
+    		  var title = data.name;
+    		  var type = data.type;
+    		  
+    		  var capacity = data.capacity;
+    		  var capacity = capacity.toLocaleString('en');
+    		  
+    		  var capacityFactor = data.capacityFactor;
+    		  var capacityFactor = capacityFactor.toLocaleString('en');
+    		  
+    		  var annual = data.annual;
+    		  var annual = annual.toLocaleString('en');
+    		  
+    		  var emissions = data.emissions;
+    		  var emissions = emissions.toLocaleString('en');
+    		  
+    		  var warming = data.warming;
+    		  var warming = warming.toLocaleString('en');
+    		  
+    		  var lcoe = data.lcoe;
+    		  var lcoe = lcoe.toLocaleString('en');
+			
+    		  if(data.type == "Coal"){
+    			  image = coal;
+    		  }
+    		  if(data.type == "Natural Gas"){
+    			  image = gas;
+    		  }
+    		  if(data.type == "Wind"){
+    			  image = wind;
+    		  }
+    		  if(data.type == "Solar"){
+    			  image = solar;
+    		  }
+    		  if(data.type == "Hydro"){
+    			  image = hydro;
+    		  }
+    		  if(data.type == "Biomass"){
+    			  image = biomass;
+    		  }
+    		  
+    		  // Creating a marker and putting it on the map
+    		  var marker = new google.maps.Marker({
+    		    position: latLng,
+    		    map: map,
+    		    icon: image,
+    		    capacity: capacity,
+    		    capacityFactor: capacityFactor,
+    		    type: type,
+    		    annual: annual,
+    		    emissions: emissions,
+    		    warming: warming,
+    		    lcoe: lcoe,
+    		    title: title
+    		  });
+    		  google.maps.event.addListener(marker, 'click', function () {
+    	            infowindow.setContent('<h4>' + '<u>' + this.title + '</h4>' + '</u>' +
+    	            					  '<p>' + 'Energy Type = ' + this.type + '</p>' +
+    	            					  '<p>' + 'Capacity = ' + this.capacity + ' MW' + '</p>' +
+    	            					  '<p>' + 'Capacity Factor = ' + this.capacityFactor + '%' + '</p>' +
+    	            					  '<p>' + 'Annual Electricity Generated = ' + this.annual + ' MWh' + '</p>' +
+    	            					  '<p>' + 'Direct Emissions Of CO2 = ' + this.emissions + ' kg' + '</p>' +
+    	            					  '<p>' + 'Global Warming Potential = ' + this.warming + ' kg' + '</p>' +
+    	            					  '<p>' + 'Total LCoE = ' + '$' + this.lcoe + '</p>');
+    	            infowindow.open(map, this);
+    	        });
+    		}
+  }
+/*]]>*/
+</script>
+<script async="async" defer="defer" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWSnUTD5EMTBsFolIr5CH2fv596dPlB74&amp;callback=loadMap"></script>
+</form>
+</body>
+</html>

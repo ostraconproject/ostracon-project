@@ -126,6 +126,8 @@ public class PowerPlantController {
 			JsonObject jsonObject = new JsonObject();
 			try {
 				jsonObject.addProperty("name", retrievedPowerPlant.getName());
+				jsonObject.addProperty("capacity", powerPlant.getCapacity());
+				jsonObject.addProperty("capacityFactor", powerPlant.getCapacityFactor());
 				jsonObject.addProperty("lat", retrievedPowerPlant.getLatitude());
 				jsonObject.addProperty("lng", retrievedPowerPlant.getLongitude());
 				jsonObject.addProperty("type", retrievedPowerPlant.getFuelType());

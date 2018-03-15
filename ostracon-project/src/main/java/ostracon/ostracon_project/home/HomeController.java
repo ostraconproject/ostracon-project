@@ -41,7 +41,6 @@ public class HomeController {
 			ModelAndView mv = new ModelAndView("home/homeNotSignedIn");
 			return mv;
 		}
-		ModelAndView mv = new ModelAndView("home/homepage");
 		
 		String accountName = principal.getName();
 		Account account = accountRepository.findByEmail(accountName);
@@ -49,7 +48,8 @@ public class HomeController {
 		PowerPlantsArrayForm arrayForm = new PowerPlantsArrayForm();
 		
 		JsonArray jsonArray = new JsonArray();
-		List<PowerPlant> powerPlants = powerPlantService.retrieveAllPowerPlantsForAccountAndYear(account, year);
+		List<PowerPlant> powerPlants = powerPlantService.retrieveAllPowerPlantsForAccountAndYear(account, year);		
+		
 		for (PowerPlant powerPlant : powerPlants) {
 			JsonObject jsonObject = new JsonObject();
 			try {
@@ -78,6 +78,18 @@ public class HomeController {
 		
 		arrayForm.setYear(year);
 		arrayForm.setYears(years);
+		
+//		//if the user has no powerplants, send them to no plants screen
+		if (powerPlants.isEmpty()) {
+			ModelAndView noPlantsMv = new ModelAndView("home/homepageNoPlants");
+			noPlantsMv.addObject("arrayForm", arrayForm);
+			noPlantsMv.addObject("jsonStringArray", jsonStringArray);
+			noPlantsMv.addObject("year", year);
+			noPlantsMv.addObject("years", years);
+			return noPlantsMv;
+		}
+		
+		ModelAndView mv = new ModelAndView("home/homepage");
 		
 		mv.addObject("arrayForm", arrayForm);
 		mv.addObject("jsonStringArray", jsonStringArray);
