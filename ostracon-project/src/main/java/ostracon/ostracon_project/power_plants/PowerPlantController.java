@@ -7,10 +7,12 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,15 +40,12 @@ public class PowerPlantController {
 	
 	@Autowired
 	private AccountRepository accountRepository;
-	
-	@Autowired
-	private PowerPlantValidator powerPlantValidator;
 
 	@RequestMapping(value = "addPowerPlant", method = RequestMethod.GET)
 	public ModelAndView addPowerPlant(){
 		ModelAndView mv = new ModelAndView("power_plants/newPowerPlant");
 		
-		NewPowerPlantForm powerPlantForm = new NewPowerPlantForm();
+		NewPowerPlantForm newPowerPlantForm = new NewPowerPlantForm();
 		
 		FuelType[] fuelTypeValues = FuelType.values();
 		ArrayList<String> fuelTypes = new ArrayList<>();
@@ -54,58 +53,67 @@ public class PowerPlantController {
 			fuelTypes.add(fuelType.getPrettyName());
 		}
 		
-		powerPlantForm.setFuleTypes(fuelTypes);
+		newPowerPlantForm.setFuleTypes(fuelTypes);
 		
-		mv.addObject("powerPlantForm", powerPlantForm);
+		mv.addObject("newPowerPlantForm", newPowerPlantForm);
 		mv.addObject("fuelTypes", fuelTypes);
 		return mv;
 	}
 	
 	@RequestMapping(value = "addPowerPlant", method = RequestMethod.POST)
-	public ModelAndView submitPowerPlant(@ModelAttribute("powerPlantForm") NewPowerPlantForm powerPlantForm, Principal principal, BindingResult bindingResult){
+	public ModelAndView submitPowerPlant(@Valid @ModelAttribute("newPowerPlantForm") NewPowerPlantForm newPowerPlantForm, Errors errors, Principal principal){
+		if (errors.hasErrors()) {
+			ModelAndView thisMv = new ModelAndView("power_plants/newPowerPlant");
+			
+			FuelType[] fuelTypeValues = FuelType.values();
+			ArrayList<String> fuelTypes = new ArrayList<>();
+			for (FuelType fuelType : fuelTypeValues) {
+				fuelTypes.add(fuelType.getPrettyName());
+			}
+			
+			newPowerPlantForm.setFuleTypes(fuelTypes);
+			
+			thisMv.addObject("newPowerPlantForm", newPowerPlantForm);
+			thisMv.addObject("fuelTypes", fuelTypes);
+			return thisMv;
+		}
 		String accountName = principal.getName();
 		Account account = accountRepository.findByEmail(accountName);
 		
 		ModelAndView thisMv = new ModelAndView("power_plants/newPowerPlant");
-		thisMv.addObject("powerPlantForm", powerPlantForm);
-		
-		powerPlantValidator.validate(powerPlantForm, bindingResult);
-		if (bindingResult.hasErrors()) {
-			thisMv.addObject("errors", bindingResult);
-			return thisMv;
-		}
+		thisMv.addObject("newPowerPlantForm", newPowerPlantForm);
 		
 		PowerPlant powerPlant = new PowerPlant();
 		powerPlant.setAccount(account);
-		powerPlant.setName(powerPlantForm.getName());
-		powerPlant.setYear(powerPlantForm.getYear());
-		powerPlant.setCountry(powerPlantForm.getCountry());
-		powerPlant.setCity(powerPlantForm.getCity());
-		powerPlant.setLatitude(powerPlantForm.getLatitude());
-		powerPlant.setLongitude(powerPlantForm.getLongitude());
-		powerPlant.setFuelType(powerPlantForm.getFuelType());
-		powerPlant.setCapacity(powerPlantForm.getCapacity());
-		powerPlant.setCapacityFactor(powerPlantForm.getCapacityFactor());
+		powerPlant.setName(newPowerPlantForm.getName());
+		powerPlant.setYear(newPowerPlantForm.getYear());
+		powerPlant.setCountry(newPowerPlantForm.getCountry());
+		powerPlant.setCity(newPowerPlantForm.getCity());
+		powerPlant.setLatitude(newPowerPlantForm.getLatitude());
+		powerPlant.setLongitude(newPowerPlantForm.getLongitude());
+		powerPlant.setFuelType(newPowerPlantForm.getFuelType());
+		powerPlant.setCapacity(newPowerPlantForm.getCapacity());
+		powerPlant.setCapacityFactor(newPowerPlantForm.getCapacityFactor());
 		
 		int electricityGenerated = calculationsService.electricityGeneratedAnnually(powerPlant);
 		powerPlant.setAnualElectricityGenerated(electricityGenerated);
-		powerPlantForm.setAnualElectricityGenerated(electricityGenerated);
+		newPowerPlantForm.setAnualElectricityGenerated(electricityGenerated);
 		
 		int directEmissions = calculationsService.directEmissionsOfCarbonDioxide(powerPlant);
 		powerPlant.setDirectEmissions(directEmissions);
-		powerPlantForm.setDirectEmissions(directEmissions);
+		newPowerPlantForm.setDirectEmissions(directEmissions);
 		
 		int globalWarming = calculationsService.globalWarmingPotential(powerPlant);
 		powerPlant.setGlobalWarmingPotential(globalWarming);
-		powerPlantForm.setGlobalWarmingPotential(globalWarming);
+		newPowerPlantForm.setGlobalWarmingPotential(globalWarming);
 		
 		BigInteger totalLcoe = calculationsService.totalLcoe(powerPlant);
 		powerPlant.setTotalLcoe(totalLcoe);
-		powerPlantForm.setTotalLcoe(totalLcoe);
+		newPowerPlantForm.setTotalLcoe(totalLcoe);
 		
 		powerPlantService.createPowerPlant(powerPlant);
 		
-		String year = powerPlantForm.getYear();
+		String year = newPowerPlantForm.getYear();
 		List<PowerPlant> powerPlants = powerPlantService.retrieveAllPowerPlantsForAccountAndYear(account, year);
 		ArrayList<String> years = powerPlantService.getYearsForPowerPlants(account);
 		

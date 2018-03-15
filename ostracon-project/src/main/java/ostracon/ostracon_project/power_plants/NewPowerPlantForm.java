@@ -3,23 +3,48 @@ package ostracon.ostracon_project.power_plants;
 import java.math.BigInteger;
 import java.util.ArrayList;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+
 public class NewPowerPlantForm {
 
+	private static final String NOT_BLANK_MESSAGE = "{blankField.message}";
+	
 	private Long plantId;
+	
+	@NotBlank(message = NewPowerPlantForm.NOT_BLANK_MESSAGE)
 	private String name;
+	
+	@NotBlank(message = NewPowerPlantForm.NOT_BLANK_MESSAGE)
 	private String country;
+	
+	@NotBlank(message = NewPowerPlantForm.NOT_BLANK_MESSAGE)
 	private String city;
+	
+	@NotBlank(message = NewPowerPlantForm.NOT_BLANK_MESSAGE)
 	private String year;
+	
+	@NotBlank(message = NewPowerPlantForm.NOT_BLANK_MESSAGE)
 	private String fuelType;
-	private int capacity;
+	
+	@NotNull(message = NewPowerPlantForm.NOT_BLANK_MESSAGE)
+	private Integer capacity;
+	
+	@NotNull(message = NewPowerPlantForm.NOT_BLANK_MESSAGE)
 	private int capacityFactor;
+	
+	@NotNull(message = NewPowerPlantForm.NOT_BLANK_MESSAGE)
+	private float latitude;
+	
+	@NotNull(message = NewPowerPlantForm.NOT_BLANK_MESSAGE)
+	private float longitude;
+	
 	private int anualElectricityGenerated;
 	private int directEmissions;
 	private int globalWarmingPotential;
 	private BigInteger totalLcoe;
 	private ArrayList<String> fuleTypes;
-	private float latitude;
-	private float longitude;
 	
 	public Long getPlantId() {
 		return plantId;
@@ -63,7 +88,7 @@ public class NewPowerPlantForm {
 	public void setFuleTypes(ArrayList<String> fuleTypes) {
 		this.fuleTypes = fuleTypes;
 	}
-	public int getCapacity() {
+	public Integer getCapacity() {
 		return capacity;
 	}
 	public int getCapacityFactor() {
@@ -81,7 +106,7 @@ public class NewPowerPlantForm {
 	public BigInteger getTotalLcoe() {
 		return totalLcoe;
 	}
-	public void setCapacity(int capacity) {
+	public void setCapacity(Integer capacity) {
 		this.capacity = capacity;
 	}
 	public void setCapacityFactor(int capacityFactor) {

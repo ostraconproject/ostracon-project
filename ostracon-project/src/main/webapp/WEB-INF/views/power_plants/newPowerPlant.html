@@ -6,57 +6,65 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <link rel="icon" href="resources/images/logo.png"/>
-<!-- <link rel="stylesheet" th:href="@{/resources/css/core.css}" /> -->
+<link href="../../../resources/css/errors.css" rel="stylesheet" media="screen" th:href="@{/resources/css/errors.css}" />
+<!-- <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}" /> -->
+
 </head>
 <body>
 	<div th:replace="fragments/header">Header</div>
 		<div class="container">
-		<form method="post" th:action="@{/addPowerPlant}" th:object="${powerPlantForm}">
+		<form method="post" th:action="@{/addPowerPlant}" th:object="${newPowerPlantForm}">
 		<div class="jumbotron" style="background-color:#FFFFFF">
 			<h2 class="text-center" style="padding-top:40px;padding-bottom:30px;">New Power Plant</h2>
-			<div class="col-sm-offset-1 col-sm-4 text-right">
+			<div class="col-sm-offset-1 col-sm-4 text-right" th:classappend="${#fields.hasErrors('name')}? 'has-error'">
 				<span>Name</span>
 			</div>
 			<div class="col-sm-3 text-center">
-		  		<input type="text" class="form-control" id="name-input" th:field="*{name}"/>
+		  		<input type="text" th:errorclass="input-form-error" class="form-control" id="name-input" th:field="*{name}"/>
+				<span class="help-block" style="color:red;" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Empty name</span>
 				<br></br>
 			</div>
-			<div class="col-sm-offset-1 col-sm-4 text-right">
+			<div class="col-sm-offset-1 col-sm-4 text-right" th:classappend="${#fields.hasErrors('year')}? 'has-error'">
 				<span>Year</span>
 			</div>
 			<div class="col-sm-3 text-center">
-		  		<input type="text" class="form-control" id="year-input" th:field="*{year}"/>
+		  		<input type="text" th:errorclass="input-form-error" class="form-control" id="year-input" th:field="*{year}"/>
+				<span class="help-block" style="color:red;" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Empty year</span>
 				<br></br>
 			</div>
-			<div class="col-sm-offset-1 col-sm-4 text-right">
+			<div class="col-sm-offset-1 col-sm-4 text-right" th:classappend="${#fields.hasErrors('country')}? 'has-error'">
 				<span>Country</span>
 			</div>
 			<div class="col-sm-3 text-center">
-		  		<input type="text" class="form-control" id="name-input" th:field="*{country}"/>
+		  		<input type="text" th:errorclass="input-form-error" class="form-control" id="name-input" th:field="*{country}"/>
+				<span class="help-block" style="color:red;" th:if="${#fields.hasErrors('country')}" th:errors="*{country}">Empty country</span>
 				<br></br>
 			</div>
-			<div class="col-sm-offset-1 col-sm-4 text-right">
+			<div class="col-sm-offset-1 col-sm-4 text-right" th:classappend="${#fields.hasErrors('city')}? 'has-error'">
 				<span>City</span>
 			</div>
 			<div class="col-sm-3 text-center">
-		  		<input type="text" class="form-control" id="city-input" th:field="*{city}"/>
+		  		<input type="text" th:errorclass="input-form-error" class="form-control" id="city-input" th:field="*{city}"/>
+				<span class="help-block" style="color:red;" th:if="${#fields.hasErrors('city')}" th:errors="*{city}">Empty city</span>
 				<br></br>
 			</div>
-			<div class="col-sm-offset-1 col-sm-4 text-right">
+			<div class="col-sm-offset-1 col-sm-4 text-right" th:classappend="${#fields.hasErrors('latitude')}? 'has-error'">
 				<span>Latitude</span>
 			</div>
 			<div class="col-sm-3 text-center">
-		  		<input type="text" class="form-control" id="latitude-input" th:field="*{latitude}"/>
+		  		<input type="text" th:errorclass="input-form-error" class="form-control" id="latitude-input" th:field="*{latitude}"/>
+				<span class="help-block" style="color:red;" th:if="${#fields.hasErrors('latitude')}" th:errors="*{latitude}">Empty latitude</span>
 				<br></br>
 			</div>
-			<div class="col-sm-offset-1 col-sm-4 text-right">
+			<div class="col-sm-offset-1 col-sm-4 text-right" th:classappend="${#fields.hasErrors('longitude')}? 'has-error'">
 				<span>Longitude</span>
 			</div>
 			<div class="col-sm-3 text-center">
-		  		<input type="text" class="form-control" id="longitude-input" th:field="*{longitude}"/>
+		  		<input type="text" th:errorclass="input-form-error" class="form-control" id="longitude-input" th:field="*{longitude}"/>
+				<span class="help-block" style="color:red;" th:if="${#fields.hasErrors('longitude')}" th:errors="*{longitude}">Empty longitude</span>
 				<br></br>
 			</div>
-			<div class="col-sm-offset-1 col-sm-4 text-right">
+			<div class="col-sm-offset-1 col-sm-4 text-right" th:classappend="${#fields.hasErrors('fuelType')}? 'has-error'">
 				<span>Fuel Type</span>
 			</div>
 			<div class="col-sm-3 text-center">
@@ -65,25 +73,28 @@
 					<option th:each="fuelType : ${fuelTypes}"
 				  	th:value="${fuelType}" th:text="${fuelType}"></option>
 				</select>
+				<span class="help-block" style="color:red;" th:if="${#fields.hasErrors('fuelType')}" th:errors="*{fuelType}">Empty fuel type</span>
 				<br></br>
 			</div>
-			<div class="col-sm-offset-1 col-sm-4 text-right">
+			<div class="col-sm-offset-1 col-sm-4 text-right" th:classappend="${#fields.hasErrors('capacity')}? 'has-error'">
 				<span>Capacity (MW)</span>
 			</div>
 			<div class="col-sm-3 text-center">
-		  		<input type="text" class="form-control" id="capacity-input" th:field="*{capacity}"/>
+		  		<input type="text" th:errorclass="input-form-error" class="form-control" id="capacity-input" th:field="*{capacity}"/>
+				<span class="help-block" style="color:red;" th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}">Empty capacity</span>
 				<br></br>
 			</div>
-			<div class="col-sm-offset-1 col-sm-4 text-right">
+			<div class="col-sm-offset-1 col-sm-4 text-right" th:classappend="${#fields.hasErrors('capacityFactor')}? 'has-error'">
 				<span>Capacity Factor (%)</span>
 			</div>
 			<div class="col-sm-3 text-center">
-		  		<input type="text" class="form-control" id="factor-input" th:field="*{capacityFactor}"/>
+		  		<input type="text" th:errorclass="input-form-error" class="form-control" id="factor-input" th:field="*{capacityFactor}"/>
+				<span class="help-block" style="color:red;" th:if="${#fields.hasErrors('capacityFactor')}" th:errors="*{capacityFactor}">Empty capacity factor</span>
 				<br></br>
 			</div>
 			<div class="create-btn col-sm-offset-4 col-sm-2"></div>
 			<div class="col-sm-2">
-				<input type="submit" value="Save Power Plant" class="btn btn-block btn-success create-button"/>
+				<input type="submit" value="Save Power Plant" class="btn btn-block btn-success create-button" style="margin-bottom:15px;"/>
 			</div>
 		</div>
 		</form>
