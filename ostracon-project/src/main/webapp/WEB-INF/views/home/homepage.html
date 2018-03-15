@@ -100,6 +100,8 @@
 		var json = JSON.parse(jsonString);
 		var image = coal;
 		var title = "";
+		var capacity = "";
+		var capacityFactor = "";
 		var type = "";
 		var annual = "";
 		var emissions = "";
@@ -111,6 +113,8 @@
     		    latLng = new google.maps.LatLng(data.lat, data.lng);
     		  
     		  var title = data.name;
+    		  var capacity = data.capacity;
+    		  var capacityFactor = data.capacityFactor;
     		  var type = data.type;
     		  var annual = data.annual;
     		  var emissions = data.emissions;
@@ -141,6 +145,8 @@
     		    position: latLng,
     		    map: map,
     		    icon: image,
+    		    capacity: capacity,
+    		    capacityFactor: capacityFactor,
     		    type: type,
     		    annual: annual,
     		    emissions: emissions,
@@ -151,6 +157,8 @@
     		  google.maps.event.addListener(marker, 'click', function () {
     	            infowindow.setContent('<h4>' + this.title + '</h4>' +
     	            					  '<p>' + 'Energy Type = ' + this.type + '</p>' +
+    	            					  '<p>' + 'Capacity = ' + this.capacity + ' MW' + '</p>' +
+    	            					  '<p>' + 'Capacity Factor = ' + this.capacityFactor + '%' + '</p>' +
     	            					  '<p>' + 'Annual Electricity Generated = ' + this.annual + ' MWh' + '</p>' +
     	            					  '<p>' + 'Direct Emissions Of CO2 = ' + this.emissions + ' kg' + '</p>' +
     	            					  '<p>' + 'Global Warming Potential = ' + this.warming + ' kg' + '</p>' +

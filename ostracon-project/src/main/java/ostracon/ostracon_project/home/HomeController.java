@@ -54,6 +54,8 @@ public class HomeController {
 			JsonObject jsonObject = new JsonObject();
 			try {
 				jsonObject.addProperty("name", powerPlant.getName());
+				jsonObject.addProperty("capacity", powerPlant.getCapacity());
+				jsonObject.addProperty("capacityFactor", powerPlant.getCapacityFactor());
 				jsonObject.addProperty("lat", powerPlant.getLatitude());
 				jsonObject.addProperty("lng", powerPlant.getLongitude());
 				jsonObject.addProperty("type", powerPlant.getFuelType());
@@ -100,6 +102,8 @@ public class HomeController {
 			JsonObject jsonObject = new JsonObject();
 			try {
 				jsonObject.addProperty("name", powerPlant.getName());
+				jsonObject.addProperty("capacity", powerPlant.getCapacity());
+				jsonObject.addProperty("capacityFactor", powerPlant.getCapacityFactor());
 				jsonObject.addProperty("lat", powerPlant.getLatitude());
 				jsonObject.addProperty("lng", powerPlant.getLongitude());
 				jsonObject.addProperty("type", powerPlant.getFuelType());
