@@ -46,6 +46,11 @@ public class NewPowerPlantForm {
 	private BigInteger totalLcoe;
 	private ArrayList<String> fuleTypes;
 	
+	private String formattedElectricity;
+	private String formattedEmissions;
+	private String formattedGlobal;
+	private String formattedLcoe;
+	
 	public Long getPlantId() {
 		return plantId;
 	}
@@ -136,5 +141,29 @@ public class NewPowerPlantForm {
 	public void setLongitude(float longitude) {
 		this.longitude = longitude;
 	}
-
+	public String getFormattedElectricity() {
+		return formattedElectricity;
+	}
+	public String getFormattedEmissions() {
+		return formattedEmissions;
+	}
+	public String getFormattedGlobal() {
+		return formattedGlobal;
+	}
+	public String getFormattedLcoe() {
+		return formattedLcoe;
+	}
+	public void setFormattedElectricity(String formattedElectricity) {
+		this.formattedElectricity = formattedElectricity;
+	}
+	public void setFormattedEmissions(String formattedEmissions) {
+		this.formattedEmissions = formattedEmissions;
+	}
+	public void setFormattedGlobal(String formattedGlobal) {
+		this.formattedGlobal = formattedGlobal;
+	}
+	public void setFormattedLcoe(String formattedLcoe) {
+		this.formattedLcoe = formattedLcoe;
+	}
+	
 }

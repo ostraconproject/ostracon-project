@@ -15,6 +15,11 @@ public class YearSearchForm {
 	private BigInteger totalLcoe;
 	private ArrayList<PowerPlant> powerPlants;
 	
+	private String formattedElectricity;
+	private String formattedCarbon;
+	private String formattedGlobal;
+	private String formattedLcoe;
+	
 	public ArrayList<String> getYears() {
 		return years;
 	}
@@ -68,6 +73,30 @@ public class YearSearchForm {
 	}
 	public void setPowerPlants(ArrayList<PowerPlant> powerPlants) {
 		this.powerPlants = powerPlants;
+	}
+	public String getFormattedElectricity() {
+		return formattedElectricity;
+	}
+	public void setFormattedElectricity(String formattedElectricity) {
+		this.formattedElectricity = formattedElectricity;
+	}
+	public String getFormattedCarbon() {
+		return formattedCarbon;
+	}
+	public String getFormattedGlobal() {
+		return formattedGlobal;
+	}
+	public String getFormattedLcoe() {
+		return formattedLcoe;
+	}
+	public void setFormattedCarbon(String formattedCarbon) {
+		this.formattedCarbon = formattedCarbon;
+	}
+	public void setFormattedGlobal(String formattedGlobal) {
+		this.formattedGlobal = formattedGlobal;
+	}
+	public void setFormattedLcoe(String formattedLcoe) {
+		this.formattedLcoe = formattedLcoe;
 	}
 	
 }

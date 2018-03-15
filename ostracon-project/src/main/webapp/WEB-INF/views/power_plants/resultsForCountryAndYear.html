@@ -19,28 +19,28 @@
 					<span>Annual Electricity Generated</span>
 				</div>
 				<div class="col-sm-2 text-center">
-			  		<input type="text" style="background-color: white;" readonly="readonly" class="form-control" id="email-input" th:field="*{electricityGenerated}"/>
+			  		<input type="text" style="background-color: white;" readonly="readonly" class="form-control" id="electricity-input" th:field="*{formattedElectricity}"/>
 					<br></br>
 				</div>
 				<div class="col-sm-offset-2 col-sm-4 text-right">
 					<span>Direct Emissions Of Carbon Dioxide</span>
 				</div>
 				<div class="col-sm-2 text-center">
-			  		<input type="text" style="background-color: white;" readonly="readonly" class="form-control" id="email-input" th:field="*{carbonDioxide}"/>
+			  		<input type="text" style="background-color: white;" readonly="readonly" class="form-control" id="carbon-input" th:field="*{formattedCarbon}"/>
 					<br></br>
 				</div>
 				<div class="col-sm-offset-2 col-sm-4 text-right">
 					<span>Global Warming Potential</span>
 				</div>
 				<div class="col-sm-2 text-center">
-			  		<input type="text" style="background-color: white;" readonly="readonly" class="form-control" id="email-input" th:field="*{globalWarming}"/>
+			  		<input type="text" style="background-color: white;" readonly="readonly" class="form-control" id="global-input" th:field="*{formattedGlobal}"/>
 					<br></br>
 				</div>
 				<div class="col-sm-offset-2 col-sm-4 text-right">
-					<span>Total LCoE ($)</span>
+					<span>Total LCoE</span>
 				</div>
 				<div class="col-sm-2 text-center">
-			  		<input type="text" style="background-color: white;" readonly="readonly" class="form-control" id="email-input" th:field="|*{totalLcoe}"/>
+			  		<input type="text" style="background-color: white;" readonly="readonly" class="form-control" id="lcoe-input" th:field="*{formattedLcoe}"/>
 					<br></br><br></br>
 				</div>
 				<table class="table">

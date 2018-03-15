@@ -2,9 +2,11 @@ package ostracon.ostracon_project.power_plants;
 
 import java.math.BigInteger;
 import java.security.Principal;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -227,10 +229,20 @@ public class PowerPlantController {
 		ArrayList<PowerPlant> powerPlants = (ArrayList<PowerPlant>) powerPlantDAO.findPowerPlantsByCountryAndYear(country, year, account);
 		Collections.sort(powerPlants, new SortByPlantName());
 		
+		NumberFormat numberFormat = NumberFormat.getInstance(Locale.UK);
+		
 		int electricityGenerated = calculationsService.totalElectricityGeneratedAnnuallyByCountryandYear(country, year, account);
+		String formattedElectricity = numberFormat.format(electricityGenerated) + " MWh";
+		
 		int carbonDioxide = calculationsService.totalDirectEmissionsOfCarbonDioxideByCountryAndYear(country, year, account);
+		String formattedCarbon = numberFormat.format(carbonDioxide) + " kg";
+		
 		int globalWarming = calculationsService.totalGlobalWarmingPotentialByCountryAndYear(country, year, account);
+		String formattedGlobal = numberFormat.format(globalWarming) + " kg";
+		
 		BigInteger totalLcoe = calculationsService.totalOfAllLcoeByCountryAndYear(country, year, account);
+		int lcoeInt = totalLcoe.intValue();
+		String formattedLcoe = "$" + numberFormat.format(lcoeInt);
 		
 		yearSearch.setYear(year);
 		yearSearch.setElectricityGenerated(electricityGenerated);
@@ -240,6 +252,11 @@ public class PowerPlantController {
 		yearSearch.setCountry(country);
 		yearSearch.setCountries(countries);
 		yearSearch.setPowerPlants(powerPlants);
+		
+		yearSearch.setFormattedElectricity(formattedElectricity);
+		yearSearch.setFormattedCarbon(formattedCarbon);
+		yearSearch.setFormattedGlobal(formattedGlobal);
+		yearSearch.setFormattedLcoe(formattedLcoe);
 		
 		mv.addObject("powerPlants", powerPlants);
 		mv.addObject("yearSearch", yearSearch);
@@ -339,6 +356,18 @@ public class PowerPlantController {
 		powerPlantForm.setDirectEmissions(powerPlant.getDirectEmissions());
 		powerPlantForm.setGlobalWarmingPotential(powerPlant.getGlobalWarmingPotential());
 		powerPlantForm.setTotalLcoe(powerPlant.getTotalLcoe());
+		
+		NumberFormat numberFormat = NumberFormat.getInstance(Locale.UK);
+		
+		String formattedElectric = numberFormat.format(powerPlant.getAnualElectricityGenerated()) + " MWh";
+		String formattedEmissions = numberFormat.format(powerPlant.getDirectEmissions()) + " kg";
+		String formattedGlobal = numberFormat.format(powerPlant.getGlobalWarmingPotential()) + " kg";
+		String formattedLcoe = "$" + numberFormat.format(powerPlant.getTotalLcoe());
+		
+		powerPlantForm.setFormattedElectricity(formattedElectric);
+		powerPlantForm.setFormattedEmissions(formattedEmissions);
+		powerPlantForm.setFormattedGlobal(formattedGlobal);
+		powerPlantForm.setFormattedLcoe(formattedLcoe);
 		
 		mv.addObject("powerPlantForm", powerPlantForm);
 		mv.addObject("powerPlant", powerPlant);
