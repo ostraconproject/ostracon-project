@@ -32,7 +32,7 @@ public class NewPowerPlantForm {
 	private Integer capacity;
 	
 	@NotNull(message = NewPowerPlantForm.NOT_BLANK_MESSAGE)
-	private int capacityFactor;
+	private Integer capacityFactor;
 	
 	@NotNull(message = NewPowerPlantForm.NOT_BLANK_MESSAGE)
 	private float latitude;
@@ -91,7 +91,7 @@ public class NewPowerPlantForm {
 	public Integer getCapacity() {
 		return capacity;
 	}
-	public int getCapacityFactor() {
+	public Integer getCapacityFactor() {
 		return capacityFactor;
 	}
 	public int getAnualElectricityGenerated() {
@@ -109,7 +109,7 @@ public class NewPowerPlantForm {
 	public void setCapacity(Integer capacity) {
 		this.capacity = capacity;
 	}
-	public void setCapacityFactor(int capacityFactor) {
+	public void setCapacityFactor(Integer capacityFactor) {
 		this.capacityFactor = capacityFactor;
 	}
 	public void setAnualElectricityGenerated(int anualElectricityGenerated) {

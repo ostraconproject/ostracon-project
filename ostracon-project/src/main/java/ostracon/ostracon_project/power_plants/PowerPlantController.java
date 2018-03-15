@@ -281,7 +281,21 @@ public class PowerPlantController {
 	}
 	
 	@RequestMapping(value = "editPowerPlant", method = RequestMethod.POST)
-	public ModelAndView editPowerPlant(@ModelAttribute("powerPlantForm") NewPowerPlantForm powerPlantForm, BindingResult result, HttpServletRequest request){
+	public ModelAndView editPowerPlant(@Valid @ModelAttribute("powerPlantForm") NewPowerPlantForm powerPlantForm, Errors errors, HttpServletRequest request){
+		
+		if (errors.hasErrors()) {
+			ModelAndView mv = new ModelAndView("power_plants/editPowerPlant");
+			
+			FuelType[] fuelTypeValues = FuelType.values();
+			ArrayList<String> fuelTypes = new ArrayList<>();
+			for (FuelType fuelType : fuelTypeValues) {
+				fuelTypes.add(fuelType.getPrettyName());
+			}
+			
+			mv.addObject("powerPlantForm", powerPlantForm);
+			mv.addObject("fuelTypes", fuelTypes);
+			return mv;
+		}
 		
 		PowerPlant powerPlant = powerPlantService.retrievePowerPlant(powerPlantForm.getPlantId());
 		powerPlant.setName(powerPlantForm.getName());

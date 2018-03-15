@@ -8,6 +8,7 @@
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
 	<link rel="icon" href="resources/images/logo.png"/>
+	<link href="../../../resources/css/errors.css" rel="stylesheet" media="screen" th:href="@{/resources/css/errors.css}" />
 </head>
 <body>
 <div th:replace="fragments/header">Header</div>
@@ -17,25 +18,28 @@
 	<div class="container">
 		<div class="jumbotron" style="background-color:#FFFFFF">
 			<h2 class="text-center" style="padding-top:40px;padding-bottom:30px;">My Account</h2>
-			<div class="col-sm-offset-1 col-sm-4 text-right">
+			<div class="col-sm-offset-1 col-sm-4 text-right" th:classappend="${#fields.hasErrors('email')}? 'has-error'">
 				<span>Email</span>
 			</div>
 			<div class="col-sm-3 text-center">
-		  		<input type="text" class="form-control" id="email-input" th:field="*{email}"/>
+		  		<input type="text" th:errorclass="input-form-error" class="form-control" id="email-input" th:field="*{email}"/>
+				<span class="help-block" style="color:red;" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Empty email</span>
 				<br></br>
 			</div>
-			<div class="col-sm-offset-1 col-sm-4 text-right">
+			<div class="col-sm-offset-1 col-sm-4 text-right" th:classappend="${#fields.hasErrors('email')}? 'has-error'">
 				<span>First Name</span>
 			</div>
 			<div class="col-sm-3 text-center">
-		  		<input type="text" class="form-control" id="fname-input" th:field="*{firstName}"/>
+		  		<input type="text" th:errorclass="input-form-error" class="form-control" id="fname-input" th:field="*{firstName}"/>
+				<span class="help-block" style="color:red;" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Empty first name</span>
 				<br></br>
 			</div>
-			<div class="col-sm-offset-1 col-sm-4 text-right">
+			<div class="col-sm-offset-1 col-sm-4 text-right" th:classappend="${#fields.hasErrors('email')}? 'has-error'">
 				<span>Last Name</span>
 			</div>
 			<div class="col-sm-3 text-center">
-		  		<input type="text" class="form-control" id="lname-input" th:field="*{lastName}"/>
+		  		<input type="text" th:errorclass="input-form-error" class="form-control" id="lname-input" th:field="*{lastName}"/>
+				<span class="help-block" style="color:red;" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Empty last name</span>
 				<br></br>
 			</div>
 			<div class="col-sm-offset-3 col-sm-2">

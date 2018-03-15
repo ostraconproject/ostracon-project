@@ -7,11 +7,13 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -94,10 +96,35 @@ public class ManageAccountController {
 	}
 	
 	@RequestMapping(value = "/manageAccount", method = RequestMethod.POST)
-	public ModelAndView updateClientAccount(@ModelAttribute("accountForm") UpdateAccountInfoForm accountForm, BindingResult bindingResult)
+	public ModelAndView updateClientAccount(@Valid @ModelAttribute("accountForm") UpdateAccountInfoForm accountForm, Errors errors)
 	{
 		Long accountId = accountForm.getAccountId();
 		Account account = accountService.retrieveAccount(accountId);
+		
+		if (errors.hasErrors()) {
+			if (account.getRole().equals("ROLE_USER")) {
+				ModelAndView mv = new ModelAndView("account/myAccount");
+				mv.addObject("account", account);
+				mv.addObject("accountId", accountId);
+				mv.addObject("accountForm", accountForm);
+				return mv;
+			}
+			if (account.getRole().equals("ROLE_ADMIN")) {
+				ModelAndView mv = new ModelAndView("account/adminAccount");
+				mv.addObject("account", account);
+				mv.addObject("accountId", accountId);
+				mv.addObject("accountForm", accountForm);
+				return mv;
+			}
+			if (account.getRole().equals("ROLE_SUPER_ADMIN")) {
+				ModelAndView mv = new ModelAndView("account/superAdminAccount");
+				mv.addObject("account", account);
+				mv.addObject("accountId", accountId);
+				mv.addObject("accountForm", accountForm);
+				return mv;
+			}
+			
+		}
 		
 		account.setEmail(accountForm.getEmail());
 		account.setFirstName(accountForm.getFirstName());
@@ -126,7 +153,14 @@ public class ManageAccountController {
 	}
 	
 	@RequestMapping(value = "changePassword", method = RequestMethod.POST)
-	public ModelAndView changePassword(@ModelAttribute("passwordForm") ChangePasswordForm passwordForm, BindingResult result, HttpServletRequest request){
+	public ModelAndView changePassword(@Valid @ModelAttribute("passwordForm") ChangePasswordForm passwordForm, Errors errors, HttpServletRequest request){
+		
+		if (errors.hasErrors()) {
+			ModelAndView mv = new ModelAndView("account/changePassword");
+			mv.addObject("passwordForm", passwordForm);
+			return mv;
+		}
+		
 		ModelAndView mv = new ModelAndView("account/changePassword");
 		Long accountId = passwordForm.getAccountId();
 		Account account = accountService.retrieveAccount(accountId);
@@ -139,6 +173,7 @@ public class ManageAccountController {
 			account.setPassword(newEncryptedPassword);
 			accountService.updateAccount(account);
 		}
+
 		return mv;
 	}
 	
