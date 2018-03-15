@@ -113,13 +113,25 @@
     		    latLng = new google.maps.LatLng(data.lat, data.lng);
     		  
     		  var title = data.name;
-    		  var capacity = data.capacity;
-    		  var capacityFactor = data.capacityFactor;
     		  var type = data.type;
+    		  
+    		  var capacity = data.capacity;
+    		  var capacity = capacity.toLocaleString('en');
+    		  
+    		  var capacityFactor = data.capacityFactor;
+    		  var capacityFactor = capacityFactor.toLocaleString('en');
+    		  
     		  var annual = data.annual;
+    		  var annual = annual.toLocaleString('en');
+    		  
     		  var emissions = data.emissions;
+    		  var emissions = emissions.toLocaleString('en');
+    		  
     		  var warming = data.warming;
+    		  var warming = warming.toLocaleString('en');
+    		  
     		  var lcoe = data.lcoe;
+    		  var lcoe = lcoe.toLocaleString('en');
 			
     		  if(data.type == "Coal"){
     			  image = coal;
@@ -155,7 +167,7 @@
     		    title: title
     		  });
     		  google.maps.event.addListener(marker, 'click', function () {
-    	            infowindow.setContent('<h4>' + this.title + '</h4>' +
+    	            infowindow.setContent('<h4>' + '<u>' + this.title + '</h4>' + '</u>' +
     	            					  '<p>' + 'Energy Type = ' + this.type + '</p>' +
     	            					  '<p>' + 'Capacity = ' + this.capacity + ' MW' + '</p>' +
     	            					  '<p>' + 'Capacity Factor = ' + this.capacityFactor + '%' + '</p>' +
