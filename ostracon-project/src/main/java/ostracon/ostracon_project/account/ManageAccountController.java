@@ -131,6 +131,21 @@ public class ManageAccountController {
 		account.setLastName(accountForm.getLastName());
 		accountService.updateAccount(account);
 		
+		if (account.getRole().equals("ROLE_ADMIN")) {
+			ModelAndView successMv = new ModelAndView("account/successfulAdminUpdate");
+			successMv.addObject("account", account);
+			successMv.addObject("accountId", accountId);
+			successMv.addObject("accountForm", accountForm);
+			return successMv;
+		}
+		if (account.getRole().equals("ROLE_SUPER_ADMIN")) {
+			ModelAndView successMv = new ModelAndView("account/successfulSuperUpdate");
+			successMv.addObject("account", account);
+			successMv.addObject("accountId", accountId);
+			successMv.addObject("accountForm", accountForm);
+			return successMv;
+		}
+		
 		ModelAndView successMv = new ModelAndView("account/successfulAccountUpdate");
 		successMv.addObject("accountForm", accountForm);
 		successMv.addObject("accountId", accountId);
